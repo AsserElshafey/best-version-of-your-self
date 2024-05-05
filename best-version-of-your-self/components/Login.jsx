@@ -1,10 +1,10 @@
-
+import Link from "next/link";
 
 const Login = () => {
   return (
-    <div className="md:w-1/2 max-w-sm border border-solid p-10 rounded-xl shadow-xl">
+    <div className="md:w-1/2 max-w-sm border border-solid p-10 rounded-xl shadow-xl bg-zinc-200">
       <div className="text-center md:text-left mb-10">
-        <label className="mr-1 font-bold text-xl font text-green-600">Login Now !</label>
+        <label className="mr-1 font-bold text-xl font">Login Now !</label>
       </div>
       <input
         className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
@@ -38,12 +38,12 @@ const Login = () => {
       </div>
       <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
         Don&apos;t have an account?{" "}
-        <a
+        <Link
           className="text-red-600 hover:underline hover:underline-offset-4"
-          href="#"
+          href="/signup"
         >
           Register
-        </a>
+        </Link>
       </div>
     </div>
   )

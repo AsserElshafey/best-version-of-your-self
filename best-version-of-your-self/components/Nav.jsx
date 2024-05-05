@@ -25,7 +25,7 @@ const Nav = () => {
 
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
+    <nav className="flex-between w-full mb-16 pt-3 px-3">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
           src='/images/gigachad.jpg'
@@ -38,24 +38,56 @@ const Nav = () => {
       </Link>
 
       {/* desktop nav */}
-      <div className="sm:flex hidden">
+      <div className="sm:flex hidden relative">
         {isLoggedin ? (
-          <div className="flex gap-3 md:gap-5">
-            <Link href='/create-prompt' className="black_btn">
-              Create Post
-            </Link>
-            <button type="button" onClick={() => { }} className="outline_btn">
-              Sign Out
-            </button>
-            <Link href='profile'>
+          <div className="flex">
+            <div
+              className="flex justify-center cursor-pointer"
+              onClick={() => setToggleDropDown((prev) => !prev)}
+            >
               <Image
-                // src={session?.user.image}
-                width={37}
-                height={37}
-                className="rounded-full"
+                src='/images/gigachad.jpg'
+                width={45}
+                height={40}
+                className="rounded-full mr-2"
                 alt="profile-img"
+
               />
-            </Link>
+              <span>
+                <p className="font-semibold">Asser, Elshafey</p>
+                <p className="font-light text-sm">elshafeyasser@yahoo.com</p>
+              </span>
+            </div>
+
+            {toggleDropDown && (
+              <div className="dropdown">
+                <Link
+                  href='/profile'
+                  className="dropdown_link"
+                  onClick={() => setToggleDropDown(flase)}
+                >
+                  My Profile
+                </Link>
+                <Link
+                  href='/create-prompt'
+                  className="dropdown_link"
+                  onClick={() => setToggleDropDown(flase)}
+                >
+                  Create Prompt
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setToggleDropDown(false);
+                    signOut();
+                  }}
+                  className="mt-5 w-full black_btn"
+                >
+                  Sign Out
+                </button>
+              </div>
+            )
+            }
           </div>
         ) : (
           <>
@@ -80,7 +112,7 @@ const Nav = () => {
         {isLoggedin ? (
           <div className="flex">
             <Image
-              // src={session?.user.image}
+              src='/images/gigachad.jpg'
               width={37}
               height={37}
               className="rounded-full"
