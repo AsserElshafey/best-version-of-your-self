@@ -3,7 +3,7 @@
 const SignUpPage = () => {
   return (
     <div className="flex justify-center">
-      <div className="md:w-1/2 max-w-sm border border-solid p-10 rounded-xl shadow-xl bg-zinc-200">
+      <div className="md:w-1/2 max-w-sm border border-solid p-10 rounded-xl shadow-xl bg-zinc-100">
         <div className="text-center md:text-left mb-10">
           <label className="mr-1 font-bold text-xl font">Sign Up</label>
         </div>
