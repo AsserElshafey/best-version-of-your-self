@@ -10,8 +10,16 @@
   }
 }
 
+body {
+  height: 10000px;
+}
+
 .black_btn {
   @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+}
+
+.green_btn {
+  @apply rounded-full border border-green-500 bg-green-500 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center shadow-xl;
 }
 
 .outline_btn {
@@ -27,7 +35,7 @@
 }
 
 .logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg text-green-600 tracking-wide;
+  @apply font-satoshi font-semibold text-lg tracking-wide text-white;
 }
 
 .flex-center {

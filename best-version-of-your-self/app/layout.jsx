@@ -1,5 +1,6 @@
 import '@/styles/globals.css';
 import Nav from '@/components/Nav';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "BVOYS",
@@ -9,11 +10,12 @@ export const metadata = {
 const Rootlayout = ({ children }) => {
   return (
     <html lang='en'>
-      <body>
-        <main>
-          <Nav />
+      <body className='bg-gray-100'>
+        <Nav />
+        <main className='pt-36'>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   )

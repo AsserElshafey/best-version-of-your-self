@@ -10,22 +10,13 @@ const Nav = () => {
 
   const isLoggedin = true;
 
-  // const [providers, setProviders] = useState(null);
   const [toggleDropDown, setToggleDropDown] = useState(false);
 
-  // useEffect(() => {
-  //   const setUpProviders = async () => {
-  //     const response = await getProviders();
 
-  //     setProviders(response);
-  //   }
-
-  //   setUpProviders();
-  // }, [])
 
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3 px-3">
+    <nav className="flex-between w-full py-3 px-3 bg-gray-800 border-b-2 border-green-600 shadow-md fixed">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
           src='/images/gigachad.jpg'
@@ -54,8 +45,8 @@ const Nav = () => {
 
               />
               <span>
-                <p className="font-semibold">Asser, Elshafey</p>
-                <p className="font-light text-sm">elshafeyasser@yahoo.com</p>
+                <p className="font-semibold text-white">Asser, Elshafey</p>
+                <p className="text-white text-xs">elshafeyasser@yahoo.com</p>
               </span>
             </div>
 
@@ -69,11 +60,11 @@ const Nav = () => {
                   My Profile
                 </Link>
                 <Link
-                  href='/create-prompt'
+                  href='/my-habits'
                   className="dropdown_link"
                   onClick={() => setToggleDropDown(flase)}
                 >
-                  Create Prompt
+                  My Habits
                 </Link>
                 <button
                   type="button"
@@ -91,18 +82,13 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>
-              ))
-            }
+            <Link
+              type="button"
+              href='/login'
+              className="green_btn"
+            >
+              Sign In
+            </Link>
           </>
         )}
       </div>
@@ -130,11 +116,11 @@ const Nav = () => {
                   My Profile
                 </Link>
                 <Link
-                  href='/create-prompt'
+                  href='/my-habits'
                   className="dropdown_link"
                   onClick={() => setToggleDropDown(flase)}
                 >
-                  Create Prompt
+                  My Habits
                 </Link>
                 <button
                   type="button"
@@ -153,18 +139,13 @@ const Nav = () => {
 
         ) : (
           <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>
-              ))
-            }
+            <Link
+              type="button"
+              href='/login'
+              className="green_btn"
+            >
+              Sign In
+            </Link>
           </>
         )
         }
