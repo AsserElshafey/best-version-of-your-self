@@ -1,7 +1,6 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import HabitCard from "@/components/HabitCard";
 import Login from "@/components/Login";
 import CommunityCard from "@/components/CommunityCard";
 

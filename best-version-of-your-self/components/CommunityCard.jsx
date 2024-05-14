@@ -23,11 +23,11 @@ const CommunityCard = () => {
           </p>
         </div>
       </div>
-      <div className="py-2 px-4">
-        <p className="font-bold pl-2 text-lg">About Community:</p>
-        <p className="pl-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, eaque nulla! Ea voluptatum nihil obcaecati in sit ducimus laboriosam deleniti!</p>
+      <div className="py-4 px-6">
+        <p className="font-bold pl-2 text-lg mb-2">About Community:</p>
+        <p className="pl-10 pr-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, eaque nulla! Ea voluptatum nihil obcaecati in sit ducimus laboriosam deleniti!</p>
       </div>
-      <div className="py-2 px-4">
+      <div className="py-4 px-6">
         <p className="font-bold pl-2 text-lg">Top habits:</p>
 
         {/* habits div */}

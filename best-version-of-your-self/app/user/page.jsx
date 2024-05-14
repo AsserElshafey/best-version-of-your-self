@@ -1,9 +1,13 @@
+import Nav from '@/components/Nav'
 import React from 'react'
 
-const page = () => {
+const user = () => {
   return (
-    <div>page</div>
+    <div>
+      <Nav />
+      <div>user loged in</div>
+    </div>
   )
 }
 
-export default page
+export default user
