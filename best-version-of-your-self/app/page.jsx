@@ -3,6 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import HabitCard from "@/components/HabitCard";
 import Login from "@/components/Login";
+import CommunityCard from "@/components/CommunityCard";
 
 
 const Home = () => {
@@ -20,17 +21,15 @@ const Home = () => {
           <p className="logo_text">BVOYS</p>
         </Link>
       </div>
-      <div className="flex justify-center md:w-4/6 p-2 md:p-0 mt-24">
-        <div>
-          <HabitCard />
-          <HabitCard />
-          <HabitCard />
-          <HabitCard />
-          <HabitCard />
-          <HabitCard />
+      <div className="flex justify-center md:w-4/6 px-5 md:p-0">
+        <div className="mt-24">
+          <CommunityCard />
+          <CommunityCard />
+          <CommunityCard />
+          <CommunityCard />
 
         </div>
-        <div className="hidden md:block fixed right-1 md:w-2/6">
+        <div className="hidden md:block fixed right-1 md:w-2/6 mt-36">
           <Login />
         </div>
       </div>
