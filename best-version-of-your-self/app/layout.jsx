@@ -11,8 +11,7 @@ const Rootlayout = ({ children }) => {
   return (
     <html lang='en'>
       <body className='bg-gray-100'>
-        <Nav />
-        <main className='pt-36'>
+        <main>
           {children}
         </main>
         <Footer />
