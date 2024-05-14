@@ -1,8 +1,31 @@
-import Link from "next/link"
-import { HomeIcon } from '@heroicons/react/24/solid'
+"use client"
+import Link from "next/link";
+import { HomeIcon } from "@heroicons/react/24/solid";
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import api from "../../utils/api";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../utils/constants";
 
+function SignUpPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-const SignUpPage = () => {
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password });
+      localStorage.setItem(ACCESS_TOKEN, res.data.access);
+      localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+      setUsername("");
+      setPassword("");
+      router.push('/user'); // Redirect to /user route
+    } catch (error) {
+      alert(error);
+    }
+  }, [username, password, router]);
+
   return (
     <>
       <div className="flex justify-center items-center h-screen">
@@ -14,7 +37,9 @@ const SignUpPage = () => {
             <input
               className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4 mr-1"
               type="text"
-              placeholder="First name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
             />
             <input
               className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4 ml-1"
@@ -30,6 +55,8 @@ const SignUpPage = () => {
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
           <input
@@ -41,6 +68,7 @@ const SignUpPage = () => {
             <button
               className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 text-white rounded text-sm tracking-wider"
               type="submit"
+              onClick={handleSubmit}
             >
               SignUp
             </button>
@@ -48,15 +76,12 @@ const SignUpPage = () => {
         </div>
       </div>
       <div className="flex fixed bg-green-700 bottom-10 right-5 p-3 rounded-full">
-        <Link
-          href='/'
-          className="hover:scale-110 transition-all"
-        >
+        <Link href="/" className="hover:scale-110 transition-all">
           <HomeIcon className="w-6 h-6 text-white" />
         </Link>
       </div>
     </>
-  )
+  );
 }
 
-export default SignUpPage
+export default SignUpPage;
