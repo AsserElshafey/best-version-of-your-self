@@ -2,18 +2,40 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import api from "../utils/api";
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation";
 
 
 
 const Nav = () => {
-
+  const router = useRouter()
   const isLoggedin = true;
 
   const [toggleDropDown, setToggleDropDown] = useState(false);
+  const [username, setUser] = useState(null); // State to store user data
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (isLoggedin) {
+        try {
+          const response = await api.get('http://localhost:8000/api/v1/user/'); // Replace with your API endpoint
+          setUser(response.data.username);
+          console.log(response.data.username)
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+          // Handle errors gracefully, like displaying an error message
+        }
+      }
+    };
 
+    fetchUserProfile();
+  }, [isLoggedin]); // Run effect only when isLoggedin changes
 
+  function signOut() {
+    localStorage.clear()
+    router.push('/')
+  }
 
   return (
     <nav className="flex-between w-full py-3 px-3 bg-gray-800 border-b-2 border-green-600 shadow-md fixed">
@@ -46,7 +68,7 @@ const Nav = () => {
               />
               <span>
                 <p className="font-semibold text-white">Asser, Elshafey</p>
-                <p className="text-white text-xs">elshafeyasser@yahoo.com</p>
+                <p className="text-white text-xs">yahhoo</p>
               </span>
             </div>
 

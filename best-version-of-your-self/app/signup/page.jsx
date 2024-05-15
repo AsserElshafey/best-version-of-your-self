@@ -4,7 +4,7 @@ import { HomeIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "../../utils/api";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../utils/constants";
+
 
 function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -18,13 +18,11 @@ function SignUpPage() {
 
     try {
       const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, firstName, lastName });
-      localStorage.setItem(ACCESS_TOKEN, res.data.access);
-      localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       setUsername("");
       setPassword("");
       setFirstName("")
       setLastName("")
-      router.push('/user'); // Redirect to /user route
+      router.push('/login'); // Redirect to /user route
     } catch (error) {
       alert(error);
     }
