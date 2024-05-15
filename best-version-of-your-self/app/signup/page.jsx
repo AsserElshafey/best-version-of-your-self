@@ -11,17 +11,19 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     try {
-      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, firstName, lastName });
+      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, firstName, lastName, email });
       setUsername("");
       setPassword("");
       setFirstName("")
-      setLastName("")
+      setLastName("");
+      setEmail("");
       router.push('/login'); // Redirect to /user route
     } catch (error) {
       alert(error);
@@ -58,6 +60,15 @@ function SignUpPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          <input
+            className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mb-4"
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          
+          
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
             type="password"

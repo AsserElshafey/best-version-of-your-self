@@ -33,7 +33,7 @@ const Login = () => {
       <input
         className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
         type="text"
-        placeholder="Email Address"
+        placeholder="User Name"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />

@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link"
 import Image from "next/image"
 import api from "../utils/api";
@@ -7,24 +6,32 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
 
+/* Todo:
+- handle isloggedin
+- populate with more data
+- change host with .env host
+*/
 
 const Nav = () => {
   const router = useRouter()
   const isLoggedin = true;
 
   const [toggleDropDown, setToggleDropDown] = useState(false);
-  const [username, setUser] = useState(null); // State to store user data
+  const [username, setUser] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (isLoggedin) {
         try {
-          const response = await api.get('http://localhost:8000/api/v1/user/'); // Replace with your API endpoint
+          const response = await api.get('http://localhost:8000/api/v1/user/');
           setUser(response.data.username);
-          console.log(response.data.username)
+          setFirstName(response.data.firstName)
+          setLastName(response.data.lastName)
+          console.log(response.data)
         } catch (error) {
           console.error('Error fetching user profile:', error);
-          // Handle errors gracefully, like displaying an error message
         }
       }
     };
@@ -67,8 +74,8 @@ const Nav = () => {
 
               />
               <span>
-                <p className="font-semibold text-white">Asser, Elshafey</p>
-                <p className="text-white text-xs">yahhoo</p>
+                <p className="font-semibold text-white">{ firstName }, { lastName }</p>
+                <p className="text-white text-xs">{ username }</p>
               </span>
             </div>
 
