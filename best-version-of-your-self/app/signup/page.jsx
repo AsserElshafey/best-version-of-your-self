@@ -9,22 +9,26 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../utils/constants";
 function SignUpPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const router = useRouter();
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     try {
-      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password });
+      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, firstName, lastName });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       setUsername("");
       setPassword("");
+      setFirstName("")
+      setLastName("")
       router.push('/user'); // Redirect to /user route
     } catch (error) {
       alert(error);
     }
-  }, [username, password, router]);
+  }, [username, password, firstName, lastName, router]);
 
   return (
     <>
@@ -37,20 +41,24 @@ function SignUpPage() {
             <input
               className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4 mr-1"
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="First Name"
             />
             <input
               className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4 ml-1"
               type="text"
-              placeholder="Last name"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mb-4"
             type="text"
-            placeholder="Email address"
+            placeholder="User Name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
