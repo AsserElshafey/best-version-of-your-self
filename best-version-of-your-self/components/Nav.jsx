@@ -31,6 +31,7 @@ const Nav = () => {
           setLastName(response.data.lastName)
           console.log(response.data)
         } catch (error) {
+          router.push('/login')
           console.error('Error fetching user profile:', error);
         }
       }
