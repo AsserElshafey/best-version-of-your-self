@@ -9,24 +9,26 @@ import api from "../../utils/api";
 function SignUpPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     try {
-      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, firstName, lastName });
+      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, first_name, last_name, email });
       setUsername("");
       setPassword("");
       setFirstName("")
-      setLastName("")
+      setLastName("");
+      setEmail("");
       router.push('/login'); // Redirect to /user route
     } catch (error) {
       alert(error);
     }
-  }, [username, password, firstName, lastName, router]);
+  }, [username, password, first_name, last_name, email, router]);
 
   return (
     <>
@@ -39,7 +41,7 @@ function SignUpPage() {
             <input
               className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4 mr-1"
               type="text"
-              value={firstName}
+              value={first_name}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
             />
@@ -47,7 +49,7 @@ function SignUpPage() {
               className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4 ml-1"
               type="text"
               placeholder="Last Name"
-              value={lastName}
+              value={last_name}
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
@@ -58,6 +60,15 @@ function SignUpPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          <input
+            className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mb-4"
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          
+          
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
             type="password"
