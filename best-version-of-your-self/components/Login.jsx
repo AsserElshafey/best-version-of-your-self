@@ -25,6 +25,7 @@ const Login = () => {
       alert(error);
     }
   }, [username, password, router]);
+
   return (
     <div className="max-w-sm border border-solid p-10 rounded-xl shadow-xl bg-zinc-100">
       <div className="text-center md:text-left mb-10">

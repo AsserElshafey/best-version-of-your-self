@@ -68,7 +68,7 @@ const Nav = () => {
               />
               <span>
                 <p className="font-semibold text-white">Asser, Elshafey</p>
-                <p className="text-white text-xs">yahhoo</p>
+                <p className="text-white text-xs font-light">elshafeyasser@yahoo.com</p>
               </span>
             </div>
 
