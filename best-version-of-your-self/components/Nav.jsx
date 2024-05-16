@@ -4,7 +4,8 @@ import Image from "next/image"
 import api from "../utils/api";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
-import { MantineProvider, Menu } from "@mantine/core";
+import { MantineProvider, Menu, Modal } from "@mantine/core";
+import { useDisclosure } from '@mantine/hooks';
 import '@mantine/core/styles.css'
 import {
   ArrowLeftEndOnRectangleIcon,
@@ -24,6 +25,8 @@ import {
 const Nav = () => {
   const router = useRouter()
   const isLoggedin = true;
+
+  const [openedModal, { open, close }] = useDisclosure(false);
 
   const [opened, setOpened] = useState(false);
   const [username, setUser] = useState(null);
@@ -103,10 +106,15 @@ const Nav = () => {
                 My Profile
               </Menu.Item>
             </Link>
-            <Menu.Item leftSection={<QueueListIcon className="w-4 h-4" />}>
-              My Habits
-            </Menu.Item>
-            <Menu.Item leftSection={<PlusIcon className="w-4 h-4" />}>
+            <Link href='/myhabits'>
+              <Menu.Item leftSection={<QueueListIcon className="w-4 h-4" />}>
+                My Habits
+              </Menu.Item>
+            </Link>
+            <Menu.Item
+              leftSection={<PlusIcon className="w-4 h-4" />}
+              onClick={open}
+            >
               New Community
             </Menu.Item>
 
@@ -120,6 +128,10 @@ const Nav = () => {
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
+
+        <Modal opened={openedModal} onClose={close} title="Create New Community" centered>
+          {/* Modal content */}
+        </Modal>
       </nav>
     </MantineProvider>
   )
