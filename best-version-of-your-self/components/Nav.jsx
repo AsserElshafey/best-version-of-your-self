@@ -120,12 +120,14 @@ const Nav = () => {
 
             <Menu.Divider />
 
-            <Menu.Item
-              color="red"
-              leftSection={<ArrowLeftEndOnRectangleIcon className="w-4 h-4" />}
-            >
-              Sign out
-            </Menu.Item>
+            <div onClick={signOut}>
+              <Menu.Item
+                color="red"
+                leftSection={<ArrowLeftEndOnRectangleIcon className="w-4 h-4" />}
+              >
+                Sign out
+              </Menu.Item>
+            </div>
           </Menu.Dropdown>
         </Menu>
 
