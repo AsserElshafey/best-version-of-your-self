@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await api.post("http://localhost:8000/api/v1/token/", { username, password });
+      const res = await api.post("api/v1/token/", { username, password });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       setUsername("");

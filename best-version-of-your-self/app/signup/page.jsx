@@ -18,7 +18,7 @@ function SignUpPage() {
     e.preventDefault();
 
     try {
-      const res = await api.post("http://localhost:8000/api/v1/users/signup/", { username, password, first_name, last_name, email });
+      const res = await api.post("api/v1/users/signup/", { username, password, first_name, last_name, email });
       setUsername("");
       setPassword("");
       setFirstName("")
