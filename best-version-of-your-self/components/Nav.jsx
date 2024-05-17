@@ -1,20 +1,18 @@
 "use client";
-import Link from "next/link"
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
 import api from "../utils/api";
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MantineProvider, Menu, Modal } from "@mantine/core";
-import { useDisclosure } from '@mantine/hooks';
-import '@mantine/core/styles.css'
+import { useDisclosure } from "@mantine/hooks";
+import "@mantine/core/styles.css";
 import {
   ArrowLeftEndOnRectangleIcon,
   IdentificationIcon,
   QueueListIcon,
-  PlusIcon
+  PlusIcon,
 } from "@heroicons/react/24/solid";
-
-
 
 /* Todo:
 - handle isloggedin
@@ -23,9 +21,7 @@ import {
 */
 
 const Nav = () => {
-  const router = useRouter()
-  const isLoggedin = true;
-
+  const router = useRouter();
   const [openedModal, { open, close }] = useDisclosure(false);
 
   const [opened, setOpened] = useState(false);
@@ -34,27 +30,25 @@ const Nav = () => {
   const [lastName, setLastName] = useState(null);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (isLoggedin) {
-        try {
-          const response = await api.get('http://localhost:8000/api/v1/user/');
-          setUser(response.data.username);
-          setFirstName(response.data.firstName)
-          setLastName(response.data.lastName)
-          console.log(response.data)
-        } catch (error) {
-          // router.push('/login')
-          console.error('Error fetching user profile:', error);
-        }
-      }
-    };
-
     fetchUserProfile();
-  }, [isLoggedin]); // Run effect only when isLoggedin changes
+  }, []); 
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await api.get("http://localhost:8000/api/v1/user/");
+      setUser(response.data.username);
+      setFirstName(response.data.firstName);
+      setLastName(response.data.lastName);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      alert("error")
+    }
+  };
 
   function signOut() {
-    localStorage.clear()
-    router.push('/')
+    localStorage.clear();
+    router.push("/");
   }
 
   return (
@@ -62,7 +56,7 @@ const Nav = () => {
       <nav className="flex-between w-full py-3 px-3 bg-gray-800 border-b-2 border-green-600 shadow-md">
         <Link href="/" className="flex gap-2 flex-center">
           <Image
-            src='/images/gigachad.jpg'
+            src="/images/gigachad.jpg"
             alt="Prmptopia Logo"
             width={55}
             height={55}
@@ -83,15 +77,16 @@ const Nav = () => {
           <Menu.Target>
             <div className="flex justify-center cursor-pointer">
               <Image
-                src='/images/gigachad.jpg'
+                src="/images/gigachad.jpg"
                 width={45}
                 height={40}
                 className="rounded-full mr-2"
                 alt="profile-img"
-
               />
               <span className="sm:block hidden">
-                <p className="font-semibold text-white">{firstName}, {lastName}</p>
+                <p className="font-semibold text-white">
+                  {firstName}, {lastName}
+                </p>
                 <p className="text-white text-xs">{username}</p>
               </span>
             </div>
@@ -99,14 +94,14 @@ const Nav = () => {
 
           <Menu.Dropdown>
             <Menu.Label>Application</Menu.Label>
-            <Link href='/myprofile'>
+            <Link href="/myprofile">
               <Menu.Item
                 leftSection={<IdentificationIcon className="w-4 h-4" />}
               >
                 My Profile
               </Menu.Item>
             </Link>
-            <Link href='/myhabits'>
+            <Link href="/myhabits">
               <Menu.Item leftSection={<QueueListIcon className="w-4 h-4" />}>
                 My Habits
               </Menu.Item>
@@ -123,7 +118,9 @@ const Nav = () => {
             <div onClick={signOut}>
               <Menu.Item
                 color="red"
-                leftSection={<ArrowLeftEndOnRectangleIcon className="w-4 h-4" />}
+                leftSection={
+                  <ArrowLeftEndOnRectangleIcon className="w-4 h-4" />
+                }
               >
                 Sign out
               </Menu.Item>
@@ -131,12 +128,17 @@ const Nav = () => {
           </Menu.Dropdown>
         </Menu>
 
-        <Modal opened={openedModal} onClose={close} title="Create New Community" centered>
+        <Modal
+          opened={openedModal}
+          onClose={close}
+          title="Create New Community"
+          centered
+        >
           {/* Modal content */}
         </Modal>
       </nav>
     </MantineProvider>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;
