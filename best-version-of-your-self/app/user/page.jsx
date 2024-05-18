@@ -6,10 +6,10 @@ import ProtectedRoute from '../../components/ProtectedRoute';
 const user = () => {
   return (
     <ProtectedRoute>
-    <div>
-      <Nav />
-      <div>user loged in</div>
-    </div>
+      <div>
+        <Nav />
+        <div>user loged in</div>
+      </div>
     </ProtectedRoute>
   )
 }

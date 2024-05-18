@@ -4,7 +4,7 @@ import Image from "next/image";
 import api from "../utils/api";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { MantineProvider, Menu, Modal } from "@mantine/core";
+import { MantineProvider, Menu, Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import "@mantine/core/styles.css";
 import {
@@ -31,7 +31,7 @@ const Nav = () => {
 
   useEffect(() => {
     fetchUserProfile();
-  }, []); 
+  }, []);
 
   const fetchUserProfile = async () => {
     try {
@@ -106,11 +106,15 @@ const Nav = () => {
                 My Habits
               </Menu.Item>
             </Link>
-            <Menu.Item
-              leftSection={<PlusIcon className="w-4 h-4" />}
-              onClick={open}
-            >
-              New Community
+            <Menu.Item className="hover:bg-white">
+              <Button
+                leftSection={<PlusIcon className="w-5 h-5" />}
+                variant="gradient"
+                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                onClick={open}
+              >
+                New Community
+              </Button>
             </Menu.Item>
 
             <Menu.Divider />
