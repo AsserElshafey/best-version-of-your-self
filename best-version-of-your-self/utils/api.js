@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "./constants";
 
-const apiUrl = "http://localhost:8000/";
+const apiUrl = "http://13.60.28.66/";
 
 const api = axios.create({
   baseURL: apiUrl

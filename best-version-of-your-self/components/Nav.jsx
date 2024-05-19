@@ -35,7 +35,7 @@ const Nav = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await api.get("http://localhost:8000/api/v1/user/");
+      const response = await api.get("api/v1/user/");
       setUser(response.data.username);
       setFirstName(response.data.firstName);
       setLastName(response.data.lastName);
