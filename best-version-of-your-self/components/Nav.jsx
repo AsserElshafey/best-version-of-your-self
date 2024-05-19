@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import api from "../utils/api";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   MantineProvider, Menu, Modal,
@@ -21,7 +21,6 @@ import {
 /* Todo:
 - handle isloggedin
 - populate with more data
-- change host with .env host
 */
 
 const Nav = () => {
@@ -34,6 +33,22 @@ const Nav = () => {
   const [username, setUser] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
+  const [communityName, setCommunityName] = useState(null);
+  const [communityDesc, setCommunityDesc] = useState(null);
+
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await api.post("api/v1/communities/", { "name":communityName, "description": communityDesc});
+      setCommunityName("");
+      setCommunityDesc("");
+      close()
+    } catch (error) {
+      alert(error);
+    }
+  }, [communityName, communityDesc, router]);
+
 
   const clearFile = () => {
     setFile(null);
@@ -177,11 +192,15 @@ const Nav = () => {
                 label="Community Name"
                 placeholder="Enter community name here"
                 withAsterisk
+                value={communityName}
+                onChange={(e) => setCommunityName(e.target.value)}
               />
               <Textarea
                 className="mb-20"
                 label="Community description"
                 placeholder="Enter the community description"
+                value={communityDesc}
+                onChange={(e) => setCommunityDesc(e.target.value)}
               />
               <div className="flex justify-end my-4">
                 <Button
@@ -190,7 +209,7 @@ const Nav = () => {
                   gradient={{ from: 'green', to: 'cyan', deg: 90 }}
                   size="md"
                   radius="xl"
-                  onClick={() => { }}
+                  onClick={handleSubmit}
                 >
                   Create
                 </Button>
