@@ -2,9 +2,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import api from "../utils/api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { MantineProvider, Menu, Modal, Button } from "@mantine/core";
+import {
+  MantineProvider, Menu, Modal,
+  FileButton, Button, Text,
+  TextInput, Textarea
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import "@mantine/core/styles.css";
 import {
@@ -23,11 +27,18 @@ import {
 const Nav = () => {
   const router = useRouter();
   const [openedModal, { open, close }] = useDisclosure(false);
-
   const [opened, setOpened] = useState(false);
+  const [file, setFile] = useState(undefined);
+  const resetRef = useRef(null);
+
   const [username, setUser] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
+
+  const clearFile = () => {
+    setFile(null);
+    resetRef.current?.();
+  };
 
   useEffect(() => {
     fetchUserProfile();
@@ -138,7 +149,54 @@ const Nav = () => {
           title="Create New Community"
           centered
         >
-          {/* Modal content */}
+          <div>
+            <div className="flex items-end gap-3">
+              <Image
+                src={file ? URL.createObjectURL(file) : '/images/gigachad.jpg'}
+                width={85}
+                height={85}
+                className="rounded-full mr-2"
+                alt="profile-img"
+              />
+              <FileButton resetRef={resetRef} onChange={setFile} accept="image/png,image/jpeg">
+                {(props) => <Button {...props}>Upload image</Button>}
+              </FileButton>
+              <Button disabled={!file} color="red" onClick={clearFile}>
+                Reset
+              </Button>
+
+            </div>
+            {file && (
+              <Text size="sm" ta="start" mt="sm">
+                Picked file: {file.name}
+              </Text>
+            )}
+            <div className="mt-10">
+              <TextInput
+                className="mb-5"
+                label="Community Name"
+                placeholder="Enter community name here"
+                withAsterisk
+              />
+              <Textarea
+                className="mb-20"
+                label="Community description"
+                placeholder="Enter the community description"
+              />
+              <div className="flex justify-end my-4">
+                <Button
+                  leftSection={<PlusIcon className="w-5 h-5" />}
+                  variant="gradient"
+                  gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                  size="md"
+                  radius="xl"
+                  onClick={() => { }}
+                >
+                  Create
+                </Button>
+              </div>
+            </div>
+          </div>
         </Modal>
       </nav>
     </MantineProvider>
