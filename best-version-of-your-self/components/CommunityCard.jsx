@@ -2,7 +2,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { UserGroupIcon } from "@heroicons/react/24/solid"
 
-const CommunityCard = () => {
+const CommunityCard = ( { data } ) => {
+  const { name, description, id } = data;
+  console.log(data)
   return (
     <div className="max-w-xl border border-solid rounded-md mb-4 shadow-md">
       <div className="flex justify-between items-center rounded-t-md py-2 px-3 bg-gray-700 border-b-2 border-green-600">
@@ -14,7 +16,7 @@ const CommunityCard = () => {
             height={55}
             className="object-contain rounded-full"
           />
-          <p className="font-semibold font-satoshi text-xl text-gray-200">GigaChad Community</p>
+          <p className="font-semibold font-satoshi text-xl text-gray-200">{name}</p>
         </div>
         <div className="flex gap-2">
           <UserGroupIcon className="w-6 h-6 text-white" />
@@ -25,7 +27,7 @@ const CommunityCard = () => {
       </div>
       <div className="py-4 px-6">
         <p className="font-bold pl-2 text-lg mb-2">About Community:</p>
-        <p className="pl-10 pr-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, eaque nulla! Ea voluptatum nihil obcaecati in sit ducimus laboriosam deleniti!</p>
+        <p className="pl-10 pr-3">{description}</p>
       </div>
       <div className="py-4 px-6">
         <p className="font-bold pl-2 text-lg">Top habits:</p>

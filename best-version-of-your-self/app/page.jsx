@@ -1,9 +1,7 @@
-
 import Link from "next/link"
 import Image from "next/image"
 import Login from "@/components/Login";
-import CommunityCard from "@/components/CommunityCard";
-
+import CommunityList from "@/components/CommunityList";
 
 const Home = () => {
   return (
@@ -22,10 +20,7 @@ const Home = () => {
       </div>
       <div className="flex justify-center md:w-4/6 px-5 md:p-0">
         <div className="mt-24">
-          <CommunityCard />
-          <CommunityCard />
-          <CommunityCard />
-          <CommunityCard />
+          <CommunityList />
 
         </div>
         <div className="hidden md:block fixed right-1 md:w-2/6 mt-36">

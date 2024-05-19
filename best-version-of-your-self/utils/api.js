@@ -7,6 +7,10 @@ const api = axios.create({
   baseURL: apiUrl
 });
 
+export const open_api = axios.create({
+  baseURL: apiUrl
+});
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -19,5 +23,6 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 
 export default api;
