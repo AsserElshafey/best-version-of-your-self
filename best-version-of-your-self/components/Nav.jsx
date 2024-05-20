@@ -19,7 +19,6 @@ import {
 } from "@heroicons/react/24/solid";
 
 /* Todo:
-- handle isloggedin
 - populate with more data
 */
 
@@ -63,8 +62,8 @@ const Nav = () => {
     try {
       const response = await api.get("api/v1/user/");
       setUser(response.data.username);
-      setFirstName(response.data.firstName);
-      setLastName(response.data.lastName);
+      setFirstName(response.data.first_name);
+      setLastName(response.data.last_name);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching user profile:", error);
