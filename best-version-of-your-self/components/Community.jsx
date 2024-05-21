@@ -1,15 +1,20 @@
-"use client"
+"use client";
 import { useState } from "react";
-import { MantineProvider, ScrollArea, ActionIcon, Tooltip, Modal, Menu } from "@mantine/core"
+import { MantineProvider, ScrollArea, ActionIcon, Tooltip, Modal, Menu } from "@mantine/core";
 import Image from "next/image";
 import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useDisclosure } from '@mantine/hooks';
 import HabitCard from "./HabitCard";
 
-const Community = () => {
-
+const Community = ({ community }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedMenu, setOpened] = useState(false);
+
+  if (!community) {
+    return (<div className="flex-center fullscreen">
+      Select a community to view its details
+    </div>);
+  }
 
   return (
     <MantineProvider>
@@ -25,7 +30,7 @@ const Community = () => {
                 className="object-contain rounded-full"
               />
               <p className="font-semibold text-white text-lg">
-                Gigachad Community
+                {community.name}
               </p>
             </div>
             <Menu
@@ -55,7 +60,6 @@ const Community = () => {
             <HabitCard />
             <HabitCard />
             <HabitCard />
-
           </div>
           <div className="fixed bottom-10 right-4">
             <Tooltip label="New Habit">
@@ -69,9 +73,8 @@ const Community = () => {
           </Modal>
         </div>
       </ScrollArea>
-
     </MantineProvider>
-  )
-}
+  );
+};
 
-export default Community
+export default Community;

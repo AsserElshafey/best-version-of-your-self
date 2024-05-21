@@ -3,12 +3,15 @@ import { MantineProvider, ScrollArea, Text } from "@mantine/core";
 import Image from "next/image";
 import api from "../utils/api";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import "@mantine/core/styles.css";
 
-const SideBarCards = ({ icon, title, desc }) => {
+const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
   return (
-    <div className="flex py-3 px-2  mb-1 shadow-md bg-gray-200 hover:text-white hover:bg-green-800 cursor-pointer">
+    <div
+      onClick={onClick}
+      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-200 cursor-pointer ${isSelected ? "bg-green-800 text-white" : "hover:bg-green-800 hover:text-white"
+        }`}
+    >
       <Image
         src={icon}
         alt="Prmptopia Logo"
@@ -26,8 +29,7 @@ const SideBarCards = ({ icon, title, desc }) => {
   );
 };
 
-const SideBar = () => {
-  const router = useRouter();
+const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
   const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
@@ -37,31 +39,31 @@ const SideBar = () => {
   const fetchUserCommunities = async () => {
     try {
       const response = await api.get("api/v1/user/communities");
-      const communityIds = response.data.communities; // Assuming response.data is an array of community IDs
+      const communityIds = response.data.communities;
 
       const communityPromises = communityIds.map(async (communityId) => {
-        const communityResponse = await api.get(
-          `api/v1/communities/${communityId}`
-        );
+        const communityResponse = await api.get(`api/v1/communities/${communityId}`);
         return communityResponse.data;
       });
       const communitiesData = await Promise.all(communityPromises);
       setCommunities(communitiesData);
-      console.log(communitiesData);
     } catch (error) {
       console.error("Error fetching user profile:", error);
       alert("error");
     }
   };
+
   return (
     <MantineProvider>
-      <ScrollArea className="bg-gray-200">
+      <ScrollArea className="bg-gray-200 fullscreen">
         {communities.map((community) => (
           <SideBarCards
-            key={community.id} // Assuming each community object has a unique ID
-            icon="/images/gigachad.jpg" // Assuming each community object has an 'icon' property
-            title={community.name} // Assuming each community object has a 'title' property
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, corporis!" // Assuming each community object has a 'desc' property
+            key={community.id}
+            icon="/images/gigachad.jpg"
+            title={community.name}
+            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, corporis!"
+            onClick={() => onSelectCommunity(community)}
+            isSelected={selectedCommunity?.id === community.id}
           />
         ))}
       </ScrollArea>
