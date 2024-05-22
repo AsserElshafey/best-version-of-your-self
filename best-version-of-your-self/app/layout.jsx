@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: "BVOYS",
+  title: "Better",
   description: "This Website is designed to make you the greatest version of your self"
 }
 

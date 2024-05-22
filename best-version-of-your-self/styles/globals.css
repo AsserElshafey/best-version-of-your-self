@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -47,7 +48,7 @@
 }
 
 .logo_text {
-  @apply font-satoshi font-semibold text-lg tracking-wide text-white;
+  @apply font-Pacifico font-semibold text-2xl tracking-wide text-white;
 }
 
 .flex-center {

@@ -81,13 +81,13 @@ const Nav = () => {
       <nav className="flex-between w-full py-3 px-3 bg-gray-800 border-b-2 border-green-600 shadow-md">
         <Link href="/" className="flex gap-2 flex-center">
           <Image
-            src="/images/gigachad.jpg"
+            src="/images/Logo.ico"
             alt="Prmptopia Logo"
             width={55}
             height={55}
             className="object-contain rounded-full"
           />
-          <p className="logo_text">BVOYS</p>
+          <p className="logo_text">Better</p>
         </Link>
 
         {/* desktop nav */}

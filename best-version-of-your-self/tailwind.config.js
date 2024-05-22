@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         satoshi: ['"Satoshi"', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+        Pacifico: ["Pacifico", 'sans-serif']
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
