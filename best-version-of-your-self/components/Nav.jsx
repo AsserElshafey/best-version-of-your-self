@@ -39,7 +39,7 @@ const Nav = () => {
     e.preventDefault();
 
     try {
-      const res = await api.post("api/v1/communities/", { "name":communityName, "description": communityDesc});
+      const res = await api.post("api/v1/communities/", { "name": communityName, "description": communityDesc });
       setCommunityName("");
       setCommunityDesc("");
       close()
