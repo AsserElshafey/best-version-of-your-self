@@ -1,6 +1,11 @@
 "use client";
 import { useState } from "react";
-import { MantineProvider, ScrollArea, ActionIcon, Tooltip, Modal, Menu } from "@mantine/core";
+import {
+  MantineProvider, ScrollArea, ActionIcon,
+  Tooltip, Modal, Menu,
+  TextInput, Textarea, NumberInput,
+  Button
+} from "@mantine/core";
 import Image from "next/image";
 import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useDisclosure } from '@mantine/hooks';
@@ -68,8 +73,61 @@ const Community = ({ community }) => {
               </ActionIcon>
             </Tooltip>
           </div>
-          <Modal opened={opened} onClose={close} title="Authentication" centered>
-            {/* Modal content */}
+          <Modal opened={opened} onClose={close} title="New Habit" centered>
+            <TextInput
+              className="mt-4"
+              size="md"
+              radius="md"
+              label="Habit Title"
+              withAsterisk
+              placeholder="Input placeholder"
+            />
+            <Textarea
+              className="mt-4"
+              size="md"
+              radius="md"
+              label="Habit Details"
+              withAsterisk
+              placeholder="Input placeholder"
+            />
+            <Textarea
+              className="mt-4"
+              size="md"
+              radius="md"
+              label="Habit Motivation"
+              withAsterisk
+              placeholder="Input placeholder"
+            />
+            <div className="flex-between p-2 gap-10 mt-4">
+              <NumberInput
+                size="md"
+                radius="md"
+                label="Days per week"
+                withAsterisk
+                placeholder="Input placeholder"
+                min={1}
+                max={7}
+              />
+              <NumberInput
+                size="md"
+                radius="md"
+                label="Duration"
+                withAsterisk
+                placeholder="In Mins"
+                min={1}
+              />
+            </div>
+            <div className="flex justify-end mt-8 mb-2">
+              <Button
+                leftSection={<PlusIcon className="w-5 h-5" />}
+                variant="gradient"
+                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                size="md"
+                radius="xl"
+              >
+                Create
+              </Button>
+            </div>
           </Modal>
         </div>
       </ScrollArea>
