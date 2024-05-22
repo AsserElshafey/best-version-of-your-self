@@ -10,7 +10,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
   return (
     <div
       onClick={onClick}
-      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-200 cursor-pointer ${isSelected ? "bg-green-800 text-white" : "hover:bg-green-800 hover:text-white"
+      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-100 cursor-pointer ${isSelected ? "bg-green-800 text-white" : "hover:bg-green-800 hover:text-white"
         }`}
     >
       <Image
@@ -58,9 +58,10 @@ const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
     <MantineProvider>
 
       <ScrollArea className="bg-gray-200 fullscreen">
-        <div className="flex-center gap-5 fixed w-1/3 search-height bg-gray-200 border-b shadow-xl">
+        <div className="flex-center gap-5 fixed w-1/3 search-height bg-gray-100 border-b shadow-xl">
           <Input
-            className="w-4/5"
+            className="w-4/5 shadow-md"
+            size="md"
             rightSection={<MagnifyingGlassIcon className="h-6 w-6" />}
             placeholder="Search Communities"
           />

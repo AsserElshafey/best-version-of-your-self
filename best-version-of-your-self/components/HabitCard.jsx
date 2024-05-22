@@ -1,47 +1,57 @@
-import React from 'react'
+import { HashtagIcon, HeartIcon, NewspaperIcon, CalendarDaysIcon, Cog8ToothIcon } from "@heroicons/react/24/solid"
+import { ClockIcon } from "@heroicons/react/24/outline"
+import { MantineProvider, Avatar, Chip } from "@mantine/core"
+
 
 const HabitCard = () => {
   return (
-    <div class="rounded-lg border bg-card text-card-foreground shadow-md w-full max-w-md mb-5" data-v0-t="card">
-      <div class="flex flex-col space-y-1.5 p-6">
-        <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Meditate Daily</h3>
-      </div>
-      <div class="p-6 space-y-4">
-        <p>Establish a daily meditation practice to reduce stress, improve focus, and cultivate inner peace.</p>
-        <div class="flex items-center space-x-4">
-          <span class="text-sm font-medium">Contributors:</span>
-          <div class="flex -space-x-2">
-            <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-              <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
-            </span>
-            <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-              <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">SM</span>
-            </span>
-            <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-              <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">LW</span>
-            </span>
+    <MantineProvider>
+      <div class="rounded-lg border shadow-md w-full max-w-md md:max-w-lg mb-5 bg-white">
+        <div className='p-4'>
+          <div className="flex-start gap-1 h-10">
+            <HashtagIcon className="h-10 w-8" /><p className='font-extrabold text-3xl'>Exercise</p>
+          </div>
+          <div className="mt-6">
+            <div className="flex-start ml-2">
+              <NewspaperIcon className="h-7 w-5" /><p className='ml-2 text-xl font-semibold'>Details:</p>
+            </div>
+            <p className='ml-6 mt-2'>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde at nisi obcaecati minus aperiam. Neque, ut!
+            </p>
+          </div>
+          <div className="mt-4">
+            <div className="flex-start ml-2">
+              <HeartIcon className="h-7 w-5" /><p className='ml-2 text-xl font-semibold'>Motivation:</p>
+            </div>
+            <p className='ml-4 mt-2'>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde at nisi obcaecati minus aperiam. Neque, ut!
+            </p>
+          </div>
+          <div className="mt-4">
+            <div className="flex-start ml-2">
+              <Cog8ToothIcon className="h-7 w-7" /><p className='ml-2 text-xl font-semibold'>Frequency:</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4 ml-4 mt-4">
+              <div className="flex-center gap-2">
+                <CalendarDaysIcon className="h-8 w-7" /><p className="font-semibold"><span className="text-lg">3</span> Days per Week</p>
+              </div>
+              <div className="flex-center gap-2">
+                <ClockIcon className="h-8 w-8" /><p className="font-semibold">60 Mins</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex-between mt-4 p-2">
+            <Avatar.Group>
+              <Avatar src="image.png" />
+              <Avatar src="image.png" />
+              <Avatar src="image.png" />
+              <Avatar>+5</Avatar>
+            </Avatar.Group>
+            <Chip defaultChecked color="green" size="md" radius="md">Done</Chip>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <span class="text-sm font-medium">Frequency:</span>
-            <p>Daily</p>
-          </div>
-          <div>
-            <span class="text-sm font-medium">Duration:</span>
-            <p>10-20 minutes</p>
-          </div>
-          <div>
-            <span class="text-sm font-medium">Start Date:</span>
-            <p>January 1, 2023</p>
-          </div>
-          <div>
-            <span class="text-sm font-medium">Last Updated:</span>
-            <p>April 15, 2023</p>
-          </div>
-        </div>
       </div>
-    </div>
+    </MantineProvider>
   )
 }
 

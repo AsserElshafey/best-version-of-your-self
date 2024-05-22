@@ -20,7 +20,7 @@ const Community = ({ community }) => {
     <MantineProvider>
       <ScrollArea>
         <div className="fullscreen bg-gray-100">
-          <div className="flex-between p-2 pr-4 bg-gradient-to-r from-gray-800 via-slate-900 to-gray-700 border-b border-gray-500 fixed w-2/3">
+          <div className="flex-between p-2 pr-4 bg-gradient-to-r from-gray-800 via-slate-900 to-gray-700 border-b border-gray-500 fixed w-2/3 z-50">
             <div className="flex items-center gap-2">
               <Image
                 src="/images/gigachad.jpg"
