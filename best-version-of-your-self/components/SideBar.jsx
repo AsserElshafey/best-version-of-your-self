@@ -74,7 +74,7 @@ const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
             key={community.id}
             icon="/images/gigachad.jpg"
             title={community.name}
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, corporis!"
+            desc={community.description ? community.description :"Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, corporis!"}
             onClick={() => onSelectCommunity(community)}
             isSelected={selectedCommunity?.id === community.id}
           />
