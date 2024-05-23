@@ -10,7 +10,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
   return (
     <div
       onClick={onClick}
-      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-100 cursor-pointer ${isSelected ? "bg-green-800 text-white" : "hover:bg-green-800 hover:text-white"
+      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-100 cursor-pointer ${isSelected ? "green-gradient text-white" : "hover:bg-green-800 hover:text-white"
         }`}
     >
       <Image
@@ -74,7 +74,7 @@ const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
             key={community.id}
             icon="/images/gigachad.jpg"
             title={community.name}
-            desc={community.description ? community.description :"Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, corporis!"}
+            desc={community.description ? community.description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, corporis!"}
             onClick={() => onSelectCommunity(community)}
             isSelected={selectedCommunity?.id === community.id}
           />
