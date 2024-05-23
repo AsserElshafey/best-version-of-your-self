@@ -7,7 +7,11 @@ import {
   Button
 } from "@mantine/core";
 import Image from "next/image";
-import { EllipsisHorizontalIcon, PlusIcon, UserPlusIcon, UserMinusIcon } from "@heroicons/react/24/solid";
+import {
+  EllipsisHorizontalIcon, PlusIcon,
+  UserPlusIcon, UserMinusIcon,
+  PencilSquareIcon, TrashIcon
+} from "@heroicons/react/24/solid";
 import { useDisclosure } from '@mantine/hooks';
 import HabitCard from "./HabitCard";
 
@@ -40,7 +44,7 @@ const Community = ({ community }) => {
             </div>
             <Menu
               shadow="md"
-              width={200}
+              width={210}
               opened={openedMenu}
               onChange={setOpened}
               withArrow
@@ -55,7 +59,7 @@ const Community = ({ community }) => {
                 <Menu.Label>Manage community</Menu.Label>
                 <Menu.Item>
                   <Button
-                    w={175}
+                    w={185}
                     leftSection={<UserPlusIcon className="w-5 h-5" />}
                     variant="gradient"
                     gradient={{ from: 'green', to: 'cyan', deg: 90 }}
@@ -65,12 +69,36 @@ const Community = ({ community }) => {
                 </Menu.Item>
                 <Menu.Item>
                   <Button
-                    w={175}
+                    w={185}
                     leftSection={<UserMinusIcon className="w-5 h-5" />}
                     variant="gradient"
                     gradient={{ from: 'red', to: 'cyan', deg: 190 }}
                   >
                     Remove members
+                  </Button>
+                </Menu.Item>
+
+                <Menu.Divider />
+
+                <Menu.Item>
+                  <Button
+                    w={185}
+                    leftSection={<PencilSquareIcon className="w-5 h-5" />}
+                    variant="gradient"
+                    gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                    onClick={open}
+                  >
+                    Edit Community
+                  </Button>
+                </Menu.Item>
+                <Menu.Item>
+                  <Button
+                    w={185}
+                    leftSection={<TrashIcon className="w-5 h-5" />}
+                    variant="gradient"
+                    gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                  >
+                    Delete Community
                   </Button>
                 </Menu.Item>
               </Menu.Dropdown>
