@@ -85,7 +85,14 @@ const Community = ({ community }) => {
           </div>
           <div className="fixed bottom-10 right-4">
             <Tooltip label="New Habit">
-              <ActionIcon variant="filled" color="rgba(16, 166, 0, 1)" size="xl" radius="xl" aria-label="Settings" onClick={open}>
+              <ActionIcon
+                variant="gradient"
+                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                size="xl"
+                radius="xl"
+                aria-label="Settings"
+                onClick={open}
+              >
                 <PlusIcon className="h-6 w-6" />
               </ActionIcon>
             </Tooltip>
