@@ -6,7 +6,7 @@ import CommunityList from "@/components/CommunityList";
 const Home = () => {
   return (
     <>
-      <div className="flex w-full bg-gray-900 pl-3 py-3 border-b-2 border-green-500 mb-2 fixed top-0">
+      <div className="flex w-full bg-gray-900 pl-5 py-3 border-b-2 border-green-500 mb-2 fixed top-0">
         <Link href="/" className="flex gap-2 flex-center ">
           <Image
             src='/images/Logo.ico'
