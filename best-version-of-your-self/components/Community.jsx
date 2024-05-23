@@ -7,7 +7,7 @@ import {
   Button
 } from "@mantine/core";
 import Image from "next/image";
-import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { EllipsisHorizontalIcon, PlusIcon, UserPlusIcon, UserMinusIcon } from "@heroicons/react/24/solid";
 import { useDisclosure } from '@mantine/hooks';
 import HabitCard from "./HabitCard";
 
@@ -52,9 +52,26 @@ const Community = ({ community }) => {
               </Menu.Target>
 
               <Menu.Dropdown>
-                <Menu.Label>Application</Menu.Label>
+                <Menu.Label>Manage community</Menu.Label>
                 <Menu.Item>
-                  sdfsfd
+                  <Button
+                    w={175}
+                    leftSection={<UserPlusIcon className="w-5 h-5" />}
+                    variant="gradient"
+                    gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                  >
+                    Add members
+                  </Button>
+                </Menu.Item>
+                <Menu.Item>
+                  <Button
+                    w={175}
+                    leftSection={<UserMinusIcon className="w-5 h-5" />}
+                    variant="gradient"
+                    gradient={{ from: 'red', to: 'cyan', deg: 190 }}
+                  >
+                    Remove members
+                  </Button>
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
