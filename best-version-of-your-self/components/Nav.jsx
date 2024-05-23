@@ -78,7 +78,7 @@ const Nav = () => {
 
   return (
     <MantineProvider>
-      <nav className="flex-between w-full py-3 px-3 bg-gray-800 border-b-2 border-green-600 shadow-md">
+      <nav className="flex-between w-full py-3 px-5 bg-gray-800 border-b-2 border-green-600 shadow-md">
         <Link href="/" className="flex gap-2 flex-center">
           <Image
             src="/images/Logo.ico"
