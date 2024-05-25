@@ -48,16 +48,6 @@ const MyProfile = () => {
                 Reset
               </Button>
             </div>
-            <hr className='my-2' />
-            <div className='flex justify-end mt-4'>
-              <Button
-                leftSection={<PencilSquareIcon className="w-5 h-5" />}
-                variant="gradient"
-                gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-              >
-                Edit
-              </Button>
-            </div>
             <div className='flex gap-4 my-4'>
               <TextInput
                 className='w-1/2'
@@ -86,6 +76,15 @@ const MyProfile = () => {
                 label="Password"
                 placeholder="Input placeholder"
               />
+            </div>
+            <div className='flex justify-end mt-8'>
+              <Button
+                leftSection={<PencilSquareIcon className="w-5 h-5" />}
+                variant="gradient"
+                gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+              >
+                Edit
+              </Button>
             </div>
             <div>
               <p className='text-3xl font-semibold font-sans p-2 mt-10 text-red-600'>
