@@ -1,14 +1,14 @@
 "use client"
 
 import Nav from '@/components/Nav'
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import {
   MantineProvider,
   FileButton, Button,
   TextInput, PasswordInput
 } from "@mantine/core";
-import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
+import { TrashIcon, PencilSquareIcon, CheckIcon } from '@heroicons/react/24/solid';
 
 const MyProfile = () => {
 
@@ -18,6 +18,12 @@ const MyProfile = () => {
   const clearFile = () => {
     setFile(null);
     resetRef.current?.();
+  };
+
+  const [isEditable, setIsEditable] = useState(false);
+
+  const toggleEdit = () => {
+    setIsEditable(!isEditable);
   };
 
 
@@ -53,11 +59,13 @@ const MyProfile = () => {
                 className='w-1/2'
                 label="First Name"
                 placeholder="Input placeholder"
+                disabled={!isEditable}
               />
               <TextInput
                 className='w-1/2'
                 label="Last Name"
                 placeholder="Input placeholder"
+                disabled={!isEditable}
               />
             </div>
             <div>
@@ -65,25 +73,29 @@ const MyProfile = () => {
                 className='my-4'
                 label="User Name"
                 placeholder="Input placeholder"
+                disabled={!isEditable}
               />
               <TextInput
                 className='my-4'
                 label="Email"
                 placeholder="Input placeholder"
+                disabled={!isEditable}
               />
               <PasswordInput
                 className='my-4'
                 label="Password"
                 placeholder="Input placeholder"
+                disabled={!isEditable}
               />
             </div>
             <div className='flex justify-end mt-8'>
               <Button
-                leftSection={<PencilSquareIcon className="w-5 h-5" />}
+                leftSection={isEditable ? <CheckIcon className="w-5 h-5" /> : <PencilSquareIcon className="w-5 h-5" />}
                 variant="gradient"
-                gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                gradient={isEditable ? { from: 'green', to: 'cyan', deg: 45 } : { from: 'blue', to: 'cyan', deg: 90 }}
+                onClick={toggleEdit}
               >
-                Edit
+                {isEditable ? 'Save' : 'Edit'}
               </Button>
             </div>
             <div>
