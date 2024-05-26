@@ -58,7 +58,7 @@ const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
     <MantineProvider>
 
       <ScrollArea className="bg-gray-200 fullscreen">
-        <div className="flex-center gap-5 fixed w-1/3 search-height bg-gray-100 border-b shadow-xl">
+        <div className="flex-center gap-5 search-height fixed inset-0 bg-gray-100 border-b shadow-xl">
           <Input
             className="w-4/5 shadow-md"
             size="md"
@@ -67,8 +67,7 @@ const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
           />
           <AdjustmentsHorizontalIcon className="h-7 w-7" />
         </div>
-        <hr class="border-2 border-gray-500 search-hr-mt  mb-1" />
-        <hr className="" />
+        <hr className="mt-81px" />
         {communities.map((community) => (
           <SideBarCards
             key={community.id}

@@ -12,15 +12,20 @@ const User = () => {
     <ProtectedRoute>
       <div>
         <Nav />
-        <div className='flex'>
-          <div className='w-1/3'>
+        <div className="flex transition-all duration-300">
+          <div className={`fixed inset-0 mt-81px md:mt-0 md:relative md:w-1/3 ${selectedCommunity ? 'translate-x-[-100%] md:translate-x-0' : 'translate-x-0'} transition-transform duration-300 ease-in-out`}>
             <SideBar
               onSelectCommunity={setSelectedCommunity}
               selectedCommunity={selectedCommunity}
             />
           </div>
-          <div className='w-2/3'>
-            <Community community={selectedCommunity} />
+          <div className={`w-full md:w-2/3 ml-0 md:ml-auto ${!selectedCommunity ? 'hidden md:block' : 'block'} transition-transform duration-300 ease-in-out`}>
+            {selectedCommunity && (
+              <Community
+                community={selectedCommunity}
+                onBack={() => setSelectedCommunity(null)}
+              />
+            )}
           </div>
         </div>
       </div>

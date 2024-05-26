@@ -10,12 +10,13 @@ import Image from "next/image";
 import {
   EllipsisHorizontalIcon, PlusIcon,
   UserPlusIcon, UserMinusIcon,
-  PencilSquareIcon, TrashIcon
+  PencilSquareIcon, TrashIcon,
+  ArrowLeftIcon // Import the ArrowLeftIcon for the back button
 } from "@heroicons/react/24/solid";
 import { useDisclosure } from '@mantine/hooks';
 import HabitCard from "./HabitCard";
 
-const Community = ({ community }) => {
+const Community = ({ community, onBack }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedMenu, setOpened] = useState(false);
 
@@ -29,8 +30,18 @@ const Community = ({ community }) => {
     <MantineProvider>
       <ScrollArea>
         <div className="fullscreen bg-gray-100">
-          <div className="flex-between p-2 pr-4 bg-gradient-to-r from-gray-800 via-slate-900 to-gray-700 border-b border-gray-500 fixed w-2/3 z-50">
+          <div className="flex-between p-2 pr-4 bg-gradient-to-r from-gray-800 via-slate-900 to-gray-700 border-b border-gray-500 fixed w-full md:w-2/3 z-50">
             <div className="flex items-center gap-2">
+              <div className="block md:hidden">
+                <ActionIcon
+                  variant="subtle"
+                  size='xl'
+                  radius='xl'
+                  onClick={onBack}
+                >
+                  <ArrowLeftIcon className="h-7 w-7 text-white" />
+                </ActionIcon>
+              </div>
               <Image
                 src="/images/gigachad.jpg"
                 alt="Prmptopia Logo"
@@ -105,7 +116,7 @@ const Community = ({ community }) => {
             </Menu>
           </div>
 
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center mx-4 md:mx-0">
             <div className="mb-20" />
             <HabitCard />
             <HabitCard />
