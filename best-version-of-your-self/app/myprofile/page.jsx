@@ -4,7 +4,7 @@ import Nav from '@/components/Nav'
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import {
-  MantineProvider,
+  MantineProvider, ScrollArea,
   FileButton, Button,
   TextInput, PasswordInput
 } from "@mantine/core";
@@ -32,7 +32,7 @@ const MyProfile = () => {
       <div>
         <Nav />
         <div className='fullscreen flex-center py-3 bg-gradient-conic from-blue-900 via-red-500 to-cyan-600 px-3 md:px-0'>
-          <div className='rounded-lg border shadow-md w-full max-w-md md:max-w-2xl bg-white h-full p-4'>
+          <div className='rounded-lg border shadow-md w-full max-w-md md:max-w-2xl bg-white h-full p-4 overflow-x-auto hide-scrollbar'>
             <div>
               <p className='text-4xl font-bold font-Pacifico p-2 mb-5'>
                 Profile Page
