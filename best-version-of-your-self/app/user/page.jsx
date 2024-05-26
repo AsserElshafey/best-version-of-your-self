@@ -8,6 +8,7 @@ import Community from '@/components/Community';
 const User = () => {
   const [selectedCommunity, setSelectedCommunity] = useState(null);
 
+
   return (
     <ProtectedRoute>
       <div>
@@ -20,7 +21,11 @@ const User = () => {
             />
           </div>
           <div className={`w-full md:w-2/3 ml-0 md:ml-auto ${!selectedCommunity ? 'hidden md:block' : 'block'} transition-transform duration-300 ease-in-out`}>
-            {selectedCommunity && (
+            {!selectedCommunity ? (
+              <div className="flex-center fullscreen">
+                Select a community to view its details
+              </div>
+            ) : (
               <Community
                 community={selectedCommunity}
                 onBack={() => setSelectedCommunity(null)}

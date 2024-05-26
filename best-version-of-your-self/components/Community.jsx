@@ -11,7 +11,7 @@ import {
   EllipsisHorizontalIcon, PlusIcon,
   UserPlusIcon, UserMinusIcon,
   PencilSquareIcon, TrashIcon,
-  ArrowLeftIcon // Import the ArrowLeftIcon for the back button
+  ArrowLeftIcon
 } from "@heroicons/react/24/solid";
 import { useDisclosure } from '@mantine/hooks';
 import HabitCard from "./HabitCard";
@@ -19,12 +19,6 @@ import HabitCard from "./HabitCard";
 const Community = ({ community, onBack }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedMenu, setOpened] = useState(false);
-
-  if (!community) {
-    return (<div className="flex-center fullscreen">
-      Select a community to view its details
-    </div>);
-  }
 
   return (
     <MantineProvider>
