@@ -15,7 +15,8 @@ import {
   ArrowLeftEndOnRectangleIcon,
   IdentificationIcon,
   QueueListIcon,
-  PlusIcon,
+  HomeIcon, PlusIcon,
+  GlobeAltIcon
 } from "@heroicons/react/24/solid";
 
 /* Todo:
@@ -119,16 +120,31 @@ const Nav = () => {
 
           <Menu.Dropdown>
             <Menu.Label>Application</Menu.Label>
+            <Link href="/user">
+              <Menu.Item
+                leftSection={<HomeIcon className="w-4 h-4" />}
+              >
+                Home Page
+              </Menu.Item>
+            </Link>
+            <Link href="/myprofile">
+              <Menu.Item
+                leftSection={<GlobeAltIcon className="w-4 h-4" />}
+              >
+                Discover Communities
+              </Menu.Item>
+            </Link>
+
+            <Link href="/myhabits">
+              <Menu.Item leftSection={<QueueListIcon className="w-4 h-4" />}>
+                My Habits
+              </Menu.Item>
+            </Link>
             <Link href="/myprofile">
               <Menu.Item
                 leftSection={<IdentificationIcon className="w-4 h-4" />}
               >
                 My Profile
-              </Menu.Item>
-            </Link>
-            <Link href="/myhabits">
-              <Menu.Item leftSection={<QueueListIcon className="w-4 h-4" />}>
-                My Habits
               </Menu.Item>
             </Link>
             <Menu.Item className="hover:bg-white">
