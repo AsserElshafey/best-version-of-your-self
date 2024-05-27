@@ -19,16 +19,8 @@ const Home = () => {
           <p className="logo_text">Better</p>
         </Link>
       </div>
-      <div className="flex justify-center md:w-4/6 px-5 md:p-0">
-        <div className="mt-24">
-          <CommunityList />
 
-        </div>
-        <div className="hidden md:block fixed right-1 md:w-2/6 mt-36">
-          <Login />
-        </div>
-      </div>
-      <div className="flex justify-between md:hidden w-full bg-green-800 py-2 px-4 fixed bottom-6 bg-opacity-90 rounded-t-xl">
+      <div className="flex justify-between w-full bg-green-800 py-2 px-4 fixed bottom-6 bg-opacity-90 rounded-t-xl">
         <p className="text-white tet font-semibold">
           Are you ready to sign in ?
         </p>
