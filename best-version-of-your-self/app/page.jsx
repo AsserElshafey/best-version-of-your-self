@@ -2,10 +2,11 @@ import Link from "next/link"
 import Image from "next/image"
 import Login from "@/components/Login";
 import CommunityList from "@/components/CommunityList";
+import Background from "@/components/Background";
 
 const Home = () => {
   return (
-    <>
+    <Background>
       <div className="flex w-full bg-gray-900 pl-5 py-3 border-b-2 border-green-500 mb-2 fixed top-0">
         <Link href="/" className="flex gap-2 flex-center ">
           <Image
@@ -39,7 +40,7 @@ const Home = () => {
           Sign In
         </Link>
       </div>
-    </>
+    </Background>
   )
 }
 

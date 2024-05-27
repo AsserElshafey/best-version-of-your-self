@@ -7,9 +7,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-to-br': 'linear-gradient(to bottom right, #E0F7FA, #B2EBF2)'
-      },
       fontFamily: {
         satoshi: ['"Satoshi"', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
