@@ -103,9 +103,9 @@ const HabitCard = () => {
           </div>
           <div className="flex-between mt-4 p-2">
             <Avatar.Group>
-              <Avatar src="image.png" />
-              <Avatar src="image.png" />
-              <Avatar src="image.png" />
+              <Avatar src="/images/gigachad.jpg" />
+              <Avatar src="/images/gigachad.jpg" />
+              <Avatar src="/images/gigachad.jpg" />
               <Avatar>+5</Avatar>
             </Avatar.Group>
             <Chip color="green" size="md" radius="md">Done</Chip>
