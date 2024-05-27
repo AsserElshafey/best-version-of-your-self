@@ -16,7 +16,7 @@ const page = () => {
       </div>
       <ScrollArea className='fullscreen'>
         <Background>
-          <div className='flex-center mt-16'>
+          <div className='flex-center mt-16 mx-2 md:mx-0'>
             <CommunityList />
           </div>
         </Background>

@@ -6,7 +6,7 @@ const CommunityCard = ({ data }) => {
   const { name, description, id } = data;
   console.log(data)
   return (
-    <div className="max-w-xl rounded-md mb-4 shadow-md bg-white">
+    <div className="max-w-xl rounded-xl mb-4 shadow-md bg-white">
       <div className="flex justify-between items-center rounded-t-md py-2 px-3 bg-gray-700 border-b-2 border-green-600">
         <div className="flex gap-2 items-center">
           <Image

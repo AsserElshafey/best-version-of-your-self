@@ -14,8 +14,10 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'banner-1': "url('/images/banner1.jpg')",
+        'banner-2': "url('/images/banner2.jpg')",
+        'banner-3': "url('/images/banner3.jpg')",
       },
     },
   },

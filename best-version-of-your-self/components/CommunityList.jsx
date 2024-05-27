@@ -21,7 +21,7 @@ const CommunityList = () => {
   };
 
   return (
-    <div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20">
       {communities.map((community) => (
         <CommunityCard key={community.id} data={community} />
       ))}
