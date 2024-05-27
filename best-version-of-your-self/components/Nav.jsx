@@ -127,7 +127,7 @@ const Nav = () => {
                 Home Page
               </Menu.Item>
             </Link>
-            <Link href="/myprofile">
+            <Link href="/discovercommunities">
               <Menu.Item
                 leftSection={<GlobeAltIcon className="w-4 h-4" />}
               >

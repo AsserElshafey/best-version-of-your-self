@@ -19,12 +19,13 @@ const MyHabits = () => {
       <Nav />
       <ScrollArea className='fullscreen w-full '>
         <Background>
-          <div className='flex flex-col items-center mt-2 mx-2 md:mx-0'>
-            <HabitCard />
-            <HabitCard />
-            <HabitCard />
-            <HabitCard />
-
+          <div className='container mx-auto p-2'>
+            <div className='grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'>
+              <HabitCard />
+              <HabitCard />
+              <HabitCard />
+              <HabitCard />
+            </div>
           </div>
           <div className="fixed bottom-10 right-4 block md:hidden">
             <Tooltip label="New Habit">
