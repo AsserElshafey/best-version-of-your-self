@@ -1,10 +1,11 @@
+import Background from '@/components/Background'
 import Login from '@/components/Login'
 import { HomeIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
 const LoginPage = () => {
   return (
-    <>
+    <Background>
       <div className='flex justify-center items-center h-screen'>
         <Login />
       </div>
@@ -16,7 +17,7 @@ const LoginPage = () => {
           <HomeIcon className="w-6 h-6 text-white" />
         </Link>
       </div>
-    </>
+    </Background>
   )
 }
 

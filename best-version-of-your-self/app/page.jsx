@@ -4,7 +4,7 @@ import Link from "next/link"
 import Login from "@/components/Login";
 import CommunityList from "@/components/CommunityList";
 import Background from "@/components/Background";
-import { MantineProvider, Image, ScrollArea } from "@mantine/core";
+import { MantineProvider, Image } from "@mantine/core";
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import '@mantine/carousel/styles.css';
@@ -17,20 +17,19 @@ const Home = () => {
   return (
     <MantineProvider>
       <Background>
-        <div className="flex w-full bg-gray-900 pl-5 py-3 border-b-2 border-green-500 mb-2 fixed top-0 z-50">
+        <div className="flex w-full h-[81px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500 mb-2 fixed top-0 z-50">
           <Link href="/" className="flex gap-2 flex-center ">
             <Image
               src='/images/Logo.ico'
               alt="Prmptopia Logo"
-              width={55}
-              height={55}
-              className="object-contain rounded-full"
+              className="object-contain rounded-full h-[55px] w-[55px]"
             />
             <p className="logo_text">Better</p>
           </Link>
         </div>
         <div className="w-full mt-20">
           <Carousel
+            withIndicators
             loop
             plugins={[autoplay.current]}
             onMouseEnter={autoplay.current.stop}

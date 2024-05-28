@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import "@mantine/core/styles.css";
 
 import Footer from '@/components/Footer';
 
