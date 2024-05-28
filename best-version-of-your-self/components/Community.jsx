@@ -18,7 +18,12 @@ import HabitCard from "./HabitCard";
 import Background from "./Background";
 
 const Community = ({ community, onBack }) => {
-  const [opened, { open, close }] = useDisclosure(false);
+
+  const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
+
+
+  const [openedAddMember, { open: openSecond, close: closeSecond }] = useDisclosure(false);
+
   const [openedMenu, setOpened] = useState(false);
 
   return (
@@ -70,6 +75,7 @@ const Community = ({ community, onBack }) => {
                       leftSection={<UserPlusIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                      onClick={openSecond}
                     >
                       Add members
                     </Button>
@@ -126,13 +132,33 @@ const Community = ({ community, onBack }) => {
                   size="xl"
                   radius="xl"
                   aria-label="Settings"
-                  onClick={open}
+                  onClick={openFirst}
                 >
                   <PlusIcon className="h-6 w-6" />
                 </ActionIcon>
               </Tooltip>
             </div>
-            <Modal opened={opened} onClose={close} title="New Habit" centered>
+
+            {/* add mebers modal */}
+            <Modal opened={openedAddMember} onClose={closeSecond} title="Add Members" centered>
+              <TextInput
+                className="mb-5"
+                size="md"
+                radius="md"
+                label="Enter username or Email"
+                placeholder="Ex ahmed123 or ahmed@gmail.com"
+              />
+              <Button
+                leftSection={<PlusIcon className="w-5 h-5" />}
+                variant="gradient"
+                gradient={{ from: 'green', to: 'cyan', deg: 190 }}
+              >
+                Add
+              </Button>
+            </Modal>
+
+            {/* New habit modal */}
+            <Modal opened={opened} onClose={closeFirst} title="New Habit" centered>
               <TextInput
                 className="mt-4"
                 size="md"

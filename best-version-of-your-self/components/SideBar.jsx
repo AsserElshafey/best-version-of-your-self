@@ -10,7 +10,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
   return (
     <div
       onClick={onClick}
-      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-100 cursor-pointer ${isSelected ? "green-gradient text-white" : "hover:bg-green-800 hover:text-white"
+      className={`flex py-3 px-2 mb-1 shadow-md bg-gray-100 cursor-pointer ${isSelected ? "bg-green-800 text-white" : "hover:bg-green-800 hover:text-white"
         }`}
     >
       <Image
