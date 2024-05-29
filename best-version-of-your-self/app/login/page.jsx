@@ -6,7 +6,7 @@ import Link from 'next/link'
 const LoginPage = () => {
   return (
     <Background>
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center h-screen mx-5'>
         <Login />
       </div>
       <div className="flex fixed bg-green-700 bottom-10 right-5 p-3 rounded-full">

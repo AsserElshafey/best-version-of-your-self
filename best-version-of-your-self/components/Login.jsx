@@ -7,7 +7,6 @@ import { MantineProvider, TextInput, PasswordInput, LoadingOverlay } from "@mant
 import api from "../utils/api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/utils/constants";
 
-
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,8 +31,8 @@ const Login = () => {
         router.push("/user"); // Redirect to /user route
       } catch (error) {
         if (error) {
-          setUsernameError('wrong user name');
-          setPasswordError('wrong password');
+          setUsernameError("Wrong username");
+          setPasswordError("Wrong password");
         } else {
           alert("An error occurred. Please try again.");
         }
@@ -46,7 +45,7 @@ const Login = () => {
 
   return (
     <MantineProvider>
-      <div className="relative max-w-sm border border-solid p-10 rounded-xl shadow-xl bg-zinc-100">
+      <div className="relative sm:max-w-sm md:max-w-md w-full border border-solid p-10 rounded-xl shadow-xl bg-zinc-100 mt-10 sm:mt-20 lg:mt-0">
         <LoadingOverlay visible={loading} overlayBlur={2} className="rounded-xl" loaderProps={{ color: 'green' }} />
         <div className="flex gap-2 text-center md:text-left mb-10">
           <Image
@@ -56,31 +55,28 @@ const Login = () => {
             height={35}
             className="object-contain rounded-full"
           />
-          <label className="mr-1 font-bold text-xl font">Login</label>
+          <label className="mr-1 font-bold text-xl">Login</label>
         </div>
-        <div className="min-w-md">
-          <TextInput
-            className="py-2"
-            w={300}
-            size="md"
-            radius="lg"
-            label="User Name"
-            placeholder="User Name"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            error={usernameError}
-          />
-          <PasswordInput
-            className="w-full py-2"
-            size="md"
-            radius="lg"
-            label="Enter Password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={passwordError}
-          />
-        </div>
+        <TextInput
+          className="py-2"
+          size="md"
+          radius="lg"
+          label="Username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          error={usernameError}
+        />
+        <PasswordInput
+          className="w-full py-2"
+          size="md"
+          radius="lg"
+          label="Enter Password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={passwordError}
+        />
         <div className="mt-4 flex justify-between font-semibold text-sm">
           <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
             <input className="mr-1" type="checkbox" />
@@ -95,7 +91,7 @@ const Login = () => {
         </div>
         <div className="text-center md:text-left">
           <button
-            className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
+            className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider w-full sm:w-auto"
             type="submit"
             onClick={handleSubmit}
           >

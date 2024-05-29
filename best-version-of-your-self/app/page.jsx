@@ -39,7 +39,7 @@ const Home = () => {
               <div className='relative bg-banner-2 bg-cover bg-center h-[600px]'>
                 <div className='absolute inset-0 bg-black opacity-30' />
                 <p className='relative px-10 pt-20 md:leading-tight 
-                              text-7xl text-white font-semibold font-inter 
+                              md:text-7xl text-5xl text-white font-semibold font-inter 
                               sm:max-w-sm md:max-w-md lg:max-w-lg'
                 >
                   Ready to be the best version of yourself
@@ -50,7 +50,7 @@ const Home = () => {
             <Carousel.Slide>
               <div className='relative bg-banner-3 bg-cover bg-center h-[600px]'>
                 <div className='absolute inset-0 bg-black opacity-30' />
-                <p className='relative px-10 pt-20 text-6xl md:text-7xl
+                <p className='relative px-10 pt-20 md:text-7xl text-5xl
                                text-white font-semibold font-inter 
                                sm:max-w-sm md:max-w-md lg:max-w-lg'
                 >
@@ -62,7 +62,7 @@ const Home = () => {
               <div className='relative bg-banner-1 bg-cover bg-center h-[600px]'>
                 <div className='absolute inset-0 bg-black opacity-30' />
                 <p className='relative px-10 pt-20 md:leading-tight 
-                              text-6xl text-white font-semibold font-inter
+                              md:text-6xl text-5xl text-white font-semibold font-inter
                                sm:max-w-sm md:max-w-md lg:max-w-lg'
                 >
                   Create Habites & commit to be better than you were already
@@ -81,23 +81,23 @@ const Home = () => {
             <CommunityList />
           </div>
         </div>
-        <div className='block md:flex justify-center items-center gap-10 
-                        md:gap-40 bg-gradient-to-tr from-cyan-600 
+        <div className='block md:flex justify-center items-center 
+                         bg-gradient-to-tr from-cyan-600 
                         to-green-800 mt-5 mx-2 md:mx-8 p-5 
                         rounded-xl shadow-lg mb-20'
         >
-          <div className='w-full md:max-w-md mb-4'>
-            <p className='text-3xl md:text-5xl font-Pacifico font-semibold text-white text-center md:text-left'>
+          <div className='w-full md:w-1/2 mb-4 flex-center'>
+            <p className='text-3xl md:text-5xl md:w-2/3 font-Pacifico font-semibold text-white text-center md:text-left'>
               Ready to join our community? Log in now.
             </p>
           </div>
-          <div className='w-full md:w-auto flex-center'>
+          <div className='w-full md:w-1/2 flex-center'>
             <Login />
           </div>
         </div>
 
         <div className="flex justify-between w-full bg-green-800 py-2 px-4 fixed bottom-6 bg-opacity-90 rounded-t-xl">
-          <p className="text-white tet font-semibold">
+          <p className="text-white sm:text-base text-sm font-semibold flex-center">
             Are you ready to sign in ?
           </p>
           <div className='flex gap-2'>

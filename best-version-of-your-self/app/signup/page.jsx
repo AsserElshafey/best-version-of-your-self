@@ -40,7 +40,7 @@ function SignUpPage() {
     <MantineProvider>
       <Background>
         <ScrollArea className="h-svh">
-          <div className="flex justify-center items-center h-screen">
+          <div className="flex justify-center items-center mx-5 h-screen">
             <div className="relative md:w-1/2 max-w-sm border border-solid p-10 rounded-xl shadow-xl bg-zinc-100">
               <LoadingOverlay visible={loading} overlayBlur={2} className="rounded-xl" loaderProps={{ color: 'green' }} />
               <div className="flex gap-2 text-center md:text-left mb-10">

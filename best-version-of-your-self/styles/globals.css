@@ -47,11 +47,11 @@
 }
 
 .green_btn {
-  @apply rounded-full border border-green-600 bg-green-600 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center shadow-xl;
+  @apply rounded-full border border-green-600 bg-green-600 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-xs sm:text-sm md:text-base font-inter flex items-center justify-center shadow-xl;
 }
 
 .outline_btn {
-  @apply rounded-full border border-green-500 bg-white py-1.5 px-5 text-black transition-all hover:bg-green-600 hover:text-white text-center text-sm font-inter font-semibold flex items-center justify-center;
+  @apply rounded-full border border-green-500 bg-white py-1.5 px-5 text-black transition-all hover:bg-green-600 hover:text-white text-center text-xs sm:text-sm md:text-base font-inter flex items-center justify-center;
 }
 
 .logo_text {
