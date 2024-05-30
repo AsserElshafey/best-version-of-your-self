@@ -9,6 +9,7 @@ import {
   TextInput, PasswordInput
 } from "@mantine/core";
 import { TrashIcon, PencilSquareIcon, CheckIcon } from '@heroicons/react/24/solid';
+import Background from '@/components/Background';
 
 const MyProfile = () => {
 
@@ -29,9 +30,9 @@ const MyProfile = () => {
 
   return (
     <MantineProvider>
-      <div>
+      <Background>
         <Nav />
-        <div className='fullscreen flex-center py-3 bg-gradient-conic from-blue-900 via-red-500 to-cyan-600 px-3 md:px-0'>
+        <div className='fullscreen flex-center py-3 px-3 md:px-0'>
           <div className='rounded-lg border shadow-md w-full max-w-md md:max-w-2xl bg-white h-full p-4 overflow-x-auto hide-scrollbar'>
             <div>
               <p className='text-4xl font-bold font-Pacifico p-2 mb-5'>
@@ -115,7 +116,7 @@ const MyProfile = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Background>
     </MantineProvider>
   )
 }

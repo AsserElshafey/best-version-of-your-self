@@ -39,8 +39,8 @@ const Home = () => {
               <div className='relative bg-banner-2 bg-cover bg-center h-[600px]'>
                 <div className='absolute inset-0 bg-black opacity-30' />
                 <p className='relative px-10 pt-20 md:leading-tight 
-                              md:text-7xl text-5xl text-white font-semibold font-inter 
-                              sm:max-w-sm md:max-w-md lg:max-w-lg'
+                              text-6xl text-white font-semibold font-inter 
+                              sm:max-w-md md:max-w-lg'
                 >
                   Ready to be the best version of yourself
                 </p>
@@ -50,9 +50,9 @@ const Home = () => {
             <Carousel.Slide>
               <div className='relative bg-banner-3 bg-cover bg-center h-[600px]'>
                 <div className='absolute inset-0 bg-black opacity-30' />
-                <p className='relative px-10 pt-20 md:text-7xl text-5xl
+                <p className='relative px-10 pt-20 text-6xl
                                text-white font-semibold font-inter 
-                               sm:max-w-sm md:max-w-md lg:max-w-lg'
+                               sm:max-w-md md:max-w-lg'
                 >
                   Join communities and participate with your friends
                 </p>
@@ -62,8 +62,8 @@ const Home = () => {
               <div className='relative bg-banner-1 bg-cover bg-center h-[600px]'>
                 <div className='absolute inset-0 bg-black opacity-30' />
                 <p className='relative px-10 pt-20 md:leading-tight 
-                              md:text-6xl text-5xl text-white font-semibold font-inter
-                               sm:max-w-sm md:max-w-md lg:max-w-lg'
+                              text-6xl text-white font-semibold font-inter
+                              sm:max-w-md md:max-w-lg'
                 >
                   Create Habites & commit to be better than you were already
                 </p>
@@ -73,7 +73,7 @@ const Home = () => {
         </div>
         <div className='b bg-gradient-to-br from-[#1a2a6c] via-[#b21f1f]
                         to-[#fdbb2d] mt-5 mx-2 md:mx-8 rounded-xl shadow-lg'>
-          <p className='text-5xl text-white font-Pacifico font-semibold pt-7 pl-5 mb-8'>
+          <p className='text-5xl text-white font-semibold pt-7 pl-5 mb-8'>
             Top Communities
           </p>
           <hr className='mb-5 border-2 border-green-600' />
@@ -87,7 +87,7 @@ const Home = () => {
                         rounded-xl shadow-lg mb-20'
         >
           <div className='w-full md:w-1/2 mb-4 flex-center'>
-            <p className='text-3xl md:text-5xl md:w-2/3 font-Pacifico font-semibold text-white text-center md:text-left'>
+            <p className='text-3xl md:text-5xl md:w-2/3 font-semibold text-white text-center md:text-left'>
               Ready to join our community? Log in now.
             </p>
           </div>
