@@ -123,7 +123,7 @@ const Home = () => {
           </div>
         </div>
 
-        <Affix position={isMediumScreen ? { bottom: 85, right: 8 } : { bottom: 90, right: 20 }}>
+        <Affix position={isMediumScreen ? { bottom: 90, right: 8 } : { bottom: 90, right: 20 }}>
           <Transition transition="slide-up" mounted={scroll.y > 0}>
             {(transitionStyles) => (
               <Button
