@@ -1,8 +1,5 @@
-"use client";
 import { MantineProvider, ScrollArea, Text, Input } from "@mantine/core";
 import Image from "next/image";
-import api from "../utils/api";
-import { useState, useEffect } from "react";
 import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import "@mantine/core/styles.css";
 
@@ -30,29 +27,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
   );
 };
 
-const SideBar = ({ onSelectCommunity, selectedCommunity }) => {
-  const [communities, setCommunities] = useState([]);
-
-  useEffect(() => {
-    fetchUserCommunities();
-  }, []);
-
-  const fetchUserCommunities = async () => {
-    try {
-      const response = await api.get("api/v1/user/communities");
-      const communityIds = response.data.communities;
-
-      const communityPromises = communityIds.map(async (communityId) => {
-        const communityResponse = await api.get(`api/v1/communities/${communityId}`);
-        return communityResponse.data;
-      });
-      const communitiesData = await Promise.all(communityPromises);
-      setCommunities(communitiesData);
-    } catch (error) {
-      console.error("Error fetching user profile:", error);
-      alert("error");
-    }
-  };
+const SideBar = ({ onSelectCommunity, selectedCommunity, communities }) => {
 
   return (
     <MantineProvider>

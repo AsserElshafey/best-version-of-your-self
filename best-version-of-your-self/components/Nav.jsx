@@ -23,7 +23,7 @@ import {
 - populate with more data
 */
 
-const Nav = () => {
+const Nav = ({ addCommunity }) => {
   const router = useRouter();
   const [openedModal, { open, close }] = useDisclosure(false);
   const [opened, setOpened] = useState(false);
@@ -41,13 +41,15 @@ const Nav = () => {
 
     try {
       const res = await api.post("api/v1/communities/", { "name": communityName, "description": communityDesc });
+      const newCommunity = res.data;
+      addCommunity(newCommunity);
       setCommunityName("");
       setCommunityDesc("");
       close()
     } catch (error) {
       alert(error);
     }
-  }, [communityName, communityDesc, router]);
+  }, [communityName, communityDesc, router, addCommunity]);
 
 
   const clearFile = () => {
