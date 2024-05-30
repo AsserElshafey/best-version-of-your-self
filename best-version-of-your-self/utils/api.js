@@ -1,13 +1,9 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "./constants";
 
-const apiUrl = "https://api.lbnb.tech/";
+export const apiUrl = "https://api.lbnb.tech/";
 
 const api = axios.create({
-  baseURL: apiUrl
-});
-
-export const open_api = axios.create({
   baseURL: apiUrl
 });
 

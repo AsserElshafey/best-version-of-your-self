@@ -65,7 +65,7 @@ const Home = () => {
                               md:text-6xl text-5xl text-white font-semibold font-inter
                                sm:max-w-sm md:max-w-md lg:max-w-lg'
                 >
-                  Create Habites & commit to be better than you were already
+                  Create healthy habits & commit to be better person
                 </p>
               </div>
             </Carousel.Slide>
