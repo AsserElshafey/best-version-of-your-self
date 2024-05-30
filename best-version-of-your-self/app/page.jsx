@@ -71,8 +71,9 @@ const Home = () => {
             </Carousel.Slide>
           </Carousel>
         </div>
-        <div className='b bg-gradient-to-br from-[#1a2a6c] via-[#b21f1f]
-                        to-[#fdbb2d] mt-5 mx-2 md:mx-8 rounded-xl shadow-lg'>
+        <div className='bg-gradient-radial from-[#3A6073] to-[#16222A] 
+                        mt-5 mx-2 md:mx-8 rounded-xl shadow-lg'
+        >
           <p className='text-5xl text-white font-semibold pt-7 pl-5 mb-8'>
             Top Communities
           </p>

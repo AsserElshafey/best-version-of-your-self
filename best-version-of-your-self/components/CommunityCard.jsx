@@ -7,7 +7,7 @@ const CommunityCard = ({ data }) => {
   console.log(data)
   return (
     <div className="max-w-xl rounded-xl mb-4 shadow-md bg-white">
-      <div className="flex justify-between items-center rounded-t-md py-2 px-3 bg-gray-700 border-b-2 border-green-600">
+      <div className="flex justify-between items-center rounded-t-md py-2 px-3 bg-[#383838] border-b-2 border-green-600">
         <div className="flex gap-2 items-center">
           <Image
             src='/images/gigachad.jpg'
@@ -98,7 +98,7 @@ const CommunityCard = ({ data }) => {
 
       </div>
 
-      <div className="flex justify-center py-2 px-6 bg-gray-700 rounded-b-md">
+      <div className="flex justify-center py-2 px-6 bg-[#383838] rounded-b-md">
         <Link
           href='/'
           className="bg-green-600 py-1 rounded-xl w-2/3 text-center transition-all hover:scale-105"
