@@ -4,20 +4,23 @@ import Link from "next/link"
 import Login from "@/components/Login";
 import CommunityList from "@/components/CommunityList";
 import Background from "@/components/Background";
-import { MantineProvider, Image } from "@mantine/core";
+import { MantineProvider, Image, Affix, Transition, Button } from "@mantine/core";
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
+import { useWindowScroll } from '@mantine/hooks';
 import '@mantine/carousel/styles.css';
 
 
 const Home = () => {
+  const [scroll, scrollTo] = useWindowScroll();
 
   const autoplay = useRef(Autoplay({ delay: 4000 }));
 
   return (
     <MantineProvider>
       <Background>
-        <div className="flex w-full h-[81px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500 mb-2 fixed top-0 z-50">
+        <div className="flex w-full h-[81px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500">
           <Link href="/" className="flex gap-2 flex-center ">
             <Image
               src='/images/Logo.ico'
@@ -27,7 +30,7 @@ const Home = () => {
             <p className="logo_text">Better</p>
           </Link>
         </div>
-        <div className="w-full mt-20">
+        <div className="w-full">
           <Carousel
             withIndicators
             loop
@@ -118,6 +121,23 @@ const Home = () => {
             </Link>
           </div>
         </div>
+
+        <Affix position={{ bottom: 90, right: 20 }}>
+          <Transition transition="slide-up" mounted={scroll.y > 0}>
+            {(transitionStyles) => (
+              <Button
+                leftSection={<ArrowUpIcon className='h-5 w-6' />}
+                radius='xl'
+                variant="gradient"
+                gradient={{ from: 'green', to: 'cyan', deg: 190 }}
+                style={transitionStyles}
+                onClick={() => scrollTo({ y: 0 })}
+              >
+                Scroll to top
+              </Button>
+            )}
+          </Transition>
+        </Affix>
       </Background>
     </MantineProvider >
   )
