@@ -1,6 +1,7 @@
 "use client";
 import Nav from '@/components/Nav';
-import React, { useState } from 'react';
+import api from "/utils/api";
+import React, { useState, useEffect } from 'react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import SideBar from '@/components/SideBar';
 import Community from '@/components/Community';
@@ -11,6 +12,27 @@ const User = () => {
 
   const addCommunity = (newCommunity) => {
     setCommunities((prevCommunities) => [...prevCommunities, newCommunity]);
+  };
+
+  useEffect(() => {
+    fetchUserCommunities();
+  }, []);
+
+  const fetchUserCommunities = async () => {
+    try {
+      const response = await api.get("api/v1/user/communities");
+      const communityIds = response.data.communities;
+
+      const communityPromises = communityIds.map(async (communityId) => {
+        const communityResponse = await api.get(`api/v1/communities/${communityId}`);
+        return communityResponse.data;
+      });
+      const communitiesData = await Promise.all(communityPromises);
+      setCommunities(communitiesData);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      alert("error");
+    }
   };
 
   return (
