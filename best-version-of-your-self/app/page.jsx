@@ -8,12 +8,13 @@ import { MantineProvider, Image, Affix, Transition, Button } from "@mantine/core
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
-import { useWindowScroll } from '@mantine/hooks';
+import { useWindowScroll, useMediaQuery } from '@mantine/hooks';
 import '@mantine/carousel/styles.css';
 
 
 const Home = () => {
   const [scroll, scrollTo] = useWindowScroll();
+  const isMediumScreen = useMediaQuery('(max-width: 768px)');
 
   const autoplay = useRef(Autoplay({ delay: 4000 }));
 
@@ -122,7 +123,7 @@ const Home = () => {
           </div>
         </div>
 
-        <Affix position={{ bottom: 90, right: 20 }}>
+        <Affix position={isMediumScreen ? { bottom: 85, right: 8 } : { bottom: 90, right: 20 }}>
           <Transition transition="slide-up" mounted={scroll.y > 0}>
             {(transitionStyles) => (
               <Button
