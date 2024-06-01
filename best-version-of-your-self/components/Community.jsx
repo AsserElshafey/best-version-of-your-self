@@ -20,11 +20,11 @@ import Background from "./Background";
 const Community = ({ community, onBack }) => {
 
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
-
-
   const [openedAddMember, { open: openSecond, close: closeSecond }] = useDisclosure(false);
+  const [openedDeleteCommunity, { open: openThird, close: closeThird }] = useDisclosure(false);
 
   const [openedMenu, setOpened] = useState(false);
+  const [deleteButton, setDeleteButton] = useState(true);
 
   return (
     <MantineProvider>
@@ -99,7 +99,6 @@ const Community = ({ community, onBack }) => {
                       leftSection={<PencilSquareIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-                      onClick={open}
                     >
                       Edit Community
                     </Button>
@@ -110,6 +109,7 @@ const Community = ({ community, onBack }) => {
                       leftSection={<TrashIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                      onClick={openThird}
                     >
                       Delete Community
                     </Button>
@@ -138,6 +138,48 @@ const Community = ({ community, onBack }) => {
                 </ActionIcon>
               </Tooltip>
             </div>
+
+            {/* Delete Community modal */}
+            <Modal opened={openedDeleteCommunity} onClose={closeThird} title="Delete Community" centered>
+              <div className="text-center mb-4">
+                <p className="text-3xl mb-2">
+                  Are you sure you want to delete <span className="font-bold">{community.name}</span>?
+                </p>
+
+                <p>Once this action is done, it cannot be reversed.</p>
+              </div>
+              <TextInput
+                className="mb-5"
+                size="md"
+                radius="md"
+                label="Please type 'CONFIRM' to enable the delete button."
+                placeholder="Type CONFIRM"
+                onChange={(e) => {
+                  if (e.target.value === 'CONFIRM') {
+                    setDeleteButton(false);
+                  } else {
+                    setDeleteButton(true);
+                  }
+                }}
+              />
+              <div className="flex-center gap-5">
+                <Button
+                  variant="gradient"
+                  gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                  onClick={closeThird}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  leftSection={<TrashIcon className="w-5 h-5" />}
+                  variant="gradient"
+                  gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                  disabled={deleteButton}
+                >
+                  Delete
+                </Button>
+              </div>
+            </Modal>
 
             {/* add mebers modal */}
             <Modal opened={openedAddMember} onClose={closeSecond} title="Add Members" centered>
