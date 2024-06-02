@@ -26,6 +26,11 @@ const Community = ({ community, onBack }) => {
   const [openedMenu, setOpened] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
 
+  const handleClose = () => {
+    setDeleteButton(true);
+    closeThird();
+  };
+
   return (
     <MantineProvider>
       <ScrollArea>
@@ -140,7 +145,7 @@ const Community = ({ community, onBack }) => {
             </div>
 
             {/* Delete Community modal */}
-            <Modal opened={openedDeleteCommunity} onClose={closeThird} title="Delete Community" centered>
+            <Modal opened={openedDeleteCommunity} onClose={handleClose} title="Delete Community" centered>
               <div className="text-center mb-4">
                 <p className="text-3xl mb-2">
                   Are you sure you want to delete <span className="font-bold">{community.name}</span>?
@@ -152,10 +157,10 @@ const Community = ({ community, onBack }) => {
                 className="mb-5"
                 size="md"
                 radius="md"
-                label="Please type 'CONFIRM' to enable the delete button."
-                placeholder="Type CONFIRM"
+                label={`Please type '${community.name}' to enable the delete button.`}
+                placeholder={`Please type ${community.name} here`}
                 onChange={(e) => {
-                  if (e.target.value === 'CONFIRM') {
+                  if (e.target.value === community.name) {
                     setDeleteButton(false);
                   } else {
                     setDeleteButton(true);
@@ -166,7 +171,7 @@ const Community = ({ community, onBack }) => {
                 <Button
                   variant="gradient"
                   gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-                  onClick={closeThird}
+                  onClick={handleClose}
                 >
                   Cancel
                 </Button>

@@ -4,14 +4,22 @@ import Nav from '@/components/Nav'
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import {
-  MantineProvider, ScrollArea,
+  MantineProvider, Modal,
   FileButton, Button,
   TextInput, PasswordInput
 } from "@mantine/core";
+import { useDisclosure } from '@mantine/hooks';
 import { TrashIcon, PencilSquareIcon, CheckIcon } from '@heroicons/react/24/solid';
 import Background from '@/components/Background';
 
 const MyProfile = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+  const [deleteButton, setDeleteButton] = useState(true);
+
+  const handleClose = () => {
+    setDeleteButton(true);
+    close();
+  };
 
   const [file, setFile] = useState(undefined);
   const resetRef = useRef(null);
@@ -110,12 +118,55 @@ const MyProfile = () => {
                 leftSection={<TrashIcon className="w-5 h-5" />}
                 variant="gradient"
                 gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                onClick={open}
               >
                 Delete Account
               </Button>
             </div>
           </div>
         </div>
+
+        {/* Delete Profile modal */}
+        <Modal opened={opened} onClose={handleClose} title="Delete Community" centered>
+          <div className="text-center mb-4">
+            <p className="text-3xl mb-2">
+              Are you sure you want to delete <span className="font-bold">Your Account</span>?
+            </p>
+
+            <p>Once this action is done, it cannot be reversed.</p>
+          </div>
+          <TextInput
+            className="mb-5"
+            size="md"
+            radius="md"
+            label="Please type 'CONFIRM' to enable the delete button."
+            placeholder="Please type CONFIRM here"
+            onChange={(e) => {
+              if (e.target.value === 'CONFIRM') {
+                setDeleteButton(false);
+              } else {
+                setDeleteButton(true);
+              }
+            }}
+          />
+          <div className="flex-center gap-5">
+            <Button
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              leftSection={<TrashIcon className="w-5 h-5" />}
+              variant="gradient"
+              gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+              disabled={deleteButton}
+            >
+              Delete
+            </Button>
+          </div>
+        </Modal>
       </Background>
     </MantineProvider>
   )
