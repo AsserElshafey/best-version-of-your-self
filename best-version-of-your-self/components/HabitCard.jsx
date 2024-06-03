@@ -18,10 +18,9 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 
 
-const HabitCard = () => {
+const HabitCard = ({data}) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedMenu, setOpened] = useState(false);
-
 
   return (
     <MantineProvider>
@@ -29,7 +28,7 @@ const HabitCard = () => {
         <div className='p-4'>
           <div className="flex-between gap-1 h-10">
             <div className="flex-start">
-              <HashtagIcon className="h-10 w-8" /><p className='font-extrabold text-3xl'>Exercise</p>
+              <HashtagIcon className="h-7 w-7" /><p className='font-extrabold text-3xl'>{data.name}</p>
             </div>
             <div>
               <Menu
@@ -77,7 +76,7 @@ const HabitCard = () => {
               <NewspaperIcon className="h-7 w-5" /><p className='ml-2 text-xl font-semibold'>Details:</p>
             </div>
             <p className='ml-6 mt-2'>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde at nisi obcaecati minus aperiam. Neque, ut!
+              {data.description}
             </p>
           </div>
           <div className="mt-4">
@@ -85,7 +84,7 @@ const HabitCard = () => {
               <HeartIcon className="h-7 w-5" /><p className='ml-2 text-xl font-semibold'>Motivation:</p>
             </div>
             <p className='ml-4 mt-2'>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde at nisi obcaecati minus aperiam. Neque, ut!
+              {data.motivation}
             </p>
           </div>
           <div className="mt-4">

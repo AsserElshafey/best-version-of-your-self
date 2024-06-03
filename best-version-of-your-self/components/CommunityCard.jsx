@@ -3,8 +3,7 @@ import Link from "next/link"
 import { UserGroupIcon } from "@heroicons/react/24/solid"
 
 const CommunityCard = ({ data }) => {
-  const { name, description, id } = data;
-  console.log(data)
+  const { name, description } = data;
   return (
     <div className="max-w-xl rounded-xl mb-4 shadow-md bg-white">
       <div className="flex justify-between items-center rounded-t-md py-2 px-3 bg-[#383838] border-b-2 border-green-600">

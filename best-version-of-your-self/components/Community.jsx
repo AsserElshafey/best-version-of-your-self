@@ -1,37 +1,72 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  MantineProvider, ScrollArea, ActionIcon,
-  Tooltip, Modal, Menu,
-  TextInput, Textarea, NumberInput,
-  Button
+  MantineProvider,
+  ScrollArea,
+  ActionIcon,
+  Tooltip,
+  Modal,
+  Menu,
+  TextInput,
+  Textarea,
+  NumberInput,
+  Button,
 } from "@mantine/core";
 import Image from "next/image";
 import {
-  EllipsisHorizontalIcon, PlusIcon,
-  UserPlusIcon, UserMinusIcon,
-  PencilSquareIcon, TrashIcon,
-  ArrowLeftIcon
+  EllipsisHorizontalIcon,
+  PlusIcon,
+  UserPlusIcon,
+  UserMinusIcon,
+  PencilSquareIcon,
+  TrashIcon,
+  ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure } from "@mantine/hooks";
 import HabitCard from "./HabitCard";
 import Background from "./Background";
-import api from "@/utils/api"
-import { useCallback } from "react";
+import api from "@/utils/api";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
-
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
-  const [openedAddMember, { open: openSecond, close: closeSecond }] = useDisclosure(false);
-  const [openedDeleteCommunity, { open: openThird, close: closeThird }] = useDisclosure(false);
+  const [openedAddMember, { open: openSecond, close: closeSecond }] =
+    useDisclosure(false);
+  const [openedDeleteCommunity, { open: openThird, close: closeThird }] =
+    useDisclosure(false);
 
   const [openedMenu, setOpened] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
+  const [habits, setHabits] = useState([]);
 
   const handleClose = () => {
     setDeleteButton(true);
     closeThird();
   };
+
+  const fetchCommunityHabits = async (communityId) => {
+    try {
+      console.log(communityId);
+      const response = await api.get(
+        `api/v1/communities/${communityId}/habits/`
+      );
+      const habits = response.data;
+      console.log(habits);
+
+      // const communityPromises = communityIds.map(async (communityId) => {
+      //   const communityResponse = await api.get(`api/v1/communities/${communityId}/habits`);
+      //   return communityResponse.data;
+      // });
+      // const communitiesData = await Promise.all(communityPromises);
+      setHabits(habits);
+    } catch (error) {
+      console.error("Error fetching community habits", error);
+      alert("error");
+    }
+  };
+
+  useEffect(() => {
+    fetchCommunityHabits(community.id);
+  }, [community.id]);
 
   return (
     <MantineProvider>
@@ -43,8 +78,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 <div className="block md:hidden">
                   <ActionIcon
                     variant="subtle"
-                    size='xl'
-                    radius='xl'
+                    size="xl"
+                    radius="xl"
                     onClick={onBack}
                   >
                     <ArrowLeftIcon className="h-7 w-7 text-white" />
@@ -69,7 +104,13 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 withArrow
               >
                 <Menu.Target>
-                  <ActionIcon variant="outline" color="gray" size="lg" radius="xl" aria-label="Settings">
+                  <ActionIcon
+                    variant="outline"
+                    color="gray"
+                    size="lg"
+                    radius="xl"
+                    aria-label="Settings"
+                  >
                     <EllipsisHorizontalIcon className="h-8 w-8" />
                   </ActionIcon>
                 </Menu.Target>
@@ -81,7 +122,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                       w={185}
                       leftSection={<UserPlusIcon className="w-5 h-5" />}
                       variant="gradient"
-                      gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                      gradient={{ from: "green", to: "cyan", deg: 90 }}
                       onClick={openSecond}
                     >
                       Add members
@@ -92,7 +133,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                       w={185}
                       leftSection={<UserMinusIcon className="w-5 h-5" />}
                       variant="gradient"
-                      gradient={{ from: 'red', to: 'cyan', deg: 190 }}
+                      gradient={{ from: "red", to: "cyan", deg: 190 }}
                     >
                       Remove members
                     </Button>
@@ -105,7 +146,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                       w={185}
                       leftSection={<PencilSquareIcon className="w-5 h-5" />}
                       variant="gradient"
-                      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                      gradient={{ from: "blue", to: "cyan", deg: 90 }}
                     >
                       Edit Community
                     </Button>
@@ -115,7 +156,11 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                       w={185}
                       leftSection={<TrashIcon className="w-5 h-5" />}
                       variant="gradient"
-                      gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                      gradient={{
+                        from: "red",
+                        to: "rgba(255, 130, 130, 1)",
+                        deg: 190,
+                      }}
                       onClick={openThird}
                     >
                       Delete Community
@@ -127,15 +172,21 @@ const Community = ({ community, onBack, deleteCommunity }) => {
 
             <div className="flex flex-col items-center justify-center mx-4 md:mx-0">
               <div className="mb-20" />
-              <HabitCard />
-              <HabitCard />
-              <HabitCard />
+              {habits.length === 0  ? (
+                <div className="flex-center fullscreen">
+                  Select a community to view its details
+                </div>
+              ) : (
+                habits.map((habit) => 
+                <HabitCard key={habit.id} data={habit}/>)
+              )}
+              
             </div>
             <div className="fixed bottom-10 right-4">
               <Tooltip label="New Habit">
                 <ActionIcon
                   variant="gradient"
-                  gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                  gradient={{ from: "green", to: "cyan", deg: 90 }}
                   size="xl"
                   radius="xl"
                   aria-label="Settings"
@@ -147,10 +198,16 @@ const Community = ({ community, onBack, deleteCommunity }) => {
             </div>
 
             {/* Delete Community modal */}
-            <Modal opened={openedDeleteCommunity} onClose={handleClose} title="Delete Community" centered>
+            <Modal
+              opened={openedDeleteCommunity}
+              onClose={handleClose}
+              title="Delete Community"
+              centered
+            >
               <div className="text-center mb-4">
                 <p className="text-3xl mb-2">
-                  Are you sure you want to delete <span className="font-bold">{community.name}</span>?
+                  Are you sure you want to delete{" "}
+                  <span className="font-bold">{community.name}</span>?
                 </p>
 
                 <p>Once this action is done, it cannot be reversed.</p>
@@ -172,7 +229,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               <div className="flex-center gap-5">
                 <Button
                   variant="gradient"
-                  gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                  gradient={{ from: "blue", to: "cyan", deg: 90 }}
                   onClick={handleClose}
                 >
                   Cancel
@@ -180,7 +237,11 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 <Button
                   leftSection={<TrashIcon className="w-5 h-5" />}
                   variant="gradient"
-                  gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                  gradient={{
+                    from: "red",
+                    to: "rgba(255, 130, 130, 1)",
+                    deg: 190,
+                  }}
                   disabled={deleteButton}
                   onClick={() => deleteCommunity(community.id)}
                 >
@@ -190,7 +251,12 @@ const Community = ({ community, onBack, deleteCommunity }) => {
             </Modal>
 
             {/* add mebers modal */}
-            <Modal opened={openedAddMember} onClose={closeSecond} title="Add Members" centered>
+            <Modal
+              opened={openedAddMember}
+              onClose={closeSecond}
+              title="Add Members"
+              centered
+            >
               <TextInput
                 className="mb-5"
                 size="md"
@@ -201,14 +267,19 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               <Button
                 leftSection={<PlusIcon className="w-5 h-5" />}
                 variant="gradient"
-                gradient={{ from: 'green', to: 'cyan', deg: 190 }}
+                gradient={{ from: "green", to: "cyan", deg: 190 }}
               >
                 Add
               </Button>
             </Modal>
 
             {/* New habit modal */}
-            <Modal opened={opened} onClose={closeFirst} title="New Habit" centered>
+            <Modal
+              opened={opened}
+              onClose={closeFirst}
+              title="New Habit"
+              centered
+            >
               <TextInput
                 className="mt-4"
                 size="md"
@@ -256,7 +327,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 <Button
                   leftSection={<PlusIcon className="w-5 h-5" />}
                   variant="gradient"
-                  gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                  gradient={{ from: "green", to: "cyan", deg: 90 }}
                   size="md"
                   radius="xl"
                 >
