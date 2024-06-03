@@ -19,7 +19,7 @@ import Background from "./Background";
 import api from "@/utils/api"
 import { useCallback } from "react";
 
-const Community = ({ community, onBack }) => {
+const Community = ({ community, onBack, deleteCommunity }) => {
 
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
   const [openedAddMember, { open: openSecond, close: closeSecond }] = useDisclosure(false);
@@ -182,6 +182,7 @@ const Community = ({ community, onBack }) => {
                   variant="gradient"
                   gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
                   disabled={deleteButton}
+                  onClick={() => deleteCommunity(community.id)}
                 >
                   Delete
                 </Button>
