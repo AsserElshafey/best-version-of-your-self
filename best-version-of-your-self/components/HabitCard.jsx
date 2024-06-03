@@ -93,10 +93,10 @@ const HabitCard = ({data}) => {
             </div>
             <div className="grid grid-cols-2 gap-4 ml-4 mt-4">
               <div className="flex-center gap-2">
-                <CalendarDaysIcon className="h-8 w-7" /><p className="font-semibold"><span className="text-lg">3</span> Days per Week</p>
+                <CalendarDaysIcon className="h-8 w-7" /><p className="font-semibold"><span className="text-lg">{data.frequency}</span> Days per Week</p>
               </div>
               <div className="flex-center gap-2">
-                <ClockIcon className="h-8 w-8" /><p className="font-semibold">60 Mins</p>
+                <ClockIcon className="h-8 w-8" /><p className="font-semibold">{data.duration} Mins</p>
               </div>
             </div>
           </div>

@@ -174,7 +174,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               <div className="mb-20" />
               {habits.length === 0  ? (
                 <div className="flex-center fullscreen">
-                  Select a community to view its details
+                  No Habits added yet
                 </div>
               ) : (
                 habits.map((habit) => 
