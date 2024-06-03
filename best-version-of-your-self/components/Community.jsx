@@ -16,8 +16,10 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import HabitCard from "./HabitCard";
 import Background from "./Background";
+import api from "@/utils/api"
+import { useCallback } from "react";
 
-const Community = ({ community, onBack }) => {
+const Community = ({ community, onBack, deleteCommunity  }) => {
 
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
 
@@ -25,6 +27,19 @@ const Community = ({ community, onBack }) => {
   const [openedAddMember, { open: openSecond, close: closeSecond }] = useDisclosure(false);
 
   const [openedMenu, setOpened] = useState(false);
+
+  console.log(community.id)
+
+
+  // const deleteCommunity = useCallback(async (id) => {
+  //   try {
+  //     const res = await api.delete(`api/v1/communities/${id}`);
+  //     console.log(res.json())
+  //   } catch (error) {
+  //     console.error("Error deleting community", error);
+  //     alert(error);
+  //   }
+  // }, [deleteCom])
 
   return (
     <MantineProvider>
@@ -110,6 +125,7 @@ const Community = ({ community, onBack }) => {
                       leftSection={<TrashIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                      
                     >
                       Delete Community
                     </Button>

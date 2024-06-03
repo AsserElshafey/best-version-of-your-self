@@ -27,7 +27,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
   );
 };
 
-const SideBar = ({ onSelectCommunity, selectedCommunity, communities }) => {
+const SideBar = ({ onSelectCommunity, selectedCommunity, communities}) => {
 
 
 

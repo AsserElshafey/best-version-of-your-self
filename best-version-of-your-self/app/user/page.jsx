@@ -14,6 +14,22 @@ const User = () => {
     setCommunities((prevCommunities) => [...prevCommunities, newCommunity]);
   };
 
+
+  const deleteCommunity = async (communityId) => {
+    try {
+      await api.delete(`api/v1/communities/${communityId}`);
+      setCommunities((prevCommunities) =>
+        prevCommunities.filter((community) => community.id !== communityId)
+      );
+      if (selectedCommunity && selectedCommunity.id === communityId) {
+        setSelectedCommunity(null);
+      }
+    } catch (error) {
+      console.error("Error deleting community:", error);
+      alert("error deleting community");
+    }
+  };
+
   useEffect(() => {
     fetchUserCommunities();
   }, []);
@@ -56,6 +72,7 @@ const User = () => {
               <Community
                 community={selectedCommunity}
                 onBack={() => setSelectedCommunity(null)}
+                deleteCommunity={deleteCommunity}
               />
             )}
           </div>
