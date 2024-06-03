@@ -72,8 +72,7 @@ const User = () => {
               <Community
                 community={selectedCommunity}
                 onBack={() => setSelectedCommunity(null)}
-                deleteCommunity={deleteCommunity}
-              />
+                deleteCommunity={deleteCommunity}              />
             )}
           </div>
         </div>

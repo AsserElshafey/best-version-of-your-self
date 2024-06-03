@@ -18,7 +18,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 
 
-const HabitCard = ({data}) => {
+const HabitCard = ({ data, deleteHabit }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedMenu, setOpened] = useState(false);
 
@@ -63,8 +63,9 @@ const HabitCard = ({data}) => {
                       leftSection={<TrashIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                      onClick={() => deleteHabit(data.id)}
                     >
-                      Delete Card
+                      Delete Habit
                     </Button>
                   </Menu.Item>
                 </Menu.Dropdown>

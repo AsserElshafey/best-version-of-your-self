@@ -51,16 +51,30 @@ const Community = ({ community, onBack, deleteCommunity }) => {
       );
       const habits = response.data;
       console.log(habits);
-
-      // const communityPromises = communityIds.map(async (communityId) => {
-      //   const communityResponse = await api.get(`api/v1/communities/${communityId}/habits`);
-      //   return communityResponse.data;
-      // });
-      // const communitiesData = await Promise.all(communityPromises);
       setHabits(habits);
     } catch (error) {
       console.error("Error fetching community habits", error);
       alert("error");
+    }
+  };
+
+
+  const deleteHabit = async (habitId) => {
+    try {
+      setHabits((prevHabits) =>
+        prevHabits.filter((habit) => habit.id !== habitId)
+      );
+
+      const response = await api.delete(`api/v1/communities/${community.id}/habits/${habitId}`);
+
+      if (!response.status === 204) {
+        setHabits((prevHabits) => [...prevHabits, habits.find((habit) => habit.id === habitId)]);
+        throw new Error("Failed to delete habit.");
+      }
+
+    } catch (error) {
+      console.error("Error deleting habit:", error);
+      alert("Error deleting habit: " + error)
     }
   };
 
@@ -178,7 +192,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 </div>
               ) : (
                 habits.map((habit) => 
-                <HabitCard key={habit.id} data={habit}/>)
+                <HabitCard key={habit.id} data={habit} deleteHabit={deleteHabit}/>)
               )}
               
             </div>
