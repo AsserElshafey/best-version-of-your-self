@@ -19,27 +19,19 @@ import Background from "./Background";
 import api from "@/utils/api"
 import { useCallback } from "react";
 
-const Community = ({ community, onBack, deleteCommunity  }) => {
+const Community = ({ community, onBack }) => {
 
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
-
-
   const [openedAddMember, { open: openSecond, close: closeSecond }] = useDisclosure(false);
+  const [openedDeleteCommunity, { open: openThird, close: closeThird }] = useDisclosure(false);
 
   const [openedMenu, setOpened] = useState(false);
+  const [deleteButton, setDeleteButton] = useState(true);
 
-  console.log(community.id)
-
-
-  // const deleteCommunity = useCallback(async (id) => {
-  //   try {
-  //     const res = await api.delete(`api/v1/communities/${id}`);
-  //     console.log(res.json())
-  //   } catch (error) {
-  //     console.error("Error deleting community", error);
-  //     alert(error);
-  //   }
-  // }, [deleteCom])
+  const handleClose = () => {
+    setDeleteButton(true);
+    closeThird();
+  };
 
   return (
     <MantineProvider>
@@ -114,7 +106,6 @@ const Community = ({ community, onBack, deleteCommunity  }) => {
                       leftSection={<PencilSquareIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-                      onClick={open}
                     >
                       Edit Community
                     </Button>
@@ -125,7 +116,7 @@ const Community = ({ community, onBack, deleteCommunity  }) => {
                       leftSection={<TrashIcon className="w-5 h-5" />}
                       variant="gradient"
                       gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
-                      
+                      onClick={openThird}
                     >
                       Delete Community
                     </Button>
@@ -154,6 +145,48 @@ const Community = ({ community, onBack, deleteCommunity  }) => {
                 </ActionIcon>
               </Tooltip>
             </div>
+
+            {/* Delete Community modal */}
+            <Modal opened={openedDeleteCommunity} onClose={handleClose} title="Delete Community" centered>
+              <div className="text-center mb-4">
+                <p className="text-3xl mb-2">
+                  Are you sure you want to delete <span className="font-bold">{community.name}</span>?
+                </p>
+
+                <p>Once this action is done, it cannot be reversed.</p>
+              </div>
+              <TextInput
+                className="mb-5"
+                size="md"
+                radius="md"
+                label={`Please type '${community.name}' to enable the delete button.`}
+                placeholder={`Please type ${community.name} here`}
+                onChange={(e) => {
+                  if (e.target.value === community.name) {
+                    setDeleteButton(false);
+                  } else {
+                    setDeleteButton(true);
+                  }
+                }}
+              />
+              <div className="flex-center gap-5">
+                <Button
+                  variant="gradient"
+                  gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  leftSection={<TrashIcon className="w-5 h-5" />}
+                  variant="gradient"
+                  gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
+                  disabled={deleteButton}
+                >
+                  Delete
+                </Button>
+              </div>
+            </Modal>
 
             {/* add mebers modal */}
             <Modal opened={openedAddMember} onClose={closeSecond} title="Add Members" centered>
