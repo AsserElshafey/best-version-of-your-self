@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   MantineProvider,
   ScrollArea,
@@ -26,8 +26,10 @@ import { useDisclosure } from "@mantine/hooks";
 import HabitCard from "./HabitCard";
 import Background from "./Background";
 import api from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
+  const router = useRouter();
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
   const [openedAddMember, { open: openSecond, close: closeSecond }] =
     useDisclosure(false);
@@ -37,6 +39,14 @@ const Community = ({ community, onBack, deleteCommunity }) => {
   const [openedMenu, setOpened] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
   const [habits, setHabits] = useState([]);
+
+
+  const [name, setHabitName] = useState(null);
+  const [description, setHabitDesc] = useState(null);
+  const [frequency, setHabitFrequency] = useState("");
+  const [duration, setHabitDuration] = useState("");
+  const [motivation, setHabitMotivation] = useState(null)
+
 
   const handleClose = () => {
     setDeleteButton(true);
@@ -58,6 +68,9 @@ const Community = ({ community, onBack, deleteCommunity }) => {
     }
   };
 
+  const addHabit = (newHabit) => {
+    setHabits((prevHabits) => [...prevHabits, newHabit]);
+  };
 
   const deleteHabit = async (habitId) => {
     try {
@@ -65,18 +78,52 @@ const Community = ({ community, onBack, deleteCommunity }) => {
         prevHabits.filter((habit) => habit.id !== habitId)
       );
 
-      const response = await api.delete(`api/v1/communities/${community.id}/habits/${habitId}`);
+      const response = await api.delete(
+        `api/v1/communities/${community.id}/habits/${habitId}`
+      );
 
       if (!response.status === 204) {
-        setHabits((prevHabits) => [...prevHabits, habits.find((habit) => habit.id === habitId)]);
+        setHabits((prevHabits) => [
+          ...prevHabits,
+          habits.find((habit) => habit.id === habitId),
+        ]);
         throw new Error("Failed to delete habit.");
       }
-
     } catch (error) {
       console.error("Error deleting habit:", error);
-      alert("Error deleting habit: " + error)
+      alert("Error deleting habit: " + error);
     }
   };
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      try {
+        const res = await api.post(
+          `api/v1/communities/${community.id}/habits/`,
+          {
+            "name": name,
+            "description": description,
+            "motivation": motivation,
+            "frequency": frequency,
+            "duration": duration,
+          }
+        );
+        const newHabit = res.data;
+        addHabit(newHabit);
+        setHabitName("");
+        setHabitDesc("");
+        setHabitFrequency(1);
+        // setHabitDuration(0);
+        setHabitMotivation("")
+        closeFirst();
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [name, description, frequency, duration, router, addHabit]
+  );
 
   useEffect(() => {
     fetchCommunityHabits(community.id);
@@ -186,15 +233,19 @@ const Community = ({ community, onBack, deleteCommunity }) => {
 
             <div className="flex flex-col items-center justify-center mx-4 md:mx-0">
               <div className="mb-20" />
-              {habits.length === 0  ? (
+              {habits.length === 0 ? (
                 <div className="flex-center fullscreen">
                   No Habits added yet
                 </div>
               ) : (
-                habits.map((habit) => 
-                <HabitCard key={habit.id} data={habit} deleteHabit={deleteHabit}/>)
+                habits.map((habit) => (
+                  <HabitCard
+                    key={habit.id}
+                    data={habit}
+                    deleteHabit={deleteHabit}
+                  />
+                ))
               )}
-              
             </div>
             <div className="fixed bottom-10 right-4">
               <Tooltip label="New Habit">
@@ -301,6 +352,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 label="Habit Title"
                 withAsterisk
                 placeholder="Input placeholder"
+                value={name}
+                onChange={(e) => setHabitName(e.target.value)}
               />
               <Textarea
                 className="mt-4"
@@ -309,6 +362,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 label="Habit Details"
                 withAsterisk
                 placeholder="Input placeholder"
+                value={description}
+                onChange={(e) => setHabitDesc(e.target.value)}z
               />
               <Textarea
                 className="mt-4"
@@ -317,6 +372,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 label="Habit Motivation"
                 withAsterisk
                 placeholder="Input placeholder"
+                value={motivation}
+                onChange={(e) => setHabitMotivation(e.target.value)}
               />
               <div className="flex-between p-2 gap-10 mt-4">
                 <NumberInput
@@ -327,6 +384,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   placeholder="Input placeholder"
                   min={1}
                   max={7}
+                  value={frequency}
+                  onChange ={(value) => setHabitFrequency(value)}
                 />
                 <NumberInput
                   size="md"
@@ -335,6 +394,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   withAsterisk
                   placeholder="In Mins"
                   min={1}
+                  value={duration}
+                  onChange={(value) => setHabitDuration(value)}
                 />
               </div>
               <div className="flex justify-end mt-8 mb-2">
@@ -344,6 +405,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   gradient={{ from: "green", to: "cyan", deg: 90 }}
                   size="md"
                   radius="xl"
+                  onClick={handleSubmit}
                 >
                   Create
                 </Button>
