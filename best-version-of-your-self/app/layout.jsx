@@ -1,6 +1,8 @@
 import '@/styles/globals.css';
 import "@mantine/core/styles.css";
 
+import { AuthProvider } from './context/AuthContext';
+
 import Footer from '@/components/Footer';
 
 export const metadata = {
@@ -12,10 +14,12 @@ const Rootlayout = ({ children }) => {
   return (
     <html lang='en'>
       <body className='bg-gray-100'>
-        <main>
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   )
