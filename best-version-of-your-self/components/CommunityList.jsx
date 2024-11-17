@@ -12,7 +12,8 @@ const CommunityList = () => {
 
   const getAllCommunities = async () => {
     try {
-      const response = await axiosPrivate.get(apiUrl + "api/v1/communities/");
+      const userId = localStorage.getItem("userId");
+      const response = await axiosPrivate.get(`/communities/users/${userId}`);
       setCommunities(response.data);
     } catch (error) {
       console.error("Error fetching all communities", error);

@@ -4,10 +4,12 @@ import React, { useState, useEffect } from "react";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
 import axiosPrivate from "@/app/api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const User = () => {
   const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [communities, setCommunities] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
   const addCommunity = (newCommunity) => {
     setCommunities((prevCommunities) => [...prevCommunities, newCommunity]);
@@ -29,22 +31,24 @@ const User = () => {
   };
 
   useEffect(() => {
-    fetchUserCommunities();
+    const userId = localStorage.getItem("userId");
+    fetchUserCommunities(userId);
   }, []);
 
   const fetchUserCommunities = async (userId) => {
     try {
-      const response = await axiosPrivate.get("user/communities");
-      const communityIds = response.data.communities;
+      const response = await axiosPrivate.get(`/communities/users/${userId}`);
+      console.log(response.data.message);
+      // const communityIds = response.data.communities;
 
-      const communityPromises = communityIds.map(async (communityId) => {
-        const communityResponse = await api.get(
-          `api/v1/communities/${communityId}`
-        );
-        return communityResponse.data;
-      });
-      const communitiesData = await Promise.all(communityPromises);
-      setCommunities(communitiesData);
+      // const communityPromises = communityIds.map(async (communityId) => {
+      //   const communityResponse = await axiosPrivate.get(
+      //     `/communities/${communityId}`
+      //   );
+      //   return communityResponse.data;
+      // });
+      // const communitiesData = await Promise.all(communityPromises);
+      setCommunities(response.data.communities);
     } catch (error) {
       console.error("Error fetching user profile:", error);
       alert("error");

@@ -29,6 +29,7 @@ import {
 */
 
 const Nav = ({ addCommunity }) => {
+  const api = useAxiosPrivate();
   const router = useRouter();
   const [openedModal, { open, close }] = useDisclosure(false);
   const [opened, setOpened] = useState(false);

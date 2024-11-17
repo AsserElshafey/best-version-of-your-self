@@ -10,8 +10,11 @@ import {
   LoadingOverlay,
 } from "@mantine/core";
 import axiosPublic from "@/app/api/axios";
+import useAuth from "@/app/hooks/useAuth";
+import axios from "@/app/api/axios";
 
 const Login = () => {
+  const { setAuth } = useAuth();
   const [identifier, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -27,17 +30,30 @@ const Login = () => {
       setLoading(true);
 
       try {
-        const res = await axiosPublic.post("/auth/login", {
-          identifier,
-          password,
-        });
-        // localStorage.setItem(ACCESS_TOKEN, res.data.access);
-        // localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        const response = await axios.post(
+          "/auth/login",
+          JSON.stringify({ identifier, password }),
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: false,
+          }
+        );
+
+        console.log(JSON.stringify(response?.data));
+        console.log(JSON.stringify(response?.data.access));
+
+        const accessToken = response?.data?.accessToken;
+        setAuth({ identifier, password, accessToken });
+        localStorage.setItem("userId", response.data.user.id);
         setUsername("");
         setPassword("");
-        router.push("/user"); // Redirect to /user route
+        setLoading(false);
+
+        // Redirect to user page
+        router.push("/user");
       } catch (error) {
         if (error) {
+          console.log(error);
           setUsernameError("Wrong username");
           setPasswordError("Wrong password");
         } else {
