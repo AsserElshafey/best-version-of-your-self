@@ -1,8 +1,6 @@
 "use client";
 import Nav from "@/components/Nav";
-import api from "/utils/api";
 import React, { useState, useEffect } from "react";
-import ProtectedRoute from "../../components/ProtectedRoute";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
 import axiosPrivate from "@/app/api/axios";

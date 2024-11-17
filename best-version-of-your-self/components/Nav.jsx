@@ -1,13 +1,17 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import api from "../utils/api";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
-  MantineProvider, Menu, Modal,
-  FileButton, Button, Text,
-  TextInput, Textarea
+  MantineProvider,
+  Menu,
+  Modal,
+  FileButton,
+  Button,
+  Text,
+  TextInput,
+  Textarea,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import "@mantine/core/styles.css";
@@ -15,8 +19,9 @@ import {
   ArrowLeftEndOnRectangleIcon,
   IdentificationIcon,
   QueueListIcon,
-  HomeIcon, PlusIcon,
-  GlobeAltIcon
+  HomeIcon,
+  PlusIcon,
+  GlobeAltIcon,
 } from "@heroicons/react/24/solid";
 
 /* Todo:
@@ -36,21 +41,26 @@ const Nav = ({ addCommunity }) => {
   const [communityName, setCommunityName] = useState(null);
   const [communityDesc, setCommunityDesc] = useState(null);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    try {
-      const res = await api.post("api/v1/communities/", { "name": communityName, "description": communityDesc });
-      const newCommunity = res.data;
-      addCommunity(newCommunity);
-      setCommunityName("");
-      setCommunityDesc("");
-      close()
-    } catch (error) {
-      alert(error);
-    }
-  }, [communityName, communityDesc, router, addCommunity]);
-
+      try {
+        const res = await api.post("api/v1/communities/", {
+          name: communityName,
+          description: communityDesc,
+        });
+        const newCommunity = res.data;
+        addCommunity(newCommunity);
+        setCommunityName("");
+        setCommunityDesc("");
+        close();
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [communityName, communityDesc, router, addCommunity]
+  );
 
   const clearFile = () => {
     setFile(null);
@@ -70,7 +80,7 @@ const Nav = ({ addCommunity }) => {
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      alert("error")
+      alert("error");
     }
   };
 
@@ -123,16 +133,12 @@ const Nav = ({ addCommunity }) => {
           <Menu.Dropdown>
             <Menu.Label>Application</Menu.Label>
             <Link href="/user">
-              <Menu.Item
-                leftSection={<HomeIcon className="w-4 h-4" />}
-              >
+              <Menu.Item leftSection={<HomeIcon className="w-4 h-4" />}>
                 Home Page
               </Menu.Item>
             </Link>
             <Link href="/discovercommunities">
-              <Menu.Item
-                leftSection={<GlobeAltIcon className="w-4 h-4" />}
-              >
+              <Menu.Item leftSection={<GlobeAltIcon className="w-4 h-4" />}>
                 Discover Communities
               </Menu.Item>
             </Link>
@@ -153,7 +159,7 @@ const Nav = ({ addCommunity }) => {
               <Button
                 leftSection={<PlusIcon className="w-5 h-5" />}
                 variant="gradient"
-                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                gradient={{ from: "green", to: "cyan", deg: 90 }}
                 onClick={open}
               >
                 New Community
@@ -184,19 +190,22 @@ const Nav = ({ addCommunity }) => {
           <div>
             <div className="flex items-end gap-3">
               <Image
-                src={file ? URL.createObjectURL(file) : '/images/gigachad.jpg'}
+                src={file ? URL.createObjectURL(file) : "/images/gigachad.jpg"}
                 width={85}
                 height={85}
                 className="rounded-full mr-2"
                 alt="profile-img"
               />
-              <FileButton resetRef={resetRef} onChange={setFile} accept="image/png,image/jpeg">
+              <FileButton
+                resetRef={resetRef}
+                onChange={setFile}
+                accept="image/png,image/jpeg"
+              >
                 {(props) => <Button {...props}>Upload image</Button>}
               </FileButton>
               <Button disabled={!file} color="red" onClick={clearFile}>
                 Reset
               </Button>
-
             </div>
             {file && (
               <Text size="sm" ta="start" mt="sm">
@@ -223,7 +232,7 @@ const Nav = ({ addCommunity }) => {
                 <Button
                   leftSection={<PlusIcon className="w-5 h-5" />}
                   variant="gradient"
-                  gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                  gradient={{ from: "green", to: "cyan", deg: 90 }}
                   size="md"
                   radius="xl"
                   onClick={handleSubmit}

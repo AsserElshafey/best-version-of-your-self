@@ -3,9 +3,13 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { MantineProvider, TextInput, PasswordInput, LoadingOverlay } from "@mantine/core";
+import {
+  MantineProvider,
+  TextInput,
+  PasswordInput,
+  LoadingOverlay,
+} from "@mantine/core";
 import axiosPublic from "@/app/api/axios";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/utils/constants";
 
 const Login = () => {
   const [identifier, setUsername] = useState("");
@@ -23,7 +27,10 @@ const Login = () => {
       setLoading(true);
 
       try {
-        const res = await axiosPublic.post("/auth/login", { identifier, password });
+        const res = await axiosPublic.post("/auth/login", {
+          identifier,
+          password,
+        });
         // localStorage.setItem(ACCESS_TOKEN, res.data.access);
         // localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         setUsername("");
@@ -46,7 +53,12 @@ const Login = () => {
   return (
     <MantineProvider>
       <div className="relative sm:max-w-sm md:max-w-md w-full border border-solid p-10 rounded-xl shadow-xl bg-zinc-100 mt-10 sm:mt-20 lg:mt-0">
-        <LoadingOverlay visible={loading} overlayBlur={2} className="rounded-xl" loaderProps={{ color: 'green' }} />
+        <LoadingOverlay
+          visible={loading}
+          overlayBlur={2}
+          className="rounded-xl"
+          loaderProps={{ color: "green" }}
+        />
         <div className="flex gap-2 text-center md:text-left mb-10">
           <Image
             src="/images/Logo.ico"

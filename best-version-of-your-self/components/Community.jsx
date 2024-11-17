@@ -25,7 +25,6 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import HabitCard from "./HabitCard";
 import Background from "./Background";
-import api from "@/utils/api";
 import { useRouter } from "next/navigation";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
@@ -40,13 +39,11 @@ const Community = ({ community, onBack, deleteCommunity }) => {
   const [deleteButton, setDeleteButton] = useState(true);
   const [habits, setHabits] = useState([]);
 
-
   const [name, setHabitName] = useState(null);
   const [description, setHabitDesc] = useState(null);
   const [frequency, setHabitFrequency] = useState("");
   const [duration, setHabitDuration] = useState("");
-  const [motivation, setHabitMotivation] = useState(null)
-
+  const [motivation, setHabitMotivation] = useState(null);
 
   const handleClose = () => {
     setDeleteButton(true);
@@ -103,11 +100,11 @@ const Community = ({ community, onBack, deleteCommunity }) => {
         const res = await api.post(
           `api/v1/communities/${community.id}/habits/`,
           {
-            "name": name,
-            "description": description,
-            "motivation": motivation,
-            "frequency": frequency,
-            "duration": duration,
+            name: name,
+            description: description,
+            motivation: motivation,
+            frequency: frequency,
+            duration: duration,
           }
         );
         const newHabit = res.data;
@@ -116,7 +113,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
         setHabitDesc("");
         setHabitFrequency(1);
         // setHabitDuration(0);
-        setHabitMotivation("")
+        setHabitMotivation("");
         closeFirst();
       } catch (error) {
         alert(error);
@@ -363,7 +360,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 withAsterisk
                 placeholder="Input placeholder"
                 value={description}
-                onChange={(e) => setHabitDesc(e.target.value)}z
+                onChange={(e) => setHabitDesc(e.target.value)}
+                z
               />
               <Textarea
                 className="mt-4"
@@ -385,7 +383,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   min={1}
                   max={7}
                   value={frequency}
-                  onChange ={(value) => setHabitFrequency(value)}
+                  onChange={(value) => setHabitFrequency(value)}
                 />
                 <NumberInput
                   size="md"
