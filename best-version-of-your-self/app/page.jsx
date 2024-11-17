@@ -78,13 +78,13 @@ const Home = () => {
         <div className='bg-gradient-radial from-[#3A6073] to-[#16222A] 
                         mt-5 mx-2 md:mx-8 rounded-xl shadow-lg'
         >
-          <p className='text-5xl text-white font-semibold pt-7 pl-5 mb-8'>
+          {/* <p className='text-5xl text-white font-semibold pt-7 pl-5 mb-8'>
             Top Communities
-          </p>
+          </p> */}
           <hr className='mb-5 border-2 border-green-600' />
-          <div className='flex-center px-2'>
+          {/* <div className='flex-center px-2'>
             <CommunityList />
-          </div>
+          </div> */}
         </div>
         <div className='block md:flex justify-center items-center 
                          bg-gradient-to-tr from-cyan-600 

@@ -4,11 +4,11 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { MantineProvider, TextInput, PasswordInput, LoadingOverlay } from "@mantine/core";
-import api from "../utils/api";
+import axiosPublic from "@/app/api/axios";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/utils/constants";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [identifier, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -23,9 +23,9 @@ const Login = () => {
       setLoading(true);
 
       try {
-        const res = await api.post("api/v1/token/", { username, password });
-        localStorage.setItem(ACCESS_TOKEN, res.data.access);
-        localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        const res = await axiosPublic.post("/auth/login", { identifier, password });
+        // localStorage.setItem(ACCESS_TOKEN, res.data.access);
+        // localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         setUsername("");
         setPassword("");
         router.push("/user"); // Redirect to /user route
@@ -40,7 +40,7 @@ const Login = () => {
         setLoading(false);
       }
     },
-    [username, password, router]
+    [identifier, password, router]
   );
 
   return (
@@ -63,7 +63,7 @@ const Login = () => {
           radius="lg"
           label="Username"
           placeholder="Username"
-          value={username}
+          value={identifier}
           onChange={(e) => setUsername(e.target.value)}
           error={usernameError}
         />
