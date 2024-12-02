@@ -4,6 +4,7 @@ import Link from "next/link";
 import Login from "@/components/Login";
 import CommunityList from "@/components/CommunityList";
 import Background from "@/components/Background";
+import Hero from "@/components/Hero";
 import {
   MantineProvider,
   Image,
@@ -26,7 +27,7 @@ const Home = () => {
   return (
     <MantineProvider>
       <Background>
-        <div className="flex w-full h-[81px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500">
+        <div className="flex w-full h-[70px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500">
           <Link href="/" className="flex gap-2 flex-center ">
             <Image
               src="/images/Logo.ico"
@@ -36,7 +37,7 @@ const Home = () => {
             <p className="logo_text">Better</p>
           </Link>
         </div>
-        <div className="w-full">
+        {/* <div className="w-full">
           <Carousel
             withIndicators
             loop
@@ -81,7 +82,8 @@ const Home = () => {
               </div>
             </Carousel.Slide>
           </Carousel>
-        </div>
+        </div> */}
+        <Hero />
         <div
           className="bg-gradient-radial from-[#3A6073] to-[#16222A] 
                         mt-5 mx-2 md:mx-8 rounded-xl shadow-lg"
