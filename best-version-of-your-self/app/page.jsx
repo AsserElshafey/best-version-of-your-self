@@ -17,6 +17,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { ArrowUpIcon } from "@heroicons/react/24/solid";
 import { useWindowScroll, useMediaQuery } from "@mantine/hooks";
 import "@mantine/carousel/styles.css";
+import Navbar from "@/components/NavBar";
 
 const Home = () => {
   const [scroll, scrollTo] = useWindowScroll();
@@ -27,7 +28,7 @@ const Home = () => {
   return (
     <MantineProvider>
       <Background>
-        <div className="flex w-full h-[70px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500">
+        {/* <div className="flex w-full h-[70px] bg-gray-900 pl-5 py-3 border-b-2 border-green-500">
           <Link href="/" className="flex gap-2 flex-center ">
             <Image
               src="/images/Logo.ico"
@@ -36,7 +37,8 @@ const Home = () => {
             />
             <p className="logo_text">Better</p>
           </Link>
-        </div>
+        </div> */}
+        <Navbar />
         {/* <div className="w-full">
           <Carousel
             withIndicators

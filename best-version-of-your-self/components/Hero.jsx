@@ -2,9 +2,9 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="pt-24 pb-16 bg-gradient-to-b from-[#728156] to-[#5d6945] text-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <div className="min-h-[calc(100vh-70px)] bg-gradient-to-b from-[#728156] to-[#5d6945] text-white flex items-center">
+      <div className="max-w-7xl mx-auto px-6 h-full flex items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center w-full">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight">
               Transform Your Habits,
