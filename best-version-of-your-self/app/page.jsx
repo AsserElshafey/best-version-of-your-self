@@ -18,6 +18,9 @@ import { ArrowUpIcon } from "@heroicons/react/24/solid";
 import { useWindowScroll, useMediaQuery } from "@mantine/hooks";
 import "@mantine/carousel/styles.css";
 import Navbar from "@/components/NavBar";
+import Features from "@/components/Features";
+import footer from "@/components/Foooter";
+import Footer from "@/components/Footer";
 
 const Home = () => {
   const [scroll, scrollTo] = useWindowScroll();
@@ -86,6 +89,8 @@ const Home = () => {
           </Carousel>
         </div> */}
         <Hero />
+        <Features />
+        <footer />
         <div
           className="bg-gradient-radial from-[#3A6073] to-[#16222A] 
                         mt-5 mx-2 md:mx-8 rounded-xl shadow-lg"
@@ -127,6 +132,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
+        <footer />
 
         <Affix
           position={

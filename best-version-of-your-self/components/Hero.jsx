@@ -1,5 +1,9 @@
 import React from "react";
 
+/* TODO:
+  * 1. Fix hero for mobile
+  * 2. Add hero image
+ */
 const Hero = () => {
   return (
     <div className="min-h-[calc(100vh-70px)] bg-gradient-to-b from-[#728156] to-[#5d6945] text-white flex items-center">
@@ -26,11 +30,11 @@ const Hero = () => {
             </div>
           </div>
           <div className="relative">
-            <img
+            {/* <img
               src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=600&q=80"
               alt="Habit Tracking"
               className="rounded-lg shadow-2xl"
-            />
+            /> */}
           </div>
         </div>
       </div>
