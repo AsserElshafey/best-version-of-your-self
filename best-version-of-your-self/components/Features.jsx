@@ -1,64 +1,140 @@
+"use client";
 import React from 'react';
-import { Smartphone, Target, TrendingUp, Calendar, Bell, Users } from 'lucide-react';
+import { Smartphone, Target, TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Container from './common/Container';
+import SectionTitle from './common/SectionTitle';
 
 const Features = () => {
   const features = [
     {
-      icon: <Smartphone className="h-8 w-8" />,
+      icon: Smartphone,
       title: "Cross-Platform Sync",
-      description: "Track your habits seamlessly across all your devices"
+      description: "Track your habits seamlessly across all your devices with real-time synchronization. Access your data anywhere, anytime.",
+      image: "/images/feature-1.jpg"
     },
     {
-      icon: <Target className="h-8 w-8" />,
-      title: "Goal Setting",
-      description: "Set and achieve your personal goals with smart tracking"
+      icon: Target,
+      title: "Smart Goal Setting",
+      description: "Set and achieve your personal goals with our intelligent tracking system. Break down large goals into manageable daily habits.",
+      image: "/images/feature-2.jpg"
     },
     {
-      icon: <TrendingUp className="h-8 w-8" />,
-      title: "Progress Analytics",
-      description: "Visualize your progress with detailed insights and trends"
-    },
-    {
-      icon: <Calendar className="h-8 w-8" />,
-      title: "Flexible Scheduling",
-      description: "Customize your habit tracking schedule to fit your lifestyle"
-    },
-    {
-      icon: <Bell className="h-8 w-8" />,
-      title: "Smart Reminders",
-      description: "Never miss a habit with intelligent notifications"
-    },
-    {
-      icon: <Users className="h-8 w-8" />,
-      title: "Community Support",
-      description: "Connect with others and share your journey to success"
+      icon: TrendingUp,
+      title: "Detailed Analytics",
+      description: "Gain insights into your progress with comprehensive analytics and visualization tools. Understand your patterns and improve.",
+      image: "/images/feature-3.jpg"
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
+      }
+    }
+  };
+
+  const featureVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 50
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <section id="discover" className="py-20 bg-[#E7F5DC]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-[#728156] mb-4">
-            Everything You Need to Build Better Habits
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Our comprehensive feature set helps you stay on track and achieve your goals
-          </p>  
-        </div>
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <SectionTitle 
+            title="Everything You Need to Build Better Habits"
+            subtitle="Our comprehensive feature set helps you stay on track and achieve your goals"
+          />
+        </motion.div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="text-[#728156] mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-[#728156] mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+        <motion.div 
+          className="space-y-24"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            const isEven = index % 2 === 0;
+            
+            return (
+              <motion.div
+                key={index}
+                variants={featureVariants}
+                className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12`}
+              >
+                <motion.div 
+                  className="lg:w-1/2"
+                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="rounded-2xl shadow-2xl w-full h-[400px] object-cover transition-shadow duration-300"
+                  />
+                </motion.div>
+                <motion.div 
+                  className="lg:w-1/2 space-y-6"
+                  initial={{ opacity: 0, x: isEven ? 50 : -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <motion.div 
+                    className="text-[#728156] mb-4"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Icon className="h-12 w-12" />
+                  </motion.div>
+                  <motion.h3 
+                    className="text-3xl font-bold text-[#728156]"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                    {feature.title}
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-600 text-lg leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                  >
+                    {feature.description}
+                  </motion.p>
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </Container>
     </section>
   );
 };

@@ -12,7 +12,7 @@ import {
   LoadingOverlay,
   ScrollArea,
 } from "@mantine/core";
-import { axiosPrivate, axiosPublic } from "@/app/api/axios";
+import { axiosPrivate, axiosPublic } from "@/api/axios";
 import Background from "@/components/Background";
 
 function SignUpPage() {

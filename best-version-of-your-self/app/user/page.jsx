@@ -3,8 +3,8 @@ import Nav from "@/components/Nav";
 import React, { useState, useEffect } from "react";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
-import axiosPrivate from "@/app/api/axios";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import axiosPrivate from "@/api/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const User = () => {
   const [selectedCommunity, setSelectedCommunity] = useState(null);

@@ -9,9 +9,9 @@ import {
   PasswordInput,
   LoadingOverlay,
 } from "@mantine/core";
-import axiosPublic from "@/app/api/axios";
-import useAuth from "@/app/hooks/useAuth";
-import axios from "@/app/api/axios";
+import axiosPublic from "@/api/axios";
+import useAuth from "@/hooks/useAuth";
+import axios from "@/api/axios";
 
 const Login = () => {
   const { setAuth } = useAuth();

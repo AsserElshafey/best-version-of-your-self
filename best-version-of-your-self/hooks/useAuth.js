@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useDebugValue } from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../contexts/AuthContext";
 
 const useAuth = () => {
   const context = useContext(AuthContext);

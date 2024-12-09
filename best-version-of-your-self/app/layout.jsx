@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import "@mantine/core/styles.css";
 
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from '../contexts/AuthContext';
 
 import Footer from '@/components/Footer';
 
@@ -18,7 +18,7 @@ const Rootlayout = ({ children }) => {
           <main>
             {children}
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </AuthProvider>
       </body>
     </html>

@@ -1,41 +1,118 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Container from './common/Container';
+import Button from './common/Button';
+import { useRouter } from 'next/navigation';
+
+const NAV_LINKS = [
+  { name: 'Discover', href: '/about' },
+  { name: 'Pricing', href: '/services' },
+  { name: 'Contact', href: '/contact' },
+];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
+  const router = useRouter();
+
   return (
-    <nav
-      className={`${
-        isScrolled ? 'bg-[#728156] shadow-md' : 'bg-transparent'
-      } h-[70px] text-white fixed w-full top-0 z-50 transition-all duration-300`}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-6">
-        <div className="flex items-center space-x-2">
-          <span className="text-xl font-bold">Better</span>
-        </div>
-        
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="#discover" className="hover:text-[#E7F5DC] transition-colors">
-            Discover
-          </a>
-          <a href="#pricing" className="hover:text-[#E7F5DC] transition-colors">
-            Pricing
-          </a>
-          <button className="bg-[#E7F5DC] text-[#728156] px-6 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors">
-            Join Now
+    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-[#728156] shadow-lg' : 'bg-transparent'
+    }`}>
+      <Container>
+        <div className="flex items-center justify-between h-16">
+          <motion.div 
+            className="flex items-center space-x-2"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-xl font-bold text-[#E7F5DC]">Better</span>
+          </motion.div>
+          
+          <div className="hidden md:flex items-center space-x-12">
+            {NAV_LINKS.map((link, index) => (
+              <motion.a
+                key={link.name}
+                onClick={() => router.push(link.href)}
+                className="cursor-pointer text-[#E7F5DC] hover:text-white transition-colors text-center font-medium relative group"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                {link.name}
+                <motion.span
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E7F5DC] group-hover:w-full transition-all duration-300"
+                  whileHover={{ width: "100%" }}
+                />
+              </motion.a>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Button className="bg-[#E7F5DC] text-[#728156] hover:bg-opacity-90">
+                Join Now
+              </Button>
+            </motion.div>
+          </div>
+
+          <button
+            className="md:hidden text-[#E7F5DC]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
-      </div>
+      </Container>
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <motion.div 
+          className="md:hidden bg-[#728156] shadow-xl"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Container>
+            <div className="py-4 space-y-4">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.name}
+                  onClick={() => {
+                    router.push(link.href);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="block cursor-pointer text-[#E7F5DC] hover:text-white transition-colors py-2"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <Button
+                className="w-full bg-[#E7F5DC] text-[#728156] hover:bg-opacity-90"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Join Now
+              </Button>
+            </div>
+          </Container>
+        </motion.div>
+      )}
     </nav>
   );
 };
