@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.mybg {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjJFQkYyIiBzdHJva2Utd2lkdGg9IjAuMSIvPjxsaW5lIHgxPSI1IiB5MT0iMCIgeDI9IjUiIHkyPSIyMCIgc3Ryb2tlPSIjQjJFQkYyIiBzdHJva2Utd2lkdGg9IjAuMSIvPjxsaW5lIHgxPSIxMCIgeTE9IjAiIHgyPSIxMCIgeTI9IjIwIiBzdHJva2U9IiNCMkVCRjIiIHN0cm9rZS13aWR0aD0iMC4xIi8+PGxpbmUgeDE9IjE1IiB5MT0iMCIgeDI9IjE1IiB5Mj0iMjAiIHN0cm9rZT0iI0IyRUJGMiIgc3Ryb2tlLXdpZHRoPSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjUiIHgyPSIyMCIgeTI9IjUiIHN0cm9rZT0iI0IyRUJGMiIgc3Ryb2tlLXdpZHRoPSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjEwIiB4Mj0iMjAiIHkyPSIxMCIgc3Ryb2tlPSIjQjJFQkYyIiBzdHJva2Utd2lkdGg9IjAuMSIvPjxsaW5lIHgxPSIwIiB5MT0iMTUiIHgyPSIyMCIgeTI9IjE1IiBzdHJva2U9IiNCMkVCRjIiIHN0cm9rZS13aWR0aD0iMC4xIi8+PC9zdmc+");
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+}
+
+.fullscreen {
+  height: calc(100vh - 106px);
+}
+
+.search-height {
+  height: 72px;
+}
+
+.mt-81px {
+  margin-top: 81px;
+}
+
+.green-gradient {
+  @apply bg-gradient-to-r from-black via-cyan-700 to-green-800;
+}
+
+.black_btn {
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+}
+
+.green_btn {
+  @apply rounded-full border border-green-600 bg-green-600 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-xs sm:text-sm md:text-base font-inter flex items-center justify-center shadow-xl;
+}
+
+.outline_btn {
+  @apply rounded-full border border-green-500 bg-white py-1.5 px-5 text-black transition-all hover:bg-green-600 hover:text-white text-center text-xs sm:text-sm md:text-base font-inter flex items-center justify-center;
+}
+
+.logo_text {
+  @apply font-Pacifico font-semibold text-2xl tracking-wide text-white;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.flex-start {
+  @apply flex justify-start items-start;
+}
+
+.flex-end {
+  @apply flex justify-end items-center;
+}
+
+.flex-between {
+  @apply flex justify-between items-center;
+}
