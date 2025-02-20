@@ -1,64 +1,61 @@
 "use client";
+
+import React, { useState, useEffect, useCallback } from "react";
 import Nav from "@/components/Nav";
-import React, { useState, useEffect } from "react";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
-import axiosPrivate from "@/api/axios";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { axiosPrivate } from "../../api/axios";
 
-const User = () => {
-  const [selectedCommunity, setSelectedCommunity] = useState(null);
+const useCommunities = () => {
   const [communities, setCommunities] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
 
-  const addCommunity = (newCommunity) => {
-    setCommunities((prevCommunities) => [...prevCommunities, newCommunity]);
-  };
-
-  const deleteCommunity = async (communityId) => {
+  const fetchUserCommunities = useCallback(async () => {
     try {
-      await api.delete(`api/v1/communities/${communityId}`);
-      setCommunities((prevCommunities) =>
-        prevCommunities.filter((community) => community.id !== communityId)
-      );
-      if (selectedCommunity && selectedCommunity.id === communityId) {
-        setSelectedCommunity(null);
-      }
-    } catch (error) {
-      console.error("Error deleting community:", error);
-      alert("error deleting community");
-    }
-  };
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    fetchUserCommunities(userId);
+      if (!userId || !token) {
+        console.error("Missing user ID or token in localStorage");
+        return;
+      }
+
+      const response = await axiosPrivate.get(`/communities/users/${userId}`);
+      setCommunities(response.data.communities || []);
+    } catch (error) {
+      console.error("Failed to fetch user communities:", error);
+    }
   }, []);
 
-  const fetchUserCommunities = async (userId) => {
-    try {
-      const response = await axiosPrivate.get(`/communities/users/${userId}`);
-      console.log(response.data.message);
-      // const communityIds = response.data.communities;
+  useEffect(() => {
+    fetchUserCommunities();
+  }, [fetchUserCommunities]);
 
-      // const communityPromises = communityIds.map(async (communityId) => {
-      //   const communityResponse = await axiosPrivate.get(
-      //     `/communities/${communityId}`
-      //   );
-      //   return communityResponse.data;
-      // });
-      // const communitiesData = await Promise.all(communityPromises);
-      setCommunities(response.data.communities);
+  const addCommunity = useCallback(
+    (newCommunity) => setCommunities((prev) => [...prev, newCommunity]),
+    []
+  );
+
+  const deleteCommunity = useCallback(async (communityId) => {
+    try {
+      await axiosPrivate.delete(`/communities/${communityId}`);
+      setCommunities((prev) => prev.filter((c) => c.id !== communityId));
     } catch (error) {
-      console.error("Error fetching user profile:", error);
-      alert("error");
+      console.error("Failed to delete community:", error);
     }
-  };
+  }, []);
+
+  return { communities, addCommunity, deleteCommunity };
+};
+
+const User = () => {
+  const { communities, addCommunity, deleteCommunity } = useCommunities();
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
 
   return (
     <div>
       <Nav addCommunity={addCommunity} />
       <div className="flex transition-all duration-300">
+        {/* Sidebar */}
         <div
           className={`fixed inset-0 mt-81px md:mt-0 md:relative md:w-1/3 ${
             selectedCommunity
@@ -72,6 +69,8 @@ const User = () => {
             communities={communities}
           />
         </div>
+
+        {/* Main Content */}
         <div
           className={`w-full md:w-2/3 ml-0 md:ml-auto ${
             !selectedCommunity ? "hidden md:block" : "block"
@@ -95,3 +94,4 @@ const User = () => {
 };
 
 export default User;
+

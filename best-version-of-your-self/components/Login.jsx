@@ -9,9 +9,8 @@ import {
   PasswordInput,
   LoadingOverlay,
 } from "@mantine/core";
-import axiosPublic from "@/api/axios";
+import {axiosPublic} from "@/api/axios";
 import useAuth from "@/hooks/useAuth";
-import axios from "@/api/axios";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -30,7 +29,7 @@ const Login = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post(
+        const response = await axiosPublic.post(
           "/auth/login",
           JSON.stringify({ identifier, password }),
           {
@@ -44,6 +43,7 @@ const Login = () => {
 
         const accessToken = response?.data?.accessToken;
         setAuth({ identifier, password, accessToken });
+        localStorage.setItem("token", accessToken);
         localStorage.setItem("userId", response.data.user.id);
         setUsername("");
         setPassword("");

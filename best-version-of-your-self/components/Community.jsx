@@ -26,6 +26,7 @@ import { useDisclosure } from "@mantine/hooks";
 import HabitCard from "./HabitCard";
 import Background from "./Background";
 import { useRouter } from "next/navigation";
+import { axiosPrivate } from "@/api/axios";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const router = useRouter();
@@ -53,10 +54,10 @@ const Community = ({ community, onBack, deleteCommunity }) => {
   const fetchCommunityHabits = async (communityId) => {
     try {
       console.log(communityId);
-      const response = await api.get(
-        `api/v1/communities/${communityId}/habits/`
+      const response = await axiosPrivate.get(
+        `/communities/${communityId}/habits`
       );
-      const habits = response.data;
+      const habits = response.data.habits;
       console.log(habits);
       setHabits(habits);
     } catch (error) {

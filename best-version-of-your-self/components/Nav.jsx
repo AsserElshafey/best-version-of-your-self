@@ -23,13 +23,13 @@ import {
   PlusIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
+import { axiosPrivate, axiosPublic } from "@/api/axios";
 
 /* Todo:
 - populate with more data
 */
 
 const Nav = ({ addCommunity }) => {
-  const api = useAxiosPrivate();
   const router = useRouter();
   const [openedModal, { open, close }] = useDisclosure(false);
   const [opened, setOpened] = useState(false);
@@ -37,30 +37,33 @@ const Nav = ({ addCommunity }) => {
   const resetRef = useRef(null);
 
   const [username, setUser] = useState(null);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
+  const [name, setName] = useState(null);
   const [communityName, setCommunityName] = useState(null);
   const [communityDesc, setCommunityDesc] = useState(null);
+  const [communityTag, setCommunityTag] = useState(null);
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
 
       try {
-        const res = await api.post("api/v1/communities/", {
+        const res = await axiosPrivate.post("/communities", {
           name: communityName,
           description: communityDesc,
+          isPrivate: false,
+          tag: communityTag,
         });
         const newCommunity = res.data;
         addCommunity(newCommunity);
         setCommunityName("");
         setCommunityDesc("");
+        setCommunityTag("");
         close();
       } catch (error) {
         alert(error);
       }
     },
-    [communityName, communityDesc, router, addCommunity]
+    [communityName, communityDesc, router, communityTag, addCommunity]
   );
 
   const clearFile = () => {
@@ -74,10 +77,9 @@ const Nav = ({ addCommunity }) => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await api.get("api/v1/user/");
-      setUser(response.data.username);
-      setFirstName(response.data.first_name);
-      setLastName(response.data.last_name);
+      const response = await axiosPrivate.get("/users/me");
+      setUser(response.data.user.username);
+      setName(response.data.user.name);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching user profile:", error);
@@ -124,7 +126,7 @@ const Nav = ({ addCommunity }) => {
               />
               <span className="sm:block hidden">
                 <p className="font-semibold text-white">
-                  {firstName}, {lastName}
+                  {name}
                 </p>
                 <p className="text-white text-xs">{username}</p>
               </span>
@@ -221,6 +223,14 @@ const Nav = ({ addCommunity }) => {
                 withAsterisk
                 value={communityName}
                 onChange={(e) => setCommunityName(e.target.value)}
+              />
+              <TextInput
+                className="mb-5"
+                label="Community Tag"
+                placeholder="Enter community tag here"
+                withAsterisk
+                value={communityTag}
+                onChange={(e) => setCommunityTag(e.target.value)}
               />
               <Textarea
                 className="mb-20"

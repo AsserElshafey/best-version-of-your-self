@@ -65,7 +65,10 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Button className="bg-[#E7F5DC] text-[#728156] hover:bg-opacity-90">
+              <Button 
+                className="bg-[#E7F5DC] text-[#728156] hover:bg-opacity-90"
+                onClick={() => router.push('/signup')}
+              >
                 Join Now
               </Button>
             </motion.div>
@@ -105,7 +108,10 @@ const Navbar = () => {
               ))}
               <Button
                 className="w-full bg-[#E7F5DC] text-[#728156] hover:bg-opacity-90"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  router.push('/signup');
+                  setIsMobileMenuOpen(false);
+                }}
               >
                 Join Now
               </Button>
