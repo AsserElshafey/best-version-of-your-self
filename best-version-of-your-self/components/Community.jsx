@@ -26,10 +26,12 @@ import { useDisclosure } from "@mantine/hooks";
 import HabitCard from "./HabitCard";
 import Background from "./Background";
 import { useRouter } from "next/navigation";
-import { axiosPrivate } from "@/api/axios";
+import { useCommunityHabits } from "@/hooks/useCommunityHabits";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const router = useRouter();
+  const { habits, addHabit, deleteHabit } = useCommunityHabits(community.id);
+
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
   const [openedAddMember, { open: openSecond, close: closeSecond }] =
     useDisclosure(false);
@@ -38,7 +40,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
 
   const [openedMenu, setOpened] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
-  const [habits, setHabits] = useState([]);
 
   const [name, setHabitName] = useState(null);
   const [description, setHabitDesc] = useState(null);
@@ -51,55 +52,13 @@ const Community = ({ community, onBack, deleteCommunity }) => {
     closeThird();
   };
 
-  const fetchCommunityHabits = async (communityId) => {
-    try {
-      console.log(communityId);
-      const response = await axiosPrivate.get(
-        `/communities/${communityId}/habits`
-      );
-      const habits = response.data.habits;
-      console.log(habits);
-      setHabits(habits);
-    } catch (error) {
-      console.error("Error fetching community habits", error);
-      alert("error");
-    }
-  };
-
-  const addHabit = (newHabit) => {
-    setHabits((prevHabits) => [...prevHabits, newHabit]);
-  };
-
-  const deleteHabit = async (habitId) => {
-    try {
-      setHabits((prevHabits) =>
-        prevHabits.filter((habit) => habit.id !== habitId)
-      );
-
-      const response = await api.delete(
-        `api/v1/communities/${community.id}/habits/${habitId}`
-      );
-
-      if (!response.status === 204) {
-        setHabits((prevHabits) => [
-          ...prevHabits,
-          habits.find((habit) => habit.id === habitId),
-        ]);
-        throw new Error("Failed to delete habit.");
-      }
-    } catch (error) {
-      console.error("Error deleting habit:", error);
-      alert("Error deleting habit: " + error);
-    }
-  };
-
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
 
       try {
         const res = await api.post(
-          `api/v1/communities/${community.id}/habits/`,
+          `/communities/${community.id}/habits/`,
           {
             name: name,
             description: description,
@@ -123,9 +82,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
     [name, description, frequency, duration, router, addHabit]
   );
 
-  useEffect(() => {
-    fetchCommunityHabits(community.id);
-  }, [community.id]);
 
   return (
     <MantineProvider>
@@ -306,7 +262,9 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                     deg: 190,
                   }}
                   disabled={deleteButton}
-                  onClick={() => deleteCommunity(community.id)}
+                  onClick={() => {
+                    deleteCommunity(community.id)
+                    handleClose()}}
                 >
                   Delete
                 </Button>

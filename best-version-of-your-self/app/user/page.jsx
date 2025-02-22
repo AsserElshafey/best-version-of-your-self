@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import Nav from "@/components/Nav";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
-import { axiosPrivate } from "../../api/axios";
 import { useCommunities } from "../../hooks/useCommunities";
 
 const User = () => {

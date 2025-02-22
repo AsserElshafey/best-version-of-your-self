@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CommunityCard from "@/components/CommunityCard";
-import axiosPrivate from "@/api/axios";
+import { axiosPrivate } from "@/api/axios";
 
 const CommunityList = () => {
   const [communities, setCommunities] = useState([]);
