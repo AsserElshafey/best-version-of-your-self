@@ -80,7 +80,6 @@ const Nav = ({ addCommunity }) => {
       const response = await axiosPrivate.get("/users/me");
       setUser(response.data.user.username);
       setName(response.data.user.name);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user profile:", error);
       alert("error");
