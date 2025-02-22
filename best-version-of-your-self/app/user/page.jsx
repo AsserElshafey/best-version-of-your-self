@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import Nav from "@/components/Nav";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";

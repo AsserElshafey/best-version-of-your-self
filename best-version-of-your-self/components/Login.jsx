@@ -38,8 +38,6 @@ const Login = () => {
           }
         );
 
-        console.log(JSON.stringify(response?.data));
-        console.log(JSON.stringify(response?.data.access));
 
         const accessToken = response?.data?.accessToken;
         setAuth({ identifier, password, accessToken });
@@ -53,7 +51,6 @@ const Login = () => {
         router.push("/user");
       } catch (error) {
         if (error) {
-          console.log(error);
           setUsernameError("Wrong username");
           setPasswordError("Wrong password");
         } else {

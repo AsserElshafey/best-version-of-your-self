@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   MantineProvider,
   ScrollArea,
@@ -27,6 +27,7 @@ import HabitCard from "./HabitCard";
 import Background from "./Background";
 import { useRouter } from "next/navigation";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
+import { axiosPrivate } from "@/api/axios";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const router = useRouter();
@@ -57,14 +58,13 @@ const Community = ({ community, onBack, deleteCommunity }) => {
       e.preventDefault();
 
       try {
-        const res = await api.post(
-          `/communities/${community.id}/habits/`,
+        const res = await axiosPrivate.post(
+          `/communities/${community.id}/habits`,
           {
-            name: name,
+            title: name,
             description: description,
             motivation: motivation,
-            frequency: frequency,
-            duration: duration,
+            interval: "daily",
           }
         );
         const newHabit = res.data;
@@ -271,7 +271,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               </div>
             </Modal>
 
-            {/* add mebers modal */}
+            {/* add members modal */}
             <Modal
               opened={openedAddMember}
               onClose={closeSecond}
@@ -333,7 +333,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 onChange={(e) => setHabitMotivation(e.target.value)}
               />
               <div className="flex-between p-2 gap-10 mt-4">
-                <NumberInput
+                {/* <NumberInput
                   size="md"
                   radius="md"
                   label="Days per week"
@@ -343,8 +343,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   max={7}
                   value={frequency}
                   onChange={(value) => setHabitFrequency(value)}
-                />
-                <NumberInput
+                /> */}
+                {/* <NumberInput
                   size="md"
                   radius="md"
                   label="Duration"
@@ -353,7 +353,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   min={1}
                   value={duration}
                   onChange={(value) => setHabitDuration(value)}
-                />
+                /> */}
               </div>
               <div className="flex justify-end mt-8 mb-2">
                 <Button
