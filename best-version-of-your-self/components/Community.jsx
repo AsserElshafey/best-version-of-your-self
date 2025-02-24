@@ -27,7 +27,6 @@ import HabitCard from "./HabitCard";
 import Background from "./Background";
 import { useRouter } from "next/navigation";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
-import { axiosPrivate } from "@/api/axios";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const router = useRouter();
@@ -58,17 +57,12 @@ const Community = ({ community, onBack, deleteCommunity }) => {
       e.preventDefault();
 
       try {
-        const res = await axiosPrivate.post(
-          `/communities/${community.id}/habits`,
-          {
-            title: name,
-            description: description,
-            motivation: motivation,
-            interval: "daily",
-          }
-        );
-        const newHabit = res.data;
-        addHabit(newHabit);
+        await addHabit({
+          title: name,
+          description: description,
+          motivation: motivation,
+          interval: "daily",
+        });
         setHabitName("");
         setHabitDesc("");
         setHabitFrequency(1);
@@ -79,7 +73,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
         alert(error);
       }
     },
-    [name, description, frequency, duration, router, addHabit]
+    [addHabit] // 👈 REMOVE UNNECESSARY DEPENDENCIES
   );
 
 

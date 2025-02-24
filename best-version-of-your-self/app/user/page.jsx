@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Nav from "@/components/Nav";
 import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
-import { useCommunities } from "../../hooks/useCommunities";
+import { useCommunities } from "@/hooks/useCommunities";
 
 const User = () => {
   const { communities, addCommunity, deleteCommunity } = useCommunities();
