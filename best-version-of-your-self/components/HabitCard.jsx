@@ -28,7 +28,7 @@ const HabitCard = ({ data, deleteHabit }) => {
         <div className='p-4'>
           <div className="flex-between gap-1 h-10">
             <div className="flex-start">
-              <HashtagIcon className="h-7 w-7" /><p className='font-extrabold text-3xl'>{data.name}</p>
+              <HashtagIcon className="h-7 w-7" /><p className='font-extrabold text-3xl'>{data.title}</p>
             </div>
             <div>
               <Menu
