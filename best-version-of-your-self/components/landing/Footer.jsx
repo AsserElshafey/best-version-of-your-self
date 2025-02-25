@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'luc
 
 const Footer = () => {
   return (
-    <footer className="bg-[#5d6945] text-white">
+    <footer className="bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Company Info */}
@@ -11,20 +11,20 @@ const Footer = () => {
             <div className="flex items-center space-x-2">
               <span className="text-xl font-bold">Better</span>
             </div>
-            <p className="text-[#E7F5DC] opacity-80">
+            <p className="text-light opacity-80">
               Transform your life through the power of consistent habits. Join our community of achievers today.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-[#E7F5DC] transition-colors">
+              <a href="#" className="hover:text-light transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-[#E7F5DC] transition-colors">
+              <a href="#" className="hover:text-light transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-[#E7F5DC] transition-colors">
+              <a href="#" className="hover:text-light transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-[#E7F5DC] transition-colors">
+              <a href="#" className="hover:text-light transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>

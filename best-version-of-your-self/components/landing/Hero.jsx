@@ -16,14 +16,14 @@ const Hero = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl text-[#E7F5DC] mb-12 max-w-2xl animate-fade-in-up delay-200">
+          <p className="text-xl text-white mb-12 max-w-2xl animate-fade-in-up delay-200">
             Track, build, and maintain positive habits with our powerful mobile and web platform. 
             Join thousands of users achieving their goals.
           </p>
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 animate-fade-in-up delay-400">
-            <Button variant="primary" className="bg-primary text-[#728156] hover:bg-opacity-90">
+            <Button variant="primary" className="bg-primaryDark text-white hover:bg-opacity-90">
               Get Started Free
             </Button>
           </div>
