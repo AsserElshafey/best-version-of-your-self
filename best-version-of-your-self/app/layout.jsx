@@ -14,7 +14,7 @@ export const metadata = {
 
 const Rootlayout = ({ children }) => {
   return (
-    <html lang='en'>
+    <html lang='en' className={inter.className}>
       <body className='bg-gray-100'>
         <AuthProvider>
           <main>

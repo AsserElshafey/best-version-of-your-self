@@ -69,7 +69,7 @@ const Login = () => {
           visible={loading}
           overlayBlur={2}
           className="rounded-xl"
-          loaderProps={{ color: "green" }}
+          loaderProps={{ color: "grey" }}
         />
         <div className="flex gap-2 text-center md:text-left mb-10">
           <label className="mr-1 font-semibold font-inter w-full text-center text-2xl">Log into your account</label>
