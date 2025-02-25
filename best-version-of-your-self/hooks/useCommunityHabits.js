@@ -20,7 +20,6 @@ export const useCommunityHabits = (communityId) => {
   const addHabit = async (newHabit) => {
     try {
       const response = await axiosPrivate.post(`/communities/${communityId}/habits`, newHabit);
-      console.log("response", response.data);
       setHabits((prev) => [...prev, response.data.habit]);
     } catch (error) {
       console.error("Error adding habit", error);

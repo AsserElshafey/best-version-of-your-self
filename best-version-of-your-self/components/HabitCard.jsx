@@ -24,7 +24,7 @@ const HabitCard = ({ data, deleteHabit }) => {
 
   return (
     <MantineProvider>
-      <div class="rounded-lg border shadow-md w-full max-w-md md:max-w-lg mb-5 bg-white">
+      <div className="rounded-lg border shadow-md w-full max-w-md md:max-w-lg mb-5 bg-white">
         <div className='p-4'>
           <div className="flex-between gap-1 h-10">
             <div className="flex-start">
@@ -46,27 +46,18 @@ const HabitCard = ({ data, deleteHabit }) => {
 
                 <Menu.Dropdown>
                   <Menu.Label>Card Settings</Menu.Label>
-                  <Menu.Item>
-                    <Button
-                      w={175}
-                      leftSection={<PencilSquareIcon className="w-5 h-5" />}
-                      variant="gradient"
-                      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-                      onClick={open}
-                    >
-                      Edit Card
-                    </Button>
+                  <Menu.Item
+                    icon={<PencilSquareIcon className="w-5 h-5" />}
+                    onClick={open}
+                  >
+                    Edit Habit
                   </Menu.Item>
-                  <Menu.Item>
-                    <Button
-                      w={175}
-                      leftSection={<TrashIcon className="w-5 h-5" />}
-                      variant="gradient"
-                      gradient={{ from: 'red', to: 'rgba(255, 130, 130, 1)', deg: 190 }}
-                      onClick={() => deleteHabit(data.id)}
-                    >
-                      Delete Habit
-                    </Button>
+                  <Menu.Item
+                    icon={<TrashIcon className="w-5 h-5" />}
+                    onClick={() => deleteHabit(data.id)}
+                    color="red"
+                  >
+                    Delete Habit
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>

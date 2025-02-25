@@ -28,9 +28,6 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
 };
 
 const SideBar = ({ onSelectCommunity, selectedCommunity, communities}) => {
-
-
-
   return (
     <MantineProvider>
 

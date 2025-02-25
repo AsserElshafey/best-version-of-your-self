@@ -47,14 +47,13 @@ const Nav = ({ addCommunity }) => {
       e.preventDefault();
 
       try {
-        const res = await axiosPrivate.post("/communities", {
+        const response = await axiosPrivate.post("/communities", {
           name: communityName,
           description: communityDesc,
           isPrivate: false,
           tag: communityTag,
         });
-        const newCommunity = res.data;
-        addCommunity(newCommunity);
+        addCommunity(response.data.community);
         setCommunityName("");
         setCommunityDesc("");
         setCommunityTag("");

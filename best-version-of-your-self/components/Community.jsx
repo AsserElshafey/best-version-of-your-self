@@ -41,8 +41,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
   const [openedMenu, setOpened] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
 
-  const [name, setHabitName] = useState(null);
-  const [description, setHabitDesc] = useState(null);
+  const [name, setHabitName] = useState("");
+  const [description, setHabitDesc] = useState("");
   const [frequency, setHabitFrequency] = useState("");
   const [duration, setHabitDuration] = useState("");
   const [motivation, setHabitMotivation] = useState(null);
@@ -73,7 +73,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
         alert(error);
       }
     },
-    [addHabit] // 👈 REMOVE UNNECESSARY DEPENDENCIES
+    [name, description, frequency, duration, router, addHabit]
   );
 
 
@@ -125,57 +125,62 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Menu.Label>Manage community</Menu.Label>
-                  <Menu.Item>
-                    <Button
-                      w={185}
-                      leftSection={<UserPlusIcon className="w-5 h-5" />}
-                      variant="gradient"
-                      gradient={{ from: "green", to: "cyan", deg: 90 }}
-                      onClick={openSecond}
-                    >
-                      Add members
-                    </Button>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Button
-                      w={185}
-                      leftSection={<UserMinusIcon className="w-5 h-5" />}
-                      variant="gradient"
-                      gradient={{ from: "red", to: "cyan", deg: 190 }}
-                    >
-                      Remove members
-                    </Button>
-                  </Menu.Item>
+          <Menu.Label>Manage community</Menu.Label>
 
-                  <Menu.Divider />
+          {/* Fix: Move the onClick to Menu.Item */}
+          <Menu.Item
+            onClick={openSecond}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px",
+            }}
+          >
+            <UserPlusIcon className="w-5 h-5" />
+            Add members
+          </Menu.Item>
 
-                  <Menu.Item>
-                    <Button
-                      w={185}
-                      leftSection={<PencilSquareIcon className="w-5 h-5" />}
-                      variant="gradient"
-                      gradient={{ from: "blue", to: "cyan", deg: 90 }}
-                    >
-                      Edit Community
-                    </Button>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Button
-                      w={185}
-                      leftSection={<TrashIcon className="w-5 h-5" />}
-                      variant="gradient"
-                      gradient={{
-                        from: "red",
-                        to: "rgba(255, 130, 130, 1)",
-                        deg: 190,
-                      }}
-                      onClick={openThird}
-                    >
-                      Delete Community
-                    </Button>
-                  </Menu.Item>
-                </Menu.Dropdown>
+          <Menu.Item
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px",
+            }}
+          >
+            <UserMinusIcon className="w-5 h-5" />
+            Remove members
+          </Menu.Item>
+
+          <Menu.Divider />
+
+          <Menu.Item
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px",
+            }}
+          >
+            <PencilSquareIcon className="w-5 h-5" />
+            Edit Community
+          </Menu.Item>
+
+          <Menu.Item
+            onClick={openThird}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px",
+              color: "red",
+            }}
+          >
+            <TrashIcon className="w-5 h-5" />
+            Delete Community
+          </Menu.Item>
+        </Menu.Dropdown>
               </Menu>
             </div>
 
@@ -257,8 +262,9 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   }}
                   disabled={deleteButton}
                   onClick={() => {
-                    deleteCommunity(community.id)
-                    handleClose()}}
+                    deleteCommunity(community.id);
+                    onBack();
+                    handleClose();}}
                 >
                   Delete
                 </Button>
@@ -314,7 +320,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 placeholder="Input placeholder"
                 value={description}
                 onChange={(e) => setHabitDesc(e.target.value)}
-                z
               />
               <Textarea
                 className="mt-4"
