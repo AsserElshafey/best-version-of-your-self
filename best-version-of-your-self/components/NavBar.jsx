@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { name: 'Discover', href: '/about' },
   { name: 'Pricing', href: '/services' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Login', href: '/login' },
 ];
 
 const Navbar = () => {
