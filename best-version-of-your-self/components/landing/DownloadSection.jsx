@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppWindow, Apple, PlayCircle } from 'lucide-react';
 import { Container, Text, Title } from '@mantine/core';
 
@@ -44,7 +43,7 @@ const DownloadSection = () => {
           </a>
 
           <a
-            href="#"
+            href="/login"
             className="group flex items-center bg-[#E7F5DC] text-[#728156] px-8 py-4 rounded-xl hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105"
           >
             <AppWindow className="h-10 w-10 mr-4" />

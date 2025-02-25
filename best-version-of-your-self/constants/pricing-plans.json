@@ -1,0 +1,40 @@
+[
+    {
+      "name": "Free",
+      "price": "0",
+      "features": [
+        "Up to 5 habits",
+        "Basic analytics",
+        "Mobile app access",
+        "Daily reminders",
+        "Progress tracking"
+      ]
+    },
+    {
+      "name": "Pro",
+      "price": "9.99",
+      "features": [
+        "Unlimited habits",
+        "Advanced analytics",
+        "Cross-platform sync",
+        "Custom reminders",
+        "Priority support",
+        "Goal setting",
+        "Export data"
+      ],
+      "isPopular": true
+    },
+    {
+      "name": "Team",
+      "price": "19.99",
+      "features": [
+        "Everything in Pro",
+        "Team collaboration",
+        "Admin dashboard",
+        "Group challenges",
+        "Custom branding",
+        "API access",
+        "Dedicated support"
+      ]
+    }
+]

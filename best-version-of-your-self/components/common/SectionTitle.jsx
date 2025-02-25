@@ -1,6 +1,4 @@
-import React from 'react';
 import { colors } from '../../utils/colors';
-
 
 const SectionTitle = ({ 
   title, 

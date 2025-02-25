@@ -2,16 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Container from './common/Container';
-import Button from './common/Button';
+import Container from '../common/Container';
+import Button from '../common/Button';
 import { useRouter } from 'next/navigation';
+import navLinks from '@/constants/nav-links.json';
 
-const NAV_LINKS = [
-  { name: 'Discover', href: '/about' },
-  { name: 'Pricing', href: '/services' },
-  { name: 'Contact', href: '/contact' },
-  { name: 'Login', href: '/login' },
-];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,7 +40,7 @@ const Navbar = () => {
           </motion.div>
           
           <div className="hidden md:flex items-center space-x-12">
-            {NAV_LINKS.map((link, index) => (
+            {navLinks.map((link, index) => (
               <motion.a
                 key={link.name}
                 onClick={() => router.push(link.href)}

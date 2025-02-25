@@ -1,13 +1,12 @@
-import Hero from "@/components/Hero";
 import {
   MantineProvider,
 } from "@mantine/core";
-import "@mantine/carousel/styles.css";
-import Navbar from "@/components/NavBar";
-import Features from "@/components/Features";
-import Footer from "@/components/Footer";
-import Pricing from "@/components/Pricing";
-import DownloadSection from "@/components/DownloadSection";
+import Hero from "@/components/landing/Hero";
+import Navbar from "@/components/landing/NavBar";
+import Features from "@/components/landing/Features";
+import Footer from "@/components/landing/Footer";
+import Pricing from "@/components/landing/Pricing";
+import DownloadSection from "@/components/landing/DownloadSection";
 
 const Home = () => {
 
