@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import {
   MantineProvider,
   TextInput,
@@ -73,30 +72,21 @@ const Login = () => {
           loaderProps={{ color: "green" }}
         />
         <div className="flex gap-2 text-center md:text-left mb-10">
-          <Image
-            src="/images/Logo.ico"
-            alt="Prmptopia Logo"
-            width={35}
-            height={35}
-            className="object-contain rounded-full"
-          />
-          <label className="mr-1 font-bold text-xl">Login</label>
+          <label className="mr-1 font-semibold font-inter w-full text-center text-2xl">Log into your account</label>
         </div>
         <TextInput
-          className="py-2"
+          className="py-3"
           size="md"
-          radius="lg"
-          label="Username"
+          radius="md"
           placeholder="Username"
           value={identifier}
           onChange={(e) => setUsername(e.target.value)}
           error={usernameError}
         />
         <PasswordInput
-          className="w-full py-2"
+          className="w-full py-3"
           size="md"
-          radius="lg"
-          label="Enter Password"
+          radius="md"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -108,7 +98,7 @@ const Login = () => {
             <span>Remember Me</span>
           </label>
           <a
-            className="text-green-600 hover:text-green-700 hover:underline hover:underline-offset-4"
+            className="text-primary-dark hover:text-primary hover:underline hover:underline-offset-4"
             href="#"
           >
             Forgot Password?
@@ -116,7 +106,7 @@ const Login = () => {
         </div>
         <div className="text-center md:text-left">
           <button
-            className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider w-full sm:w-auto"
+            className="mt-4 bg-primary-dark font-semibold font-inter hover:bg-primary px-4 py-2 text-white uppercase rounded text-xs tracking-wider w-full sm:w-auto"
             type="submit"
             onClick={handleSubmit}
           >
@@ -126,10 +116,10 @@ const Login = () => {
         <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
           Don&apos;t have an account?{" "}
           <Link
-            className="text-red-600 hover:underline hover:underline-offset-4"
+            className="text-primary-dark font-semibold underline-offset-4 underline hover:text-primary"
             href="/signup"
           >
-            Register
+            Sign Up
           </Link>
         </div>
       </div>

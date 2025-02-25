@@ -1,5 +1,3 @@
-import { colors } from '../../utils/colors';
-
 const SectionTitle = ({ 
   title, 
   subtitle,
@@ -7,7 +5,7 @@ const SectionTitle = ({
 }) => {
   return (
     <div className={`text-center mb-16 ${className}`}>
-      <h2 className={`text-3xl font-bold text-[${colors.primary}] mb-4`}>
+      <h2 className={`text-3xl font-bold text-primary mb-4`}>
         {title}
       </h2>
       {subtitle && (
