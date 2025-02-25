@@ -1,5 +1,5 @@
 'use client'
-import HabitCard from '@/components/HabitCard'
+import HabitCard from '@/components/archive/HabitCard'
 import Nav from '@/components/Nav'
 import { useDisclosure } from '@mantine/hooks';
 import {

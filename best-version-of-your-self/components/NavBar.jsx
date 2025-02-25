@@ -67,7 +67,7 @@ const Navbar = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <Button 
-                className="bg-[#E7F5DC] text-[#728156] hover:bg-opacity-90"
+                className="bg-primary text-[#728156] hover:bg-opacity-90"
                 onClick={() => router.push('/signup')}
               >
                 Join Now

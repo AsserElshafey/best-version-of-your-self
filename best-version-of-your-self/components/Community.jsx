@@ -23,14 +23,15 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
 import { useDisclosure } from "@mantine/hooks";
-import HabitCard from "./HabitCard";
+import HabitCard from "./archive/HabitCard";
 import Background from "./Background";
 import { useRouter } from "next/navigation";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
+import HabitsChecklist from "./habits/HabitsChecklist";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const router = useRouter();
-  const { habits, addHabit, deleteHabit } = useCommunityHabits(community.id);
+  // const { habits, addHabit, deleteHabit } = useCommunityHabits(community.id);
 
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
   const [openedAddMember, { open: openSecond, close: closeSecond }] =
@@ -51,31 +52,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
     setDeleteButton(true);
     closeThird();
   };
-
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-
-      try {
-        await addHabit({
-          title: name,
-          description: description,
-          motivation: motivation,
-          interval: "daily",
-        });
-        setHabitName("");
-        setHabitDesc("");
-        setHabitFrequency(1);
-        // setHabitDuration(0);
-        setHabitMotivation("");
-        closeFirst();
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [name, description, frequency, duration, router, addHabit]
-  );
-
+ 
 
   return (
     <MantineProvider>
@@ -186,35 +163,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
 
             <div className="flex flex-col items-center justify-center mx-4 md:mx-0">
               <div className="mb-20" />
-              {habits.length === 0 ? (
-                <div className="flex-center fullscreen">
-                  No Habits added yet
-                </div>
-              ) : (
-                habits.map((habit) => (
-                  <HabitCard
-                    key={habit.id}
-                    data={habit}
-                    deleteHabit={deleteHabit}
-                  />
-                ))
-              )}
+              <HabitsChecklist communityId={community.id} />
             </div>
-            <div className="fixed bottom-10 right-4">
-              <Tooltip label="New Habit">
-                <ActionIcon
-                  variant="gradient"
-                  gradient={{ from: "green", to: "cyan", deg: 90 }}
-                  size="xl"
-                  radius="xl"
-                  aria-label="Settings"
-                  onClick={openFirst}
-                >
-                  <PlusIcon className="h-6 w-6" />
-                </ActionIcon>
-              </Tooltip>
-            </div>
-
             {/* Delete Community modal */}
             <Modal
               opened={openedDeleteCommunity}
@@ -295,78 +245,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
             </Modal>
 
             {/* New habit modal */}
-            <Modal
-              opened={opened}
-              onClose={closeFirst}
-              title="New Habit"
-              centered
-            >
-              <TextInput
-                className="mt-4"
-                size="md"
-                radius="md"
-                label="Habit Title"
-                withAsterisk
-                placeholder="Input placeholder"
-                value={name}
-                onChange={(e) => setHabitName(e.target.value)}
-              />
-              <Textarea
-                className="mt-4"
-                size="md"
-                radius="md"
-                label="Habit Details"
-                withAsterisk
-                placeholder="Input placeholder"
-                value={description}
-                onChange={(e) => setHabitDesc(e.target.value)}
-              />
-              <Textarea
-                className="mt-4"
-                size="md"
-                radius="md"
-                label="Habit Motivation"
-                withAsterisk
-                placeholder="Input placeholder"
-                value={motivation}
-                onChange={(e) => setHabitMotivation(e.target.value)}
-              />
-              <div className="flex-between p-2 gap-10 mt-4">
-                {/* <NumberInput
-                  size="md"
-                  radius="md"
-                  label="Days per week"
-                  withAsterisk
-                  placeholder="Input placeholder"
-                  min={1}
-                  max={7}
-                  value={frequency}
-                  onChange={(value) => setHabitFrequency(value)}
-                /> */}
-                {/* <NumberInput
-                  size="md"
-                  radius="md"
-                  label="Duration"
-                  withAsterisk
-                  placeholder="In Mins"
-                  min={1}
-                  value={duration}
-                  onChange={(value) => setHabitDuration(value)}
-                /> */}
-              </div>
-              <div className="flex justify-end mt-8 mb-2">
-                <Button
-                  leftSection={<PlusIcon className="w-5 h-5" />}
-                  variant="gradient"
-                  gradient={{ from: "green", to: "cyan", deg: 90 }}
-                  size="md"
-                  radius="xl"
-                  onClick={handleSubmit}
-                >
-                  Create
-                </Button>
-              </div>
-            </Modal>
           </Background>
         </div>
       </ScrollArea>

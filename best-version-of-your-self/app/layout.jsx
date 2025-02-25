@@ -3,8 +3,6 @@ import "@mantine/core/styles.css";
 
 import { AuthProvider } from '../contexts/AuthContext';
 
-import Footer from '@/components/Footer';
-
 export const metadata = {
   title: "Better",
   description: "This Website is designed to make you the greatest version of your self"
@@ -18,7 +16,6 @@ const Rootlayout = ({ children }) => {
           <main>
             {children}
           </main>
-          {/* <Footer /> */}
         </AuthProvider>
       </body>
     </html>
