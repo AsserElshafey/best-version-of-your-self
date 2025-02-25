@@ -7,11 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // Custom Font Families
       fontFamily: {
-        satoshi: ['"Satoshi"', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
-        Pacifico: ["Pacifico", 'sans-serif']
+        // satoshi: ['var(--font-satoshi)', 'sans-serif'],
+        inter: ['var(--font-inter)', 'sans-serif'],
+        Pacifico: ['var(--font-pacifico)', 'sans-serif'],
       },
+      // Custom Background Images
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -19,31 +21,14 @@ module.exports = {
         'banner-2': "url('/images/banner2.jpg')",
         'banner-3': "url('/images/banner3.jpg')",
       },
-      primary: {
-        DEFAULT: '#5d6945', // Default shade (e.g., blue-500)
-        50: '#EFF6FF',      // Lighter shades
-        100: '#DBEAFE',
-        200: '#BFDBFE',
-        300: '#93C5FD',
-        400: '#60A5FA',
-        500: '#3B82F6',
-        600: '#2563EB',
-        700: '#1D4ED8',
-        800: '#1E40AF',
-        900: '#1E3A8A',
-      },
-      secondary: {
-        DEFAULT: '#E7F5DC', // Default shade (e.g., amber-500)
-        50: '#FFFBEB',      // Lighter shades
-        100: '#FEF3C7',
-        200: '#FDE68A',
-        300: '#FCD34D',
-        400: '#FBBF24',
-        500: '#F59E0B',
-        600: '#D97706',
-        700: '#B45309',
-        800: '#92400E',
-        900: '#78350F',
+      // Custom Colors
+      colors: {
+        primary: {
+          DEFAULT: '#728156', // Default primary color
+          dark: '#5d6945',    // Darker shade for hover states
+        },
+        light: '#E7F5DC',     // Light color
+        text: '#2C3E50',      // Text color
       },
     },
   },

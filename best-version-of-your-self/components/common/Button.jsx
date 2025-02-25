@@ -9,7 +9,7 @@ const Button = ({
 }) => {
   const baseStyles = "py-3 px-6 rounded-full font-semibold transition-colors";
   const variantStyles = {
-    primary: `bg-[${colors.primary}] text-white hover:bg-[${colors.primaryDark}]`,
+    primary: `bg-[${colors.primaryDark}] text-white hover:bg-[${colors.primary}]`,
     outline: `border border-[${colors.primary}] text-[${colors.primary}] hover:bg-[${colors.primary}] hover:text-white`
   };
 
