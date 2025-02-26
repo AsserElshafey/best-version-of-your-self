@@ -31,9 +31,7 @@ import HabitsChecklist from "./habits/HabitsChecklist";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const router = useRouter();
-  // const { habits, addHabit, deleteHabit } = useCommunityHabits(community.id);
 
-  const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
   const [openedAddMember, { open: openSecond, close: closeSecond }] =
     useDisclosure(false);
   const [openedDeleteCommunity, { open: openThird, close: closeThird }] =
@@ -42,17 +40,10 @@ const Community = ({ community, onBack, deleteCommunity }) => {
   const [openedMenu, setOpened] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
 
-  const [name, setHabitName] = useState("");
-  const [description, setHabitDesc] = useState("");
-  const [frequency, setHabitFrequency] = useState("");
-  const [duration, setHabitDuration] = useState("");
-  const [motivation, setHabitMotivation] = useState(null);
-
   const handleClose = () => {
     setDeleteButton(true);
     closeThird();
   };
- 
 
   return (
     <MantineProvider>
@@ -102,62 +93,62 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-          <Menu.Label>Manage community</Menu.Label>
+                  <Menu.Label>Manage community</Menu.Label>
 
-          {/* Fix: Move the onClick to Menu.Item */}
-          <Menu.Item
-            onClick={openSecond}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px",
-            }}
-          >
-            <UserPlusIcon className="w-5 h-5" />
-            Add members
-          </Menu.Item>
+                  {/* Fix: Move the onClick to Menu.Item */}
+                  <Menu.Item
+                    onClick={openSecond}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "10px",
+                    }}
+                  >
+                    <UserPlusIcon className="w-5 h-5" />
+                    Add members
+                  </Menu.Item>
 
-          <Menu.Item
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px",
-            }}
-          >
-            <UserMinusIcon className="w-5 h-5" />
-            Remove members
-          </Menu.Item>
+                  <Menu.Item
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "10px",
+                    }}
+                  >
+                    <UserMinusIcon className="w-5 h-5" />
+                    Remove members
+                  </Menu.Item>
 
-          <Menu.Divider />
+                  <Menu.Divider />
 
-          <Menu.Item
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px",
-            }}
-          >
-            <PencilSquareIcon className="w-5 h-5" />
-            Edit Community
-          </Menu.Item>
+                  <Menu.Item
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "10px",
+                    }}
+                  >
+                    <PencilSquareIcon className="w-5 h-5" />
+                    Edit Community
+                  </Menu.Item>
 
-          <Menu.Item
-            onClick={openThird}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px",
-              color: "red",
-            }}
-          >
-            <TrashIcon className="w-5 h-5" />
-            Delete Community
-          </Menu.Item>
-        </Menu.Dropdown>
+                  <Menu.Item
+                    onClick={openThird}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "10px",
+                      color: "red",
+                    }}
+                  >
+                    <TrashIcon className="w-5 h-5" />
+                    Delete Community
+                  </Menu.Item>
+                </Menu.Dropdown>
               </Menu>
             </div>
 
@@ -214,7 +205,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   onClick={() => {
                     deleteCommunity(community.id);
                     onBack();
-                    handleClose();}}
+                    handleClose();
+                  }}
                 >
                   Delete
                 </Button>

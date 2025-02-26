@@ -51,10 +51,10 @@ const UserProfile = () => {
   return (
     <Menu position="top" width={200}>
       <Menu.Target>
-        <div className="flex items-center p-3 cursor-pointer hover:bg-gray-300 transition-colors">
-          <Avatar src="/images/gigachad.jpg" alt={name} radius="xl" size="md" />
-          <div className="ml-3">
-            <p className="font-medium text-gray-800">{username}</p>
+        <div className="flex items-center p-2 cursor-pointer hover:bg-gray-300 transition-colors">
+          <Avatar src="/images/gigachad.jpg" alt={name} radius="xl" size="sm" />
+          <div className="ml-2">
+            <p className="text-sm font-medium text-gray-800">{username}</p>
             <Text size="xs" color="dimmed">
               {email}
             </Text>
@@ -80,22 +80,18 @@ const SideBar = ({
   communities,
   addCommunity,
 }) => {
-  function signOut() {
-    localStorage.clear();
-    router.push("/");
-  }
-
-  const clearFile = () => {
-    setFile(null);
-    resetRef.current?.();
-  };
-
   const [openedModal, { open, close }] = useDisclosure(false);
   const [file, setFile] = useState(undefined);
   const resetRef = useRef(null);
   const [communityName, setCommunityName] = useState(null);
   const [communityDesc, setCommunityDesc] = useState(null);
   const [communityTag, setCommunityTag] = useState(null);
+
+  // Define the clearFile function
+  const clearFile = () => {
+    setFile(null); // Clear the file state
+    resetRef.current?.(); // Reset the file input
+  };
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -128,46 +124,46 @@ const SideBar = ({
     <MantineProvider>
       <div className="flex flex-col h-screen">
         {/* Logo Section */}
-        <div className="flex items-center justify-between bg-primary p-4 border-b">
+        <div className="flex items-center justify-between bg-primary p-3 border-b">
           <div className="flex items-center">
-            <p className="font-bold text-light text-xl">Better</p>
+            <p className="font-bold text-light text-lg">Better</p>
           </div>
         </div>
 
         {/* Navigation */}
-        <div className="bg-gray-100 p-3 border-b">
+        <div className="bg-gray-100 p-2 border-b">
           <div
-            className="flex items-center p-2 rounded hover:bg-gray-200 cursor-pointer"
+            className="flex items-center p-1 rounded hover:bg-gray-200 cursor-pointer"
             onClick={() => onSelectCommunity(null)}
           >
-            <HomeIcon className="h-6 w-6 mr-2 text-primary" />
-            <span className="font-medium">Home</span>
+            <HomeIcon className="h-5 w-5 mr-2 text-primary" />
+            <span className="text-sm font-medium">Home</span>
           </div>
         </div>
 
         {/* Search Section */}
-        <div className="flex-center gap-5 p-3 bg-gray-100 border-b shadow-md">
+        <div className="flex-center gap-3 p-2 bg-gray-100 border-b shadow-md">
           <Input
             className="w-4/5 shadow-md"
-            size="md"
-            rightSection={<MagnifyingGlassIcon className="h-6 w-6" />}
+            size="sm"
+            rightSection={<MagnifyingGlassIcon className="h-5 w-5" />}
             placeholder="Search Communities"
           />
-          <AdjustmentsHorizontalIcon className="h-7 w-7" />
+          <AdjustmentsHorizontalIcon className="h-6 w-6" />
         </div>
 
         {/* Communities Section */}
-        <div className="px-3 py-2 bg-white border-b">
+        <div className="px-2 py-1 bg-white border-b">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-gray-700 font-">
-              MY COMMUNITIES
+            <span className="text-sm font-bold text-gray-700">
+              My Communities
             </span>
             <Button
               variant="light"
               color="green"
-              size={"compact-md"}
+              size="xs"
               className="shadow-sm"
-              rightIcon={<PlusCircleIcon className="h-5 w-5" />}
+              rightIcon={<PlusCircleIcon className="h-4 w-4" />}
               onClick={handleCreateCommunity}
             >
               New
@@ -203,13 +199,14 @@ const SideBar = ({
         onClose={close}
         title="Create New Community"
         centered
+        size="sm"
       >
         <div>
-          <div className="flex items-end gap-3">
+          <div className="flex items-end gap-2">
             <Image
               src={file ? URL.createObjectURL(file) : "/images/gigachad.jpg"}
-              width={85}
-              height={85}
+              width={70}
+              height={70}
               className="rounded-full mr-2"
               alt="profile-img"
             />
@@ -218,9 +215,13 @@ const SideBar = ({
               onChange={setFile}
               accept="image/png,image/jpeg"
             >
-              {(props) => <Button {...props}>Upload image</Button>}
+              {(props) => (
+                <Button size="xs" {...props}>
+                  Upload image
+                </Button>
+              )}
             </FileButton>
-            <Button disabled={!file} color="red" onClick={clearFile}>
+            <Button size="xs" disabled={!file} color="red" onClick={clearFile}>
               Reset
             </Button>
           </div>
@@ -229,36 +230,39 @@ const SideBar = ({
               Picked file: {file.name}
             </Text>
           )}
-          <div className="mt-10">
+          <div className="mt-5">
             <TextInput
-              className="mb-5"
+              className="mb-3"
               label="Community Name"
               placeholder="Enter community name here"
               withAsterisk
+              size="sm"
               value={communityName}
               onChange={(e) => setCommunityName(e.target.value)}
             />
             <TextInput
-              className="mb-5"
+              className="mb-3"
               label="Community Tag"
               placeholder="Enter community tag here"
               withAsterisk
+              size="sm"
               value={communityTag}
               onChange={(e) => setCommunityTag(e.target.value)}
             />
             <Textarea
-              className="mb-20"
+              className="mb-10"
               label="Community description"
               placeholder="Enter the community description"
+              size="sm"
               value={communityDesc}
               onChange={(e) => setCommunityDesc(e.target.value)}
             />
-            <div className="flex justify-end my-4">
+            <div className="flex justify-end my-2">
               <Button
-                leftSection={<PlusIcon className="w-5 h-5" />}
+                leftSection={<PlusIcon className="w-4 h-4" />}
                 variant="gradient"
                 gradient={{ from: "green", to: "cyan", deg: 90 }}
-                size="md"
+                size="sm"
                 radius="xl"
                 onClick={handleSubmit}
               >

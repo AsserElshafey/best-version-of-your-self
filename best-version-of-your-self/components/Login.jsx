@@ -8,7 +8,7 @@ import {
   PasswordInput,
   LoadingOverlay,
 } from "@mantine/core";
-import {axiosPublic} from "@/api/axios";
+import { axiosPublic } from "@/api/axios";
 import useAuth from "@/hooks/useAuth";
 
 const Login = () => {
@@ -36,7 +36,6 @@ const Login = () => {
             withCredentials: false,
           }
         );
-
 
         const accessToken = response?.data?.accessToken;
         setAuth({ identifier, password, accessToken });
@@ -72,7 +71,9 @@ const Login = () => {
           loaderProps={{ color: "grey" }}
         />
         <div className="flex gap-2 text-center md:text-left mb-10">
-          <label className="mr-1 font-semibold font-inter w-full text-center text-2xl">Log into your account</label>
+          <label className="mr-1 font-bold w-full text-center text-2xl">
+            Log into your account
+          </label>
         </div>
         <TextInput
           className="py-3"
