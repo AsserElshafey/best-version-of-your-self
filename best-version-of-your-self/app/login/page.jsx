@@ -9,7 +9,7 @@ const LoginPage = () => {
       <div className='flex justify-center items-center h-screen mx-5'>
         <Login />
       </div>
-      <div className="flex fixed bg-green-700 bottom-10 right-5 p-3 rounded-full">
+      <div className="flex fixed bg-primary-dark bottom-10 right-5 p-3 rounded-full">
         <Link
           href='/'
           className="hover:scale-110 transition-all"
