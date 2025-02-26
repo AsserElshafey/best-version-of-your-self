@@ -123,9 +123,7 @@ const Nav = ({ addCommunity }) => {
                 alt="profile-img"
               />
               <span className="sm:block hidden">
-                <p className="font-semibold text-white">
-                  {name}
-                </p>
+                <p className="font-semibold text-white">{name}</p>
                 <p className="text-white text-xs">{username}</p>
               </span>
             </div>

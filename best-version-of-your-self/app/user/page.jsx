@@ -12,7 +12,7 @@ const User = () => {
 
   return (
     <div>
-      <Nav addCommunity={addCommunity} />
+      {/* <Nav addCommunity={addCommunity} /> */}
       <div className="flex transition-all duration-300">
         {/* Sidebar */}
         <div
@@ -26,6 +26,7 @@ const User = () => {
             onSelectCommunity={setSelectedCommunity}
             selectedCommunity={selectedCommunity}
             communities={communities}
+            addCommunity={addCommunity}
           />
         </div>
 
