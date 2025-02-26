@@ -131,7 +131,7 @@ const SideBar = ({
         </div>
 
         {/* Navigation */}
-        <div className="bg-gray-200 p-2 border-b">
+        <div className="bg-gray-100 p-2 border-b">
           <div
             className="flex items-center p-1 rounded hover:bg-gray-200 cursor-pointer"
             onClick={() => onSelectCommunity(null)}
@@ -142,7 +142,7 @@ const SideBar = ({
         </div>
 
         {/* Search Section */}
-        <div className="flex-center gap-3 p-2 bg-gray-200 border-b shadow-md">
+        <div className="flex-center gap-3 p-2 bg-gray-100 border-b shadow-md">
           <Input
             className="w-4/5 shadow-md"
             size="sm"
