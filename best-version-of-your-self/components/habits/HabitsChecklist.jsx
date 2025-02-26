@@ -1,16 +1,10 @@
 import { useState } from "react";
 import {
-  HashtagIcon,
-  HeartIcon,
-  NewspaperIcon,
-  CalendarDaysIcon,
-  Cog8ToothIcon,
   EllipsisHorizontalIcon,
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { ClockIcon } from "@heroicons/react/24/outline";
-import { MantineProvider, Avatar, Menu, ActionIcon } from "@mantine/core";
+import { MantineProvider, Menu, ActionIcon } from "@mantine/core";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
 import HabitModal from "@/components/habits/HabitModal";
 import { useDisclosure } from "@mantine/hooks";
@@ -53,7 +47,7 @@ const HabitsChecklist = ({ communityId }) => {
             habits.map((habit) => (
               <div
                 key={habit.id}
-                className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors flex flex-col sm:flex-row items-center justify-between space-y-3 sm:space-y-0 sm:space-x-3"
+                className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors flex sm:flex-row items-center justify-between space-y-3 sm:space-y-0 sm:space-x-3"
               >
                 {/* Left Section: Checkbox and Habit Title */}
                 <div className="flex items-center space-x-3">
@@ -88,16 +82,16 @@ const HabitsChecklist = ({ communityId }) => {
                 </div>
 
                 {/* Right Section: Streak Counter and Menu Icon */}
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center">
-                    {/* <span className="text-sm font-medium text-gray-600">
+                <div className="flex-row items-center space-x-2">
+                  {/* <div className="flex items-center">
+                    <span className="text-sm font-medium text-gray-600">
                       🏆 {habit.streak}
-                    </span> */}
-                  </div>
+                    </span>
+                  </div> */}
                   <div>
                     <Menu
                       shadow="md"
-                      width={200}
+                      width="w-48 sm: w-1/4"
                       opened={openedMenuId === habit.id} // Only open the current menu
                       onChange={(isOpen) =>
                         setOpenedMenuId(isOpen ? habit.id : null)

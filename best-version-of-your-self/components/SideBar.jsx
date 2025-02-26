@@ -11,7 +11,6 @@ import {
   Modal,
   FileButton,
 } from "@mantine/core";
-import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useDisclosure } from "@mantine/hooks";
