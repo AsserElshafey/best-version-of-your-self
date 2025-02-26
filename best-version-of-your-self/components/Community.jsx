@@ -1,16 +1,17 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import {
   MantineProvider,
   ScrollArea,
   ActionIcon,
-  Tooltip,
   Modal,
   Menu,
   TextInput,
-  Textarea,
-  NumberInput,
   Button,
+  Title,
+  Text,
+  Group,
+  Box,
 } from "@mantine/core";
 import Image from "next/image";
 import {
@@ -23,223 +24,208 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
 import { useDisclosure } from "@mantine/hooks";
-import HabitCard from "./archive/HabitCard";
 import Background from "./Background";
 import { useRouter } from "next/navigation";
-import { useCommunityHabits } from "@/hooks/useCommunityHabits";
 import HabitsChecklist from "./habits/HabitsChecklist";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
-  const router = useRouter();
-
-  const [openedAddMember, { open: openSecond, close: closeSecond }] =
+  const [openedAddMember, { open: openAddMember, close: closeAddMember }] =
     useDisclosure(false);
-  const [openedDeleteCommunity, { open: openThird, close: closeThird }] =
-    useDisclosure(false);
-
-  const [openedMenu, setOpened] = useState(false);
+  const [
+    openedDeleteCommunity,
+    { open: openDeleteCommunity, close: closeDeleteCommunity },
+  ] = useDisclosure(false);
+  const [openedMenu, setOpenedMenu] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
 
   const handleClose = () => {
     setDeleteButton(true);
-    closeThird();
+    closeDeleteCommunity();
   };
 
   return (
     <MantineProvider>
-      <ScrollArea>
-        <div className="fullscreen">
-          <Background>
-            <div className="flex-between p-2 pr-4 bg-gradient-to-r from-gray-800 via-slate-900 to-gray-700 border-b border-gray-500 fixed w-full md:w-2/3 z-50">
-              <div className="flex items-center gap-2">
-                <div className="block md:hidden">
-                  <ActionIcon
-                    variant="subtle"
-                    size="xl"
-                    radius="xl"
-                    onClick={onBack}
-                  >
-                    <ArrowLeftIcon className="h-7 w-7 text-white" />
-                  </ActionIcon>
-                </div>
-                <Image
-                  src="/images/gigachad.jpg"
-                  alt="Prmptopia Logo"
-                  width={55}
-                  height={55}
-                  className="object-contain rounded-full"
-                />
-                <p className="font-semibold text-white text-lg">
-                  {community.name}
-                </p>
-              </div>
+      <Background>
+        <div className="min-h-screen flex flex-col border-l border-gray-200 shadow-md">
+          {/* Header */}
+          <header className="bg-grey-200 shadow-sm fixed w-full md:w-4/5 z-50">
+            <div className="flex items-center justify-between px-4 py-2">
+              <Group spacing="sm">
+                <ActionIcon
+                  variant="subtle"
+                  color="primary-dark"
+                  size="lg"
+                  className="block md:hidden"
+                  onClick={onBack}
+                >
+                  <ArrowLeftIcon className="h-6 w-6 md:hidden" />
+                </ActionIcon>
+
+                <Group spacing="xs">
+                  <Image
+                    src="/images/gigachad.jpg"
+                    alt={community.name}
+                    width={45}
+                    height={45}
+                    className="object-cover rounded-full border-2 border-white"
+                  />
+                  <Title order={4} className="text-black">
+                    {community.name}
+                  </Title>
+                </Group>
+              </Group>
+
               <Menu
-                shadow="md"
-                width={210}
+                shadow="lg"
+                width={220}
                 opened={openedMenu}
-                onChange={setOpened}
+                onChange={setOpenedMenu}
                 withArrow
+                position="bottom-end"
               >
                 <Menu.Target>
                   <ActionIcon
-                    variant="outline"
+                    variant="light"
                     color="gray"
                     size="lg"
                     radius="xl"
-                    aria-label="Settings"
+                    className="hover:bg-primary-dark hover:text-white transition-colors"
                   >
-                    <EllipsisHorizontalIcon className="h-8 w-8" />
+                    <EllipsisHorizontalIcon className="h-6 w-6" />
                   </ActionIcon>
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Menu.Label>Manage community</Menu.Label>
+                  <Menu.Label fw={600}>Manage Community</Menu.Label>
 
-                  {/* Fix: Move the onClick to Menu.Item */}
                   <Menu.Item
-                    onClick={openSecond}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "10px",
-                    }}
+                    onClick={openAddMember}
+                    leftSection={<UserPlusIcon className="w-5 h-5" />}
                   >
-                    <UserPlusIcon className="w-5 h-5" />
                     Add members
                   </Menu.Item>
 
                   <Menu.Item
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "10px",
-                    }}
+                    leftSection={<UserMinusIcon className="w-5 h-5" />}
                   >
-                    <UserMinusIcon className="w-5 h-5" />
                     Remove members
                   </Menu.Item>
 
                   <Menu.Divider />
 
                   <Menu.Item
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "10px",
-                    }}
+                    leftSection={<PencilSquareIcon className="w-5 h-5" />}
                   >
-                    <PencilSquareIcon className="w-5 h-5" />
                     Edit Community
                   </Menu.Item>
 
                   <Menu.Item
-                    onClick={openThird}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "10px",
-                      color: "red",
-                    }}
+                    onClick={openDeleteCommunity}
+                    color="red"
+                    leftSection={<TrashIcon className="w-5 h-5" />}
                   >
-                    <TrashIcon className="w-5 h-5" />
                     Delete Community
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
             </div>
+          </header>
 
-            <div className="flex flex-col items-center justify-center mx-4 md:mx-0">
-              <div className="mb-20" />
-              <HabitsChecklist communityId={community.id} />
+          {/* Main Content */}
+          <main className="flex-1 mt-16 px-4 pb-8">
+            <ScrollArea className="h-full">
+              <Box pt={4}>
+                <HabitsChecklist communityId={community.id} />
+              </Box>
+            </ScrollArea>
+          </main>
+
+          {/* Modals */}
+          {/* Delete Community Modal */}
+          <Modal
+            opened={openedDeleteCommunity}
+            onClose={handleClose}
+            title={<Title order={3}>Delete Community</Title>}
+            centered
+            radius="md"
+            overlayProps={{
+              blur: 3,
+              opacity: 0.55,
+            }}
+          >
+            <div className="text-center mb-6">
+              <Text size="lg" mb={10}>
+                Are you sure you want to delete{" "}
+                <Text span fw={700} inherit>
+                  {community.name}
+                </Text>
+                ?
+              </Text>
+
+              <Text size="sm" color="gray.6">
+                Once this action is done, it cannot be reversed.
+              </Text>
             </div>
-            {/* Delete Community modal */}
-            <Modal
-              opened={openedDeleteCommunity}
-              onClose={handleClose}
-              title="Delete Community"
-              centered
-            >
-              <div className="text-center mb-4">
-                <p className="text-3xl mb-2">
-                  Are you sure you want to delete{" "}
-                  <span className="font-bold">{community.name}</span>?
-                </p>
 
-                <p>Once this action is done, it cannot be reversed.</p>
-              </div>
-              <TextInput
-                className="mb-5"
-                size="md"
-                radius="md"
-                label={`Please type '${community.name}' to enable the delete button.`}
-                placeholder={`Please type ${community.name} here`}
-                onChange={(e) => {
-                  if (e.target.value === community.name) {
-                    setDeleteButton(false);
-                  } else {
-                    setDeleteButton(true);
-                  }
+            <TextInput
+              mb="lg"
+              size="md"
+              radius="md"
+              label={`Please type '${community.name}' to enable the delete button`}
+              placeholder={community.name}
+              onChange={(e) => {
+                setDeleteButton(e.target.value !== community.name);
+              }}
+            />
+
+            <Group position="apart">
+              <Button variant="outline" color="blue" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button
+                leftSection={<TrashIcon className="w-5 h-5" />}
+                variant="filled"
+                color="red"
+                disabled={deleteButton}
+                onClick={() => {
+                  deleteCommunity(community.id);
+                  onBack();
+                  handleClose();
                 }}
-              />
-              <div className="flex-center gap-5">
-                <Button
-                  variant="gradient"
-                  gradient={{ from: "blue", to: "cyan", deg: 90 }}
-                  onClick={handleClose}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  leftSection={<TrashIcon className="w-5 h-5" />}
-                  variant="gradient"
-                  gradient={{
-                    from: "red",
-                    to: "rgba(255, 130, 130, 1)",
-                    deg: 190,
-                  }}
-                  disabled={deleteButton}
-                  onClick={() => {
-                    deleteCommunity(community.id);
-                    onBack();
-                    handleClose();
-                  }}
-                >
-                  Delete
-                </Button>
-              </div>
-            </Modal>
+              >
+                Delete
+              </Button>
+            </Group>
+          </Modal>
 
-            {/* add members modal */}
-            <Modal
-              opened={openedAddMember}
-              onClose={closeSecond}
-              title="Add Members"
-              centered
-            >
-              <TextInput
-                className="mb-5"
-                size="md"
-                radius="md"
-                label="Enter username or Email"
-                placeholder="Ex ahmed123 or ahmed@gmail.com"
-              />
+          {/* Add Members Modal */}
+          <Modal
+            opened={openedAddMember}
+            onClose={closeAddMember}
+            title={<Title order={3}>Add Members</Title>}
+            centered
+            radius="md"
+          >
+            <TextInput
+              mb="lg"
+              size="md"
+              radius="md"
+              label="Enter username or Email"
+              placeholder="Ex: ahmed123 or ahmed@gmail.com"
+            />
+
+            <Group position="right">
               <Button
                 leftSection={<PlusIcon className="w-5 h-5" />}
-                variant="gradient"
-                gradient={{ from: "green", to: "cyan", deg: 190 }}
+                variant="filled"
+                color="primary"
               >
-                Add
+                Add Member
               </Button>
-            </Modal>
-
-            {/* New habit modal */}
-          </Background>
+            </Group>
+          </Modal>
         </div>
-      </ScrollArea>
+      </Background>
     </MantineProvider>
   );
 };

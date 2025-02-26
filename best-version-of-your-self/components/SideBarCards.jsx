@@ -10,7 +10,6 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
       onClick={onClick}
       shadow="sm"
       padding="xs"
-      radius="md"
       mb="xs"
       className={`cursor-pointer transition-all duration-200 ${
         isSelected
@@ -32,7 +31,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
         <div>
           <Text
             size="sm"
-            weight={600}
+            weight={700}
             className={isSelected ? "text-white" : ""}
           >
             {title}
