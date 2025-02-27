@@ -16,7 +16,7 @@ const User = () => {
       <div className="flex transition-all duration-300">
         {/* Sidebar */}
         <div
-          className={`fixed inset-0 md:mt-0 md:relative md:w-1/5 ${
+          className={`fixed inset-0 md:relative md:w-1/3 lg:w-1/5 ${
             selectedCommunity
               ? "translate-x-[-100%] md:translate-x-0"
               : "translate-x-0"
@@ -29,7 +29,6 @@ const User = () => {
             addCommunity={addCommunity}
           />
         </div>
-
         {/* Main Content */}
         <div
           className={`w-full md:w-4/5 ml-0 md:ml-auto ${

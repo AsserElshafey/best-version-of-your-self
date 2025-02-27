@@ -65,7 +65,6 @@ const HabitsChecklist = ({ communityId }) => {
         {/* Habits List */}
         <div className="space-y-4 mb-6">
           {loading ? (
-            // Show multiple skeleton cards during initial load
             <div className="space-y-4">
               <HabitCardSkeleton />
               <HabitCardSkeleton />
