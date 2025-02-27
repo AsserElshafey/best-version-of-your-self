@@ -17,10 +17,10 @@ const HabitsChecklist = ({ communityId }) => {
 
   const toggleHabit = (id) => {
     const habit = habits.find((h) => h.id === id);
-    if (!habit) return;
+    if (!habit || !habit.habitLogs || habit.habitLogs.length === 0) return;
 
-    const newStatus =
-      habit.habitLogs.status === "completed" ? "missed" : "completed";
+    const currentStatus = habit.habitLogs[habit.habitLogs.length - 1].status;
+    const newStatus = currentStatus === "completed" ? "missed" : "completed";
     updateLog(id, localStorage.getItem("userId"), newStatus);
   };
 
