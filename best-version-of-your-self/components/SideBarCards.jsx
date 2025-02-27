@@ -20,7 +20,7 @@ const SideBarCards = ({ icon, title, desc, onClick, isSelected }) => {
         borderLeft: isSelected ? `4px solid ${theme.colors.blue[7]}` : "none",
       }}
     >
-      <Group noWrap spacing="xs" align="flex-start">
+      <Group wrap="nowrap" spacing="xs" align="flex-start">
         <Image
           src={icon}
           alt={`${title} icon`}

@@ -33,7 +33,27 @@ export const useCommunityHabits = (communityId) => {
     } catch (error) {
       console.error("Error deleting habit", error);
     }
-  };
+    };
 
-  return { habits, addHabit, deleteHabit };
+    const updateLog = async (habitId, userId, status) => {
+    try {
+      await axiosPrivate.put(`/communities/${communityId}/habits/${habitId}/logs/${userId}`, { status, notes: "updated" });
+      setHabits((prev) =>
+      prev.map((habit) =>
+        habit.id === habitId
+        ? {
+          ...habit,
+          habitLogs: habit.habitLogs.map((log) =>
+            log.userId === userId ? { ...log, status } : log
+          ),
+          }
+        : habit
+      )
+      );
+    } catch (error) {
+      console.error("Error updating log", error);
+    }
+  }
+
+  return { habits, addHabit, deleteHabit, updateLog };
 };

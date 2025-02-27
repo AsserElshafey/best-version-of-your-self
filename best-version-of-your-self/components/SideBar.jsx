@@ -163,7 +163,7 @@ const SideBar = ({
               color="green"
               size="xs"
               className="shadow-sm"
-              rightIcon={<PlusCircleIcon className="h-4 w-4" />}
+              rightSection={<PlusCircleIcon className="h-4 w-4" />}
               onClick={handleCreateCommunity}
             >
               New
