@@ -23,7 +23,7 @@ import {
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import "@mantine/core/styles.css";
-import { PlusIcon, Router } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { axiosPrivate } from "@/api/axios";
 import SideBarCards from "./SideBarCards";
 import { useRouter } from "next/navigation";
@@ -69,10 +69,16 @@ const UserProfile = () => {
         </div>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item icon={<UserCircleIcon className="h-4 w-4" />}>
+        <Menu.Item
+          icon={<UserCircleIcon className="h-4 w-4" />}
+          onClick={() => router.push("/profile")}
+        >
           Profile
         </Menu.Item>
-        <Menu.Item icon={<ArrowRightOnRectangleIcon className="h-4 w-4" />}>
+        <Menu.Item
+          icon={<ArrowRightOnRectangleIcon className="h-4 w-4" />}
+          onClick={handleLogout}
+        >
           Logout
         </Menu.Item>
       </Menu.Dropdown>
