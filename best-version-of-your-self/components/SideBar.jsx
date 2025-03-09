@@ -12,7 +12,7 @@ import {
   FileButton,
 } from "@mantine/core";
 import Image from "next/image";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, use } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import {
   MagnifyingGlassIcon,
@@ -23,14 +23,21 @@ import {
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import "@mantine/core/styles.css";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, Router } from "lucide-react";
 import { axiosPrivate } from "@/api/axios";
 import SideBarCards from "./SideBarCards";
+import { useRouter } from "next/navigation";
 
 const UserProfile = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
+  function handleLogout() {
+    localStorage.clear();
+    router.push("/login");
+  }
 
   useEffect(() => {
     fetchUserProfile();
@@ -61,7 +68,6 @@ const UserProfile = () => {
           </div>
         </div>
       </Menu.Target>
-
       <Menu.Dropdown>
         <Menu.Item icon={<UserCircleIcon className="h-4 w-4" />}>
           Profile

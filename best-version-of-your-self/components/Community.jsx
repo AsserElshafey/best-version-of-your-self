@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MantineProvider,
   ScrollArea,
@@ -12,21 +12,24 @@ import {
   Text,
   Group,
   Box,
+  Notification,
+  Table,
+  Avatar,
 } from "@mantine/core";
 import Image from "next/image";
 import {
   EllipsisHorizontalIcon,
   PlusIcon,
   UserPlusIcon,
-  UserMinusIcon,
   PencilSquareIcon,
   TrashIcon,
   ArrowLeftIcon,
+  UsersIcon,
 } from "@heroicons/react/24/solid";
 import { useDisclosure } from "@mantine/hooks";
 import Background from "./Background";
-import { useRouter } from "next/navigation";
 import HabitsChecklist from "./habits/HabitsChecklist";
+import { axiosPrivate } from "@/api/axios";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
   const [openedAddMember, { open: openAddMember, close: closeAddMember }] =
@@ -35,13 +38,117 @@ const Community = ({ community, onBack, deleteCommunity }) => {
     openedDeleteCommunity,
     { open: openDeleteCommunity, close: closeDeleteCommunity },
   ] = useDisclosure(false);
+  const [openedMembers, { open: openMembers, close: closeMembers }] =
+    useDisclosure(false);
+  const [
+    openedDeleteMember,
+    { open: openDeleteMember, close: closeDeleteMember },
+  ] = useDisclosure(false);
   const [openedMenu, setOpenedMenu] = useState(false);
   const [deleteButton, setDeleteButton] = useState(true);
+  const [memberIdentifier, setMemberIdentifier] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const [members, setMembers] = useState([]);
+  const [membersLoading, setMembersLoading] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState(null);
 
   const handleClose = () => {
     setDeleteButton(true);
     closeDeleteCommunity();
   };
+
+  const fetchMembers = async () => {
+    setMembersLoading(true);
+    try {
+      const response = await axiosPrivate.get(
+        `/communities/${community.id}/members`
+      );
+      setMembers(response.data.community.members);
+    } catch (error) {
+      setNotification({
+        type: "error",
+        message: "Failed to fetch members",
+      });
+    } finally {
+      setMembersLoading(false);
+    }
+  };
+
+  const handleAddMember = async () => {
+    if (!memberIdentifier) {
+      setNotification({
+        type: "error",
+        message: "Please enter a username or email",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await axiosPrivate.post(
+        `/communities/${community.id}/members`,
+        {
+          identifier: memberIdentifier,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setNotification({
+        type: "success",
+        message: "Member added successfully",
+      });
+      setMemberIdentifier("");
+      fetchMembers();
+      setTimeout(() => {
+        closeAddMember();
+        setNotification(null);
+      }, 2000);
+    } catch (error) {
+      setNotification({
+        type: "error",
+        message: error.response?.data?.message || "Failed to add member",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const confirmDeleteMember = (member) => {
+    setMemberToDelete(member);
+    openDeleteMember();
+  };
+
+  const handleDeleteMember = async () => {
+    if (!memberToDelete) return;
+
+    try {
+      await axiosPrivate.delete(
+        `/communities/${community.id}/members/${memberToDelete.id}`
+      );
+      setNotification({
+        type: "success",
+        message: "Member removed successfully",
+      });
+      fetchMembers();
+      closeDeleteMember();
+    } catch (error) {
+      setNotification({
+        type: "error",
+        message: error.response?.data?.message || "Failed to remove member",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (openedMembers) {
+      fetchMembers();
+    }
+  }, [openedMembers]);
 
   return (
     <MantineProvider>
@@ -74,7 +181,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   </Title>
                 </Group>
               </Group>
-
               <Menu
                 shadow="lg"
                 width={220}
@@ -94,23 +200,20 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                     <EllipsisHorizontalIcon className="h-6 w-6" />
                   </ActionIcon>
                 </Menu.Target>
-
                 <Menu.Dropdown>
                   <Menu.Label fw={600}>Manage Community</Menu.Label>
-
                   <Menu.Item
                     onClick={openAddMember}
                     leftSection={<UserPlusIcon className="w-5 h-5" />}
                   >
                     Add members
                   </Menu.Item>
-
                   <Menu.Item
-                    leftSection={<UserMinusIcon className="w-5 h-5" />}
+                    onClick={openMembers}
+                    leftSection={<UsersIcon className="w-5 h-5" />}
                   >
-                    Remove members
+                    View members
                   </Menu.Item>
-
                   <Menu.Divider />
 
                   <Menu.Item
@@ -130,7 +233,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               </Menu>
             </div>
           </header>
-
           {/* Main Content */}
           <main className="flex-1 mt-16 px-4 pb-8">
             <ScrollArea className="h-full">
@@ -139,7 +241,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               </Box>
             </ScrollArea>
           </main>
-
           {/* Modals */}
           {/* Delete Community Modal */}
           <Modal
@@ -152,6 +253,8 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               blur: 3,
               opacity: 0.55,
             }}
+            trapFocus // Ensure focus is trapped within the modal
+            closeOnClickOutside={false} // Prevent closing when clicking outside
           >
             <div className="text-center mb-6">
               <Text size="lg" mb={10}>
@@ -166,7 +269,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 Once this action is done, it cannot be reversed.
               </Text>
             </div>
-
             <TextInput
               mb="lg"
               size="md"
@@ -177,7 +279,6 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 setDeleteButton(e.target.value !== community.name);
               }}
             />
-
             <Group position="apart">
               <Button variant="outline" color="blue" onClick={handleClose}>
                 Cancel
@@ -197,14 +298,19 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               </Button>
             </Group>
           </Modal>
-
           {/* Add Members Modal */}
           <Modal
             opened={openedAddMember}
-            onClose={closeAddMember}
+            onClose={() => {
+              closeAddMember();
+              setMemberIdentifier("");
+              setNotification(null);
+            }}
             title={<Title order={3}>Add Members</Title>}
             centered
             radius="md"
+            trapFocus // Ensure focus is trapped within the modal
+            closeOnClickOutside={false} // Prevent closing when clicking outside
           >
             <TextInput
               mb="lg"
@@ -212,15 +318,134 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               radius="md"
               label="Enter username or Email"
               placeholder="Ex: ahmed123 or ahmed@gmail.com"
+              value={memberIdentifier}
+              onChange={(e) => setMemberIdentifier(e.target.value)}
+              disabled={loading}
             />
-
+            {notification && (
+              <Notification
+                key={notification.message}
+                color={notification.type === "error" ? "red" : "green"}
+                title={notification.type === "error" ? "Error" : "Success"}
+                onClose={() => setNotification(null)}
+                mb="lg"
+              >
+                {notification.message}
+              </Notification>
+            )}
             <Group position="right">
               <Button
                 leftSection={<PlusIcon className="w-5 h-5" />}
                 variant="filled"
                 color="primary"
+                onClick={handleAddMember}
+                loading={loading}
+                disabled={!memberIdentifier || loading}
               >
                 Add Member
+              </Button>
+            </Group>
+          </Modal>
+          {/* View Members Modal */}
+          <Modal
+            opened={openedMembers}
+            onClose={closeMembers}
+            title={<Title order={3}>Community Members</Title>}
+            centered
+            radius="md"
+            size="lg"
+            trapFocus
+            closeOnClickOutside={false}
+          >
+            <ScrollArea h={300}>
+              {membersLoading ? (
+                <Text align="center" py="md">
+                  Loading members...
+                </Text>
+              ) : members.length === 0 ? (
+                <Text align="center" py="md">
+                  No members found
+                </Text>
+              ) : (
+                <Table>
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Member</Table.Th>
+                      <Table.Th>Actions</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {members.map((member) => (
+                      <Table.Tr key={member.id}>
+                        <Table.Td>
+                          <Group spacing="sm">
+                            <Avatar
+                              size="sm"
+                              radius="xl"
+                              src={member.user.profile.image}
+                              alt={member.user.name || member.user.username}
+                            />
+                            <Text>
+                              {member.user.name ||
+                                member.user.username ||
+                                "Unknown"}
+                            </Text>
+                          </Group>
+                        </Table.Td>
+                        <Table.Td>
+                          <ActionIcon
+                            variant="light"
+                            color="red"
+                            onClick={() => confirmDeleteMember(member.user)}
+                          >
+                            <TrashIcon className="w-5 h-5" />
+                          </ActionIcon>
+                        </Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              )}
+            </ScrollArea>
+          </Modal>
+          {/* Delete Member Confirmation Modal */}
+          <Modal
+            opened={openedDeleteMember}
+            onClose={closeDeleteMember}
+            title={<Title order={3}>Remove Member</Title>}
+            centered
+            radius="md"
+            trapFocus
+            closeOnClickOutside={false}
+            overlayProps={{
+              blur: 3,
+              opacity: 0.55,
+            }}
+          >
+            <Text size="lg" mb={20}>
+              Are you sure you want to remove{" "}
+              <Text span fw={700} inherit>
+                {memberToDelete?.name ||
+                  memberToDelete?.username ||
+                  "this member"}
+              </Text>{" "}
+              from the community?
+            </Text>
+            <Group position="apart">
+              <Button
+                variant="outline"
+                color="blue"
+                onClick={closeDeleteMember}
+              >
+                Cancel
+              </Button>
+              <Button
+                leftSection={<TrashIcon className="w-5 h-5" />}
+                variant="filled"
+                color="red"
+                onClick={handleDeleteMember}
+              >
+                Remove
               </Button>
             </Group>
           </Modal>

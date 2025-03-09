@@ -22,11 +22,6 @@ const Rootlayout = ({ children }) => {
   return (
     <html lang="en">
       <head>
-        <script
-          defer
-          src="https://cloud.umami.is/script.js"
-          data-website-id="350cae94-af0d-4764-ac52-1cbe297332f8"
-        ></script>{" "}
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="350cae94-af0d-4764-ac52-1cbe297332f8"

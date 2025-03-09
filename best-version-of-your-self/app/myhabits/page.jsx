@@ -1,15 +1,20 @@
-'use client'
-import HabitCard from '@/components/archive/HabitCard'
-import Nav from '@/components/Nav'
-import { useDisclosure } from '@mantine/hooks';
+"use client";
+import HabitCard from "@/components/archive/HabitCard";
+import Nav from "@/components/archive/Nav";
+import { useDisclosure } from "@mantine/hooks";
 import {
-  MantineProvider, ScrollArea, ActionIcon,
-  Tooltip, Modal,
-  TextInput, Textarea, NumberInput,
-  Button
+  MantineProvider,
+  ScrollArea,
+  ActionIcon,
+  Tooltip,
+  Modal,
+  TextInput,
+  Textarea,
+  NumberInput,
+  Button,
 } from "@mantine/core";
-import { PlusIcon } from '@heroicons/react/24/solid';
-import Background from '@/components/Background';
+import { PlusIcon } from "@heroicons/react/24/solid";
+import Background from "@/components/Background";
 
 const MyHabits = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -17,10 +22,10 @@ const MyHabits = () => {
   return (
     <MantineProvider>
       <Nav />
-      <ScrollArea className='fullscreen w-full '>
+      <ScrollArea className="fullscreen w-full ">
         <Background>
-          <div className='container mx-auto p-2'>
-            <div className='grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'>
+          <div className="container mx-auto p-2">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {/* <HabitCard />
               <HabitCard />
               <HabitCard />
@@ -31,7 +36,7 @@ const MyHabits = () => {
             <Tooltip label="New Habit">
               <ActionIcon
                 variant="gradient"
-                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                gradient={{ from: "green", to: "cyan", deg: 90 }}
                 size="xl"
                 radius="xl"
                 aria-label="Settings"
@@ -45,7 +50,7 @@ const MyHabits = () => {
             <Tooltip label="Create New Habit">
               <Button
                 variant="gradient"
-                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                gradient={{ from: "green", to: "cyan", deg: 90 }}
                 size="lg"
                 radius="xl"
                 leftSection={<PlusIcon className="h-7 w-7" />}
@@ -103,7 +108,7 @@ const MyHabits = () => {
               <Button
                 leftSection={<PlusIcon className="w-5 h-5" />}
                 variant="gradient"
-                gradient={{ from: 'green', to: 'cyan', deg: 90 }}
+                gradient={{ from: "green", to: "cyan", deg: 90 }}
                 size="md"
                 radius="xl"
               >
@@ -114,7 +119,7 @@ const MyHabits = () => {
         </Background>
       </ScrollArea>
     </MantineProvider>
-  )
-}
+  );
+};
 
-export default MyHabits
+export default MyHabits;
