@@ -18,9 +18,11 @@ export default function HabitModal({ addHabit }) {
   const [opened, { open: openFirst, close: closeFirst }] = useDisclosure(false);
 
   // Form state
-  const [name, setHabitName] = useState("");
-  const [description, setHabitDesc] = useState("");
-  const [motivation, setHabitMotivation] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    motivation: "",
+  });
 
   // UI state
   const [loading, setLoading] = useState(false);
@@ -28,9 +30,11 @@ export default function HabitModal({ addHabit }) {
 
   // Reset form fields
   const resetForm = () => {
-    setHabitName("");
-    setHabitDesc("");
-    setHabitMotivation("");
+    setFormData({
+      name: "",
+      description: "",
+      motivation: "",
+    });
     setError("");
   };
 
@@ -40,13 +44,18 @@ export default function HabitModal({ addHabit }) {
     closeFirst();
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
       setError("");
 
       // Validate form
-      if (!name.trim()) {
+      if (!formData.name.trim()) {
         setError("Habit title is required");
         return;
       }
@@ -54,9 +63,9 @@ export default function HabitModal({ addHabit }) {
       setLoading(true);
       try {
         await addHabit({
-          title: name,
-          description: description,
-          motivation: motivation,
+          title: formData.name,
+          description: formData.description,
+          motivation: formData.motivation,
           interval: "daily",
         });
 
@@ -72,7 +81,7 @@ export default function HabitModal({ addHabit }) {
         setLoading(false);
       }
     },
-    [name, description, motivation, addHabit, closeFirst]
+    [formData, addHabit, closeFirst]
   );
 
   return (
@@ -119,9 +128,10 @@ export default function HabitModal({ addHabit }) {
             label="Habit Title"
             withAsterisk
             placeholder="What habit would you like to build?"
-            value={name}
-            onChange={(e) => setHabitName(e.target.value)}
-            error={!name && error ? "Required" : ""}
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            error={!formData.name && error ? "Required" : ""}
             disabled={loading}
           />
 
@@ -131,8 +141,9 @@ export default function HabitModal({ addHabit }) {
             radius="md"
             label="Habit Details"
             placeholder="Describe the details of this habit"
-            value={description}
-            onChange={(e) => setHabitDesc(e.target.value)}
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
             disabled={loading}
           />
 
@@ -142,8 +153,9 @@ export default function HabitModal({ addHabit }) {
             radius="md"
             label="Habit Motivation"
             placeholder="Why is this habit important to you?"
-            value={motivation}
-            onChange={(e) => setHabitMotivation(e.target.value)}
+            name="motivation"
+            value={formData.motivation}
+            onChange={handleChange}
             disabled={loading}
           />
 
