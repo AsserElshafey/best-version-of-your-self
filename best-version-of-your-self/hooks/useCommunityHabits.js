@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { axiosPrivate } from "../api/axios";
+import { notifications } from "@mantine/notifications";
+import { CheckIcon, XIcon } from "lucide-react";
 
 export const useCommunityHabits = (communityId) => {
   const [habits, setHabits] = useState([]);
@@ -14,6 +16,13 @@ export const useCommunityHabits = (communityId) => {
       setHabits(response.data.habits || []);
     } catch (error) {
       console.error("Error fetching community habits", error);
+      notifications.show({
+        title: 'Error',
+        message: 'Failed to fetch habits. Please try again later.',
+        color: 'red',
+        icon: <XIcon size={18} />,
+        autoClose: 5000,
+      });
     } finally {
       setLoading(false);
     }
@@ -28,9 +37,27 @@ export const useCommunityHabits = (communityId) => {
     try {
       const response = await axiosPrivate.post(`/communities/${communityId}/habits`, newHabit);
       setHabits((prev) => [...prev, response.data.habit]);
+      
+      notifications.show({
+        title: 'Success',
+        message: 'Habit added successfully!',
+        color: 'green',
+        icon: <CheckIcon size={18} />,
+        autoClose: 3000,
+      });
+      
       return response.data.habit;
     } catch (error) {
       console.error("Error adding habit", error);
+      
+      notifications.show({
+        title: 'Error',
+        message: error.response?.data?.message || 'Failed to add habit. Please try again.',
+        color: 'red',
+        icon: <XIcon size={18} />,
+        autoClose: 5000,
+      });
+      
       throw error;
     } finally {
       setActionLoading(false);
@@ -43,8 +70,25 @@ export const useCommunityHabits = (communityId) => {
     try {
       await axiosPrivate.delete(`/communities/${communityId}/habits/${habitId}`);
       setHabits((prev) => prev.filter((habit) => habit.id !== habitId));
+      
+      notifications.show({
+        title: 'Success',
+        message: 'Habit deleted successfully!',
+        color: 'green',
+        icon: <CheckIcon size={18} />,
+        autoClose: 3000,
+      });
     } catch (error) {
       console.error("Error deleting habit", error);
+      
+      notifications.show({
+        title: 'Error',
+        message: error.response?.data?.message || 'Failed to delete habit. Please try again.',
+        color: 'red',
+        icon: <XIcon size={18} />,
+        autoClose: 5000,
+      });
+      
       throw error;
     } finally {
       setActionLoading(false);
@@ -69,7 +113,7 @@ export const useCommunityHabits = (communityId) => {
             const updatedLog = response.data.log;
             
             // Check if the log already exists in habitLogs
-            const existingLogIndex = habit.habitLogs.findIndex(log => log.userId === userId);
+            const existingLogIndex = habit.habitLogs?.findIndex(log => log.userId === userId) ?? -1;
             
             let updatedLogs;
             if (existingLogIndex >= 0) {
@@ -78,7 +122,7 @@ export const useCommunityHabits = (communityId) => {
               updatedLogs[existingLogIndex] = updatedLog;
             } else {
               // Add new log
-              updatedLogs = [...habit.habitLogs, updatedLog];
+              updatedLogs = [...(habit.habitLogs || []), updatedLog];
             }
             
             return {
@@ -89,8 +133,29 @@ export const useCommunityHabits = (communityId) => {
           return habit;
         })
       );
+      
+      // Show appropriate notification based on status
+      notifications.show({
+        title: status === 'completed' ? 'Habit Completed' : 'Habit Marked Incomplete',
+        message: status === 'completed' 
+          ? 'Great job! Keep up the good work.' 
+          : 'Habit marked as incomplete.',
+        color: status === 'completed' ? 'green' : 'blue',
+        icon: status === 'completed' ? <CheckIcon size={18} /> : null,
+        autoClose: 3000,
+      });
+      
     } catch (error) {
       console.error("Error updating log", error);
+      
+      notifications.show({
+        title: 'Error',
+        message: error.response?.data?.message || 'Failed to update habit status. Please try again.',
+        color: 'red',
+        icon: <XIcon size={18} />,
+        autoClose: 5000,
+      });
+      
       throw error;
     } finally {
       setTimeout(() => {

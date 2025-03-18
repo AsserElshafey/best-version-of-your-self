@@ -1,3 +1,7 @@
+/* Import Mantine core and notification styles */
+@import '@mantine/core/styles.css';
+@import '@mantine/notifications/styles.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

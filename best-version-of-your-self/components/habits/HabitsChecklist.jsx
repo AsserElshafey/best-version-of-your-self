@@ -5,9 +5,11 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { MantineProvider, Menu, ActionIcon, Skeleton } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
 import HabitModal from "@/components/habits/HabitModal";
 import { useDisclosure } from "@mantine/hooks";
+import useAuth from "@/hooks/useAuth"; // Add auth hook import
 
 const HabitsChecklist = ({ communityId }) => {
   const {
@@ -20,15 +22,20 @@ const HabitsChecklist = ({ communityId }) => {
     actionHabitId,
   } = useCommunityHabits(communityId);
 
+  // Use auth context instead of localStorage
+  const { auth } = useAuth();
+
   const [openedMenuId, setOpenedMenuId] = useState(null);
-  const [opened, { open, close }] = useDisclosure(false);
+  const [{ open }] = useDisclosure(false);
 
   const toggleHabit = async (id) => {
     const habit = habits.find((h) => h.id === id);
     if (!habit) return;
 
     try {
-      const userId = localStorage.getItem("userId");
+      // Get userId from auth context instead of localStorage
+      const userId = auth.userId;
+      if (!userId) return;
 
       // Find the user's specific log
       const userLog = habit.habitLogs?.find((log) => log.userId === userId);
@@ -36,14 +43,8 @@ const HabitsChecklist = ({ communityId }) => {
       const newStatus = currentStatus === "completed" ? "missed" : "completed";
 
       await updateLog(id, userId, newStatus);
-
-      console.log("Updated habit status:", newStatus);
-      console.log(
-        "Habit after update:",
-        habits.find((h) => h.id === id)
-      );
     } catch (error) {
-      console.error("Error toggling habit:", error);
+      // Error handling is already done in the updateLog function
     }
   };
 
@@ -66,6 +67,7 @@ const HabitsChecklist = ({ communityId }) => {
 
   return (
     <MantineProvider>
+      <Notifications position="top-right" zIndex={2000} />
       <div className="w-full max-w-4xl mx-auto p-6 relative">
         {/* Header */}
         <div className="mb-6 mt-6 border-b border-gray-200 pb-4">
@@ -103,24 +105,21 @@ const HabitsChecklist = ({ communityId }) => {
                   <button
                     onClick={() => toggleHabit(habit.id)}
                     className={`w-6 h-6 flex items-center justify-center rounded border ${
-                      habit.habitLogs?.find(
-                        (log) => log.userId === localStorage.getItem("userId")
-                      )?.status === "completed"
+                      habit.habitLogs?.find((log) => log.userId === auth.userId)
+                        ?.status === "completed"
                         ? "bg-primary-dark border-primary text-white"
                         : "bg-white border-gray-300"
                     }`}
                     aria-label={
-                      habit.habitLogs?.find(
-                        (log) => log.userId === localStorage.getItem("userId")
-                      )?.status === "completed"
+                      habit.habitLogs?.find((log) => log.userId === auth.userId)
+                        ?.status === "completed"
                         ? "Mark as incomplete"
                         : "Mark as complete"
                     }
                     disabled={actionLoading}
                   >
-                    {habit.habitLogs?.find(
-                      (log) => log.userId === localStorage.getItem("userId")
-                    )?.status === "completed" && (
+                    {habit.habitLogs?.find((log) => log.userId === auth.userId)
+                      ?.status === "completed" && (
                       <svg
                         className="w-4 h-4"
                         fill="currentColor"
