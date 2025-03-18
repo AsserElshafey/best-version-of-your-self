@@ -25,12 +25,23 @@ const HabitsChecklist = ({ communityId }) => {
 
   const toggleHabit = async (id) => {
     const habit = habits.find((h) => h.id === id);
-    if (!habit || !habit.habitLogs || habit.habitLogs.length === 0) return;
+    if (!habit) return;
 
     try {
-      const currentStatus = habit.habitLogs[habit.habitLogs.length - 1].status;
+      const userId = localStorage.getItem("userId");
+
+      // Find the user's specific log
+      const userLog = habit.habitLogs?.find((log) => log.userId === userId);
+      const currentStatus = userLog?.status || "missed";
       const newStatus = currentStatus === "completed" ? "missed" : "completed";
-      await updateLog(id, localStorage.getItem("userId"), newStatus);
+
+      await updateLog(id, userId, newStatus);
+
+      console.log("Updated habit status:", newStatus);
+      console.log(
+        "Habit after update:",
+        habits.find((h) => h.id === id)
+      );
     } catch (error) {
       console.error("Error toggling habit:", error);
     }
@@ -92,39 +103,36 @@ const HabitsChecklist = ({ communityId }) => {
                   <button
                     onClick={() => toggleHabit(habit.id)}
                     className={`w-6 h-6 flex items-center justify-center rounded border ${
-                      habit.habitLogs &&
-                      habit.habitLogs.length > 0 &&
-                      habit.habitLogs[habit.habitLogs.length - 1].status ===
-                        "completed"
+                      habit.habitLogs?.find(
+                        (log) => log.userId === localStorage.getItem("userId")
+                      )?.status === "completed"
                         ? "bg-primary-dark border-primary text-white"
                         : "bg-white border-gray-300"
                     }`}
                     aria-label={
-                      habit.habitLogs &&
-                      habit.habitLogs.length > 0 &&
-                      habit.habitLogs[habit.habitLogs.length - 1].status ===
-                        "completed"
+                      habit.habitLogs?.find(
+                        (log) => log.userId === localStorage.getItem("userId")
+                      )?.status === "completed"
                         ? "Mark as incomplete"
                         : "Mark as complete"
                     }
                     disabled={actionLoading}
                   >
-                    {habit.habitLogs &&
-                      habit.habitLogs.length > 0 &&
-                      habit.habitLogs[habit.habitLogs.length - 1].status ===
-                        "completed" && (
-                        <svg
-                          className="w-4 h-4"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      )}
+                    {habit.habitLogs?.find(
+                      (log) => log.userId === localStorage.getItem("userId")
+                    )?.status === "completed" && (
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
                   </button>
                   <span className="text-lg text-gray-800">{habit.title}</span>
                 </div>

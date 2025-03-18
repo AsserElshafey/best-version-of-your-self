@@ -56,28 +56,43 @@ export const useCommunityHabits = (communityId) => {
     setActionLoading(true);
     setActionHabitId(habitId);
     try {
-      await axiosPrivate.put(
+      const response = await axiosPrivate.put(
         `/communities/${communityId}/habits/${habitId}/logs/${userId}`, 
         { status, notes: "updated" }
       );
       
+      // Update the habits state with the updated log
       setHabits((prev) =>
-        prev.map((habit) =>
-          habit.id === habitId
-          ? {
-            ...habit,
-            habitLogs: habit.habitLogs.map((log) =>
-              log.userId === userId ? { ...log, status } : log
-            ),
+        prev.map((habit) => {
+          if (habit.id === habitId) {
+            // Get the updated log from response
+            const updatedLog = response.data.log;
+            
+            // Check if the log already exists in habitLogs
+            const existingLogIndex = habit.habitLogs.findIndex(log => log.userId === userId);
+            
+            let updatedLogs;
+            if (existingLogIndex >= 0) {
+              // Update existing log
+              updatedLogs = [...habit.habitLogs];
+              updatedLogs[existingLogIndex] = updatedLog;
+            } else {
+              // Add new log
+              updatedLogs = [...habit.habitLogs, updatedLog];
             }
-          : habit
-        )
+            
+            return {
+              ...habit,
+              habitLogs: updatedLogs
+            };
+          }
+          return habit;
+        })
       );
     } catch (error) {
       console.error("Error updating log", error);
       throw error;
     } finally {
-      // Small delay to ensure the UI updates properly
       setTimeout(() => {
         setActionLoading(false);
         setActionHabitId(null);
