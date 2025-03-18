@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import "@mantine/core/styles.css";
 import { AuthProvider } from "../contexts/AuthContext";
-import { Inter, Pacifico } from "next/font/google";
+import { Inter } from "next/font/google";
 import Script from "next/script";
 
 // Load Google Fonts
@@ -10,7 +10,6 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
 });
-const pacifico = Pacifico({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
   title: "Better",
