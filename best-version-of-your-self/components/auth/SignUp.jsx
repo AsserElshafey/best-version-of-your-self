@@ -36,7 +36,7 @@ export default function SignUp() {
         setPassword("");
         setName("");
         setEmail("");
-        router.push("/login"); // Redirect to /login route
+        router.push("/login");
       } catch (error) {
         alert(error);
       } finally {
