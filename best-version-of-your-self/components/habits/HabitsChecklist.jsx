@@ -9,7 +9,7 @@ import { Notifications } from "@mantine/notifications";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
 import HabitModal from "@/components/habits/HabitModal";
 import { useDisclosure } from "@mantine/hooks";
-import useAuth from "@/hooks/useAuth"; // Add auth hook import
+import useAuth from "@/hooks/useAuth";
 
 const HabitsChecklist = ({ communityId }) => {
   const {
@@ -22,7 +22,7 @@ const HabitsChecklist = ({ communityId }) => {
     actionHabitId,
   } = useCommunityHabits(communityId);
 
-  // Use auth context instead of localStorage
+  // auth context
   const { auth } = useAuth();
 
   const [openedMenuId, setOpenedMenuId] = useState(null);
@@ -33,7 +33,6 @@ const HabitsChecklist = ({ communityId }) => {
     if (!habit) return;
 
     try {
-      // Get userId from auth context instead of localStorage
       const userId = auth.userId;
       if (!userId) return;
 

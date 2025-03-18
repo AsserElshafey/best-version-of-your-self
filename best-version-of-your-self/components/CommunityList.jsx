@@ -1,76 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CommunityCard from "@/components/CommunityCard";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import useAuth from "@/hooks/useAuth";
+import { useCommunities } from "@/hooks/useCommunities";
 import { Loader, Button, Alert } from "@mantine/core";
-import { AlertTriangle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { AlertTriangle, RefreshCw } from "lucide-react";
 
 const CommunityList = () => {
-  const [communities, setCommunities] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { auth, isAuthenticated } = useAuth();
-  const axiosPrivate = useAxiosPrivate();
-  const router = useRouter();
-
-  // Use the updated useAxiosPrivate hook instead of the direct import
-  useEffect(() => {
-    // Only fetch communities if user is authenticated and has a userId
-    if (auth?.userId && isAuthenticated()) {
-      getAllCommunities();
-    } else if (!isAuthenticated()) {
-      // If not authenticated, redirect to login
-      setError("Authentication required. Please log in.");
-
-      // Add a slight delay before redirect to show the error message
-      const redirectTimer = setTimeout(() => {
-        router.push("/login");
-      }, 2000);
-
-      return () => clearTimeout(redirectTimer);
-    } else {
-      setLoading(false);
-    }
-  }, [auth?.userId, isAuthenticated]);
-
-  const getAllCommunities = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await axiosPrivate.get(
-        `/communities/users/${auth.userId}`
-      );
-
-      // Ensure we're handling different response formats
-      if (Array.isArray(response.data)) {
-        setCommunities(response.data);
-      } else if (response.data && Array.isArray(response.data.communities)) {
-        setCommunities(response.data.communities);
-      } else {
-        setCommunities([]);
-        console.warn("Unexpected response format:", response.data);
-      }
-    } catch (error) {
-      console.error("Error fetching communities:", error);
-
-      // Handle token errors specifically
-      if (error?.response?.status === 401 || error?.response?.status === 403) {
-        setError("Your session has expired. Please log in again.");
-
-        // Redirect to login after a short delay
-        setTimeout(() => {
-          router.push("/login");
-        }, 2000);
-      } else {
-        setError("Failed to load communities. Please try again later.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { communities, loading, error, fetchUserCommunities } =
+    useCommunities();
 
   if (loading) {
     return (
@@ -94,9 +31,10 @@ const CommunityList = () => {
         </Alert>
 
         <Button
-          onClick={getAllCommunities}
+          onClick={fetchUserCommunities}
           variant="filled"
           color="blue"
+          leftSection={<RefreshCw size={16} />}
           className="mt-4"
         >
           Try Again

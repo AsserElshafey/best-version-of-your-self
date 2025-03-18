@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { notifications } from "@mantine/notifications";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Simple localStorage token utilities
@@ -74,9 +76,16 @@ axiosPrivate.interceptors.response.use(
         
         if (!refreshToken) {
           // No refresh token, clear everything and redirect
-          localStorage.removeItem(ACCESS_TOKEN_KEY);
-          localStorage.removeItem(REFRESH_TOKEN_KEY);
-          localStorage.removeItem(USER_ID_KEY);
+          clearAuth();
+          
+          // Show notification
+          notifications.show({
+            title: "Session Expired",
+            message: "Please log in again to continue",
+            color: "red",
+          });
+          
+          // Use Next router via window redirection (common approach for interceptors)
           window.location.href = '/login';
           return Promise.reject(error);
         }
@@ -106,6 +115,14 @@ axiosPrivate.interceptors.response.use(
         } else {
           // Refresh token invalid or expired
           clearAuth();
+          
+          // Show notification
+          notifications.show({
+            title: "Authentication Error",
+            message: "Your session has expired. Please log in again.",
+            color: "red",
+          });
+          
           window.location.href = '/login';
           return Promise.reject(error);
         }
@@ -113,6 +130,13 @@ axiosPrivate.interceptors.response.use(
         // Refresh request failed
         processQueue(refreshError);
         clearAuth();
+        
+        notifications.show({
+          title: "Authentication Error",
+          message: "Failed to refresh your session. Please log in again.",
+          color: "red",
+        });
+        
         window.location.href = '/login';
         return Promise.reject(error);
       } finally {
@@ -123,6 +147,13 @@ axiosPrivate.interceptors.response.use(
     // Handle 403 Forbidden errors
     if (error?.response?.status === 403) {
       clearAuth();
+      
+      notifications.show({
+        title: "Permission Denied",
+        message: "You don't have permission to access this resource.",
+        color: "red",
+      });
+      
       window.location.href = '/login';
     }
     
