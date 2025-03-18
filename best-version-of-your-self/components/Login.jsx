@@ -66,7 +66,10 @@ const Login = () => {
       <div className="relative sm:max-w-sm md:max-w-md w-full border border-solid p-10 rounded-xl shadow-xl bg-zinc-100 mt-10 sm:mt-20 lg:mt-0">
         <LoadingOverlay
           visible={loading}
-          overlayBlur={2}
+          overlayProps={{
+            blur: 2,
+            opacity: 0.5,
+          }}
           className="rounded-xl"
           loaderProps={{ color: "grey" }}
         />
