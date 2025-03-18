@@ -49,7 +49,13 @@ export const metadata = {
   title: "Better",
   description:
     "This Website is designed to make you the greatest version of yourself",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+// Separate viewport export as per Next.js 13+ requirements
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {
@@ -62,7 +68,7 @@ export default function RootLayout({ children }) {
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${inter.className} bg-gray-100`}>
+      <body className="bg-gray-100 min-h-screen">
         <AuthProvider>
           <MantineProvider theme={theme}>
             <main>{children}</main>
