@@ -30,8 +30,11 @@ import { useDisclosure } from "@mantine/hooks";
 import Background from "./Background";
 import HabitsChecklist from "./habits/HabitsChecklist";
 import { axiosPrivate } from "@/api/axios";
+import useAuth from "@/hooks/useAuth";
 
 const Community = ({ community, onBack, deleteCommunity }) => {
+  const { auth } = useAuth();
+
   const [openedAddMember, { open: openAddMember, close: closeAddMember }] =
     useDisclosure(false);
   const [
@@ -52,6 +55,14 @@ const Community = ({ community, onBack, deleteCommunity }) => {
   const [members, setMembers] = useState([]);
   const [membersLoading, setMembersLoading] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
+  const [isOwner, setIsOwner] = useState(false); // Add state for owner check
+
+  // Check if current user is the owner
+  useEffect(() => {
+    if (community && auth?.userId) {
+      setIsOwner(community.creator === auth.userId);
+    }
+  }, [community, auth?.userId]);
 
   const handleClose = () => {
     setDeleteButton(true);
@@ -181,56 +192,64 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                   </Title>
                 </Group>
               </Group>
-              <Menu
-                shadow="lg"
-                width={220}
-                opened={openedMenu}
-                onChange={setOpenedMenu}
-                withArrow
-                position="bottom-end"
-              >
-                <Menu.Target>
-                  <ActionIcon
-                    variant="light"
-                    color="gray"
-                    size="lg"
-                    radius="xl"
-                    className="hover:bg-primary-dark hover:text-white transition-colors"
-                  >
-                    <EllipsisHorizontalIcon className="h-6 w-6" />
-                  </ActionIcon>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Label fw={600}>Manage Community</Menu.Label>
-                  <Menu.Item
-                    onClick={openAddMember}
-                    leftSection={<UserPlusIcon className="w-5 h-5" />}
-                  >
-                    Add members
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={openMembers}
-                    leftSection={<UsersIcon className="w-5 h-5" />}
-                  >
-                    View members
-                  </Menu.Item>
-                  <Menu.Divider />
+              {/* Only show the menu if user is authenticated */}
+              {auth?.userId && (
+                <Menu
+                  shadow="lg"
+                  width={220}
+                  opened={openedMenu}
+                  onChange={setOpenedMenu}
+                  withArrow
+                  position="bottom-end"
+                >
+                  <Menu.Target>
+                    <ActionIcon
+                      variant="light"
+                      color="gray"
+                      size="lg"
+                      radius="xl"
+                      className="hover:bg-primary-dark hover:text-white transition-colors"
+                    >
+                      <EllipsisHorizontalIcon className="h-6 w-6" />
+                    </ActionIcon>
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Label fw={600}>Manage Community</Menu.Label>
+                    <Menu.Item
+                      onClick={openAddMember}
+                      leftSection={<UserPlusIcon className="w-5 h-5" />}
+                    >
+                      Add members
+                    </Menu.Item>
+                    <Menu.Item
+                      onClick={openMembers}
+                      leftSection={<UsersIcon className="w-5 h-5" />}
+                    >
+                      View members
+                    </Menu.Item>
+                    <Menu.Divider />
 
-                  <Menu.Item
-                    leftSection={<PencilSquareIcon className="w-5 h-5" />}
-                  >
-                    Edit Community
-                  </Menu.Item>
+                    {/* Only show edit/delete for owner */}
+                    {isOwner && (
+                      <>
+                        <Menu.Item
+                          leftSection={<PencilSquareIcon className="w-5 h-5" />}
+                        >
+                          Edit Community
+                        </Menu.Item>
 
-                  <Menu.Item
-                    onClick={openDeleteCommunity}
-                    color="red"
-                    leftSection={<TrashIcon className="w-5 h-5" />}
-                  >
-                    Delete Community
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+                        <Menu.Item
+                          onClick={openDeleteCommunity}
+                          color="red"
+                          leftSection={<TrashIcon className="w-5 h-5" />}
+                        >
+                          Delete Community
+                        </Menu.Item>
+                      </>
+                    )}
+                  </Menu.Dropdown>
+                </Menu>
+              )}
             </div>
           </header>
           {/* Main Content */}
@@ -241,12 +260,13 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               </Box>
             </ScrollArea>
           </main>
-          {/* Modals */}
+
+          {/* Rest of the Modals - no changes needed */}
           {/* Delete Community Modal */}
           <Modal
             opened={openedDeleteCommunity}
             onClose={handleClose}
-            title={<Title order={3}>Delete Community</Title>}
+            title="Delete Community"
             centered
             radius="md"
             overlayProps={{
@@ -306,7 +326,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
               setMemberIdentifier("");
               setNotification(null);
             }}
-            title={<Title order={3}>Add Members</Title>}
+            title="Add Members"
             centered
             radius="md"
             trapFocus // Ensure focus is trapped within the modal
@@ -338,6 +358,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
                 leftSection={<PlusIcon className="w-5 h-5" />}
                 variant="filled"
                 color="primary"
+                className="hover:bg-primary-dark transition-colors" // Just added hover effect
                 onClick={handleAddMember}
                 loading={loading}
                 disabled={!memberIdentifier || loading}
@@ -350,7 +371,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
           <Modal
             opened={openedMembers}
             onClose={closeMembers}
-            title={<Title order={3}>Community Members</Title>}
+            title="Community Members"
             centered
             radius="md"
             size="lg"
@@ -412,7 +433,7 @@ const Community = ({ community, onBack, deleteCommunity }) => {
           <Modal
             opened={openedDeleteMember}
             onClose={closeDeleteMember}
-            title={<Title order={3}>Remove Member</Title>}
+            title="Remove Member"
             centered
             radius="md"
             trapFocus

@@ -7,24 +7,24 @@ import {
   TextInput,
   PasswordInput,
   LoadingOverlay,
+  Alert,
 } from "@mantine/core";
 import { axiosPublic } from "@/api/axios";
 import useAuth from "@/hooks/useAuth";
+import { AlertTriangle } from "lucide-react";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, logout } = useAuth();
   const [identifier, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      setUsernameError("");
-      setPasswordError("");
+      setError("");
       setLoading(true);
 
       try {
@@ -33,33 +33,49 @@ const Login = () => {
           JSON.stringify({ identifier, password }),
           {
             headers: { "Content-Type": "application/json" },
-            withCredentials: false,
           }
         );
 
         const accessToken = response?.data?.accessToken;
-        setAuth({ identifier, password, accessToken });
-        localStorage.setItem("token", accessToken);
-        localStorage.setItem("userId", response.data.user.id);
+        const refreshToken = response?.data?.refreshToken;
+        const userId = response?.data?.user?.id;
+
+        if (!accessToken) {
+          throw new Error("No access token returned from server");
+        }
+
+        // Store auth data and update context
+        setAuth({
+          accessToken,
+          refreshToken,
+          userId,
+          user: response.data.user,
+        });
+
+        // Clear form fields
         setUsername("");
         setPassword("");
-        setLoading(false);
 
         // Redirect to user page
         router.push("/user");
       } catch (error) {
-        if (error) {
-          setUsernameError("Wrong username");
-          setPasswordError("Wrong password");
-        } else {
-          alert("An error occurred. Please try again.");
-        }
+        // Error handling
+        setError(
+          error.response?.data?.message ||
+            "Login failed. Please check your credentials."
+        );
       } finally {
         setLoading(false);
       }
     },
-    [identifier, password, router]
+    [identifier, password, router, setAuth]
   );
+
+  // Example modification for logout function
+  const handleLogout = () => {
+    // Use the logout function from auth context instead of directly manipulating localStorage
+    logout();
+  };
 
   return (
     <MantineProvider>
@@ -78,6 +94,20 @@ const Login = () => {
             Log into your account
           </label>
         </div>
+
+        {error && (
+          <Alert
+            icon={<AlertTriangle size={16} />}
+            title="Authentication Error"
+            color="red"
+            className="mb-4"
+            withCloseButton
+            onClose={() => setError("")}
+          >
+            {error}
+          </Alert>
+        )}
+
         <TextInput
           className="py-3"
           size="md"
@@ -85,7 +115,8 @@ const Login = () => {
           placeholder="Username"
           value={identifier}
           onChange={(e) => setUsername(e.target.value)}
-          error={usernameError}
+          error={error ? " " : ""}
+          required
         />
         <PasswordInput
           className="w-full py-3"
@@ -94,7 +125,8 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          error={passwordError}
+          error={error ? " " : ""}
+          required
         />
         <div className="mt-4 flex justify-between font-semibold text-sm">
           <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
@@ -113,6 +145,7 @@ const Login = () => {
             className="mt-4 bg-primary-dark font-semibold font-inter hover:bg-primary px-4 py-2 text-white uppercase rounded text-xs tracking-wider w-full sm:w-auto"
             type="submit"
             onClick={handleSubmit}
+            disabled={loading}
           >
             Login
           </button>

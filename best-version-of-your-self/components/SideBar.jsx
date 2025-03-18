@@ -12,7 +12,7 @@ import {
   FileButton,
 } from "@mantine/core";
 import Image from "next/image";
-import { useState, useEffect, useRef, useCallback, use } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import {
   MagnifyingGlassIcon,
@@ -25,18 +25,20 @@ import {
 import "@mantine/core/styles.css";
 import { PlusIcon } from "lucide-react";
 import { axiosPrivate } from "@/api/axios";
+import useAuth from "@/hooks/useAuth"; // Import auth hook
 import SideBarCards from "./SideBarCards";
 import { useRouter } from "next/navigation";
 
 const UserProfile = () => {
   const router = useRouter();
+  const { logout, auth } = useAuth(); // Use the auth hook
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  // Use the auth.logout function instead of directly manipulating localStorage
   function handleLogout() {
-    localStorage.clear();
-    router.push("/login");
+    logout(); // This will handle token cleanup and redirect
   }
 
   useEffect(() => {
@@ -51,7 +53,8 @@ const UserProfile = () => {
       setEmail(response.data.user.email);
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      alert("error");
+      // Replace alert with more user-friendly error handling
+      // Consider using a toast notification system
     }
   };
 
@@ -61,9 +64,11 @@ const UserProfile = () => {
         <div className="flex items-center p-2 cursor-pointer hover:bg-gray-300 transition-colors">
           <Avatar src="/images/gigachad.jpg" alt={name} radius="xl" size="sm" />
           <div className="ml-2">
-            <p className="text-sm font-medium text-gray-800">{username}</p>
+            <p className="text-sm font-medium text-gray-800">
+              {username || auth?.user?.username}
+            </p>
             <Text size="xs" color="dimmed">
-              {email}
+              {email || auth?.user?.email}
             </Text>
           </div>
         </div>
@@ -92,12 +97,15 @@ const SideBar = ({
   communities,
   addCommunity,
 }) => {
+  const { auth } = useAuth(); // Add auth hook
   const [openedModal, { open, close }] = useDisclosure(false);
   const [file, setFile] = useState(undefined);
   const resetRef = useRef(null);
-  const [communityName, setCommunityName] = useState(null);
-  const [communityDesc, setCommunityDesc] = useState(null);
-  const [communityTag, setCommunityTag] = useState(null);
+  const [communityName, setCommunityName] = useState("");
+  const [communityDesc, setCommunityDesc] = useState("");
+  const [communityTag, setCommunityTag] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   // Define the clearFile function
   const clearFile = () => {
@@ -108,6 +116,14 @@ const SideBar = ({
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
+      setError("");
+
+      if (!communityName) {
+        setError("Community name is required");
+        return;
+      }
+
+      setIsSubmitting(true);
 
       try {
         const response = await axiosPrivate.post("/communities", {
@@ -116,19 +132,24 @@ const SideBar = ({
           isPrivate: false,
           tag: communityTag,
         });
+
         addCommunity(response.data.community);
         setCommunityName("");
         setCommunityDesc("");
         setCommunityTag("");
         close();
       } catch (error) {
-        alert(error);
+        setError(error.response?.data?.message || "Failed to create community");
+        console.error("Error creating community:", error);
+      } finally {
+        setIsSubmitting(false);
       }
     },
-    [communityName, communityDesc, communityTag, addCommunity]
+    [communityName, communityDesc, communityTag, addCommunity, close]
   );
 
   const handleCreateCommunity = () => {
+    setError("");
     open();
   };
 
@@ -243,6 +264,7 @@ const SideBar = ({
             </Text>
           )}
           <div className="mt-5">
+            {error && <div className="text-red-500 text-sm mb-3">{error}</div>}
             <TextInput
               className="mb-3"
               label="Community Name"
@@ -251,6 +273,7 @@ const SideBar = ({
               size="sm"
               value={communityName}
               onChange={(e) => setCommunityName(e.target.value)}
+              error={!communityName && error ? "Required" : ""}
             />
             <TextInput
               className="mb-3"
@@ -277,6 +300,7 @@ const SideBar = ({
                 size="sm"
                 radius="xl"
                 onClick={handleSubmit}
+                loading={isSubmitting}
               >
                 Create
               </Button>

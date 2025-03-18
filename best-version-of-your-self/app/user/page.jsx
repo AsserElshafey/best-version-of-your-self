@@ -5,8 +5,9 @@ import SideBar from "@/components/SideBar";
 import Community from "@/components/Community";
 import { useCommunities } from "@/hooks/useCommunities";
 import { MantineProvider } from "@mantine/core";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
-const User = () => {
+const UserContent = () => {
   const { communities, addCommunity, deleteCommunity } = useCommunities();
   const [selectedCommunity, setSelectedCommunity] = useState(null);
 
@@ -49,6 +50,17 @@ const User = () => {
           </div>
         </div>
       </div>
+    </MantineProvider>
+  );
+};
+
+// Wrap the main component with ProtectedRoute
+const User = () => {
+  return (
+    <MantineProvider>
+      <ProtectedRoute>
+        <UserContent />
+      </ProtectedRoute>
     </MantineProvider>
   );
 };
