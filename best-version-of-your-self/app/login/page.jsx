@@ -1,5 +1,5 @@
 import Background from '@/components/Background'
-import Login from '@/components/Login'
+import Login from '@/components/auth/Login'
 import { HomeIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
