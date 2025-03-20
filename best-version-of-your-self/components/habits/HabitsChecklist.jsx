@@ -64,6 +64,24 @@ const HabitsChecklist = ({ communityId }) => {
     </div>
   );
 
+  // Add this helper function before the return statement
+  const getLatestUserLog = (logs, userId) => {
+    if (!logs || logs.length === 0 || !userId) return null;
+
+    // Filter logs by userId
+    const userLogs = logs.filter((log) => log.userId === userId);
+
+    if (userLogs.length === 0) return null;
+
+    // Sort logs by date descending (newest first)
+    const sortedLogs = userLogs.sort((a, b) => {
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
+    });
+
+    // Return the most recent log
+    return sortedLogs[0];
+  };
+
   return (
     <MantineProvider>
       <Notifications position="top-right" zIndex={2000} />
@@ -104,21 +122,21 @@ const HabitsChecklist = ({ communityId }) => {
                   <button
                     onClick={() => toggleHabit(habit.id)}
                     className={`w-6 h-6 flex items-center justify-center rounded border ${
-                      habit.habitLogs?.find((log) => log.userId === auth.userId)
-                        ?.status === "completed"
+                      getLatestUserLog(habit.habitLogs, auth.userId)?.status ===
+                      "completed"
                         ? "bg-primary-dark border-primary text-white"
                         : "bg-white border-gray-300"
                     }`}
                     aria-label={
-                      habit.habitLogs?.find((log) => log.userId === auth.userId)
-                        ?.status === "completed"
+                      getLatestUserLog(habit.habitLogs, auth.userId)?.status ===
+                      "completed"
                         ? "Mark as incomplete"
                         : "Mark as complete"
                     }
                     disabled={actionLoading}
                   >
-                    {habit.habitLogs?.find((log) => log.userId === auth.userId)
-                      ?.status === "completed" && (
+                    {getLatestUserLog(habit.habitLogs, auth.userId)?.status ===
+                      "completed" && (
                       <svg
                         className="w-4 h-4"
                         fill="currentColor"
