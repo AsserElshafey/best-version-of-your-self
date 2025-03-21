@@ -9,6 +9,28 @@ export const useCommunityHabits = (communityId) => {
   const [actionLoading, setActionLoading] = useState(false);
   const [actionHabitId, setActionHabitId] = useState(null);
 
+  // Simplified notification handler
+  const showNotification = (isSuccess, message, options = {}) => {
+    notifications.show({
+      title: isSuccess ? 'Success' : 'Error',
+      message,
+      color: isSuccess ? options.color || 'green' : 'red',
+      icon: isSuccess ? (options.icon || <CheckIcon size={18} />) : <XIcon size={18} />,
+      autoClose: isSuccess ? 3000 : 5000,
+    });
+  };
+
+  // Simplified API action handler
+  const performAction = async (actionFn) => {
+    try {
+      return await actionFn();
+    } catch (error) {
+      console.error("API Error:", error);
+      showNotification(false, error.response?.data?.message || 'Operation failed. Please try again.');
+      throw error;
+    }
+  };
+
   const fetchHabits = useCallback(async () => {
     setLoading(true);
     try {
@@ -16,13 +38,7 @@ export const useCommunityHabits = (communityId) => {
       setHabits(response.data.habits || []);
     } catch (error) {
       console.error("Error fetching community habits", error);
-      notifications.show({
-        title: 'Error',
-        message: 'Failed to fetch habits. Please try again later.',
-        color: 'red',
-        icon: <XIcon size={18} />,
-        autoClose: 5000,
-      });
+      showNotification(false, 'Failed to fetch habits. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -35,30 +51,13 @@ export const useCommunityHabits = (communityId) => {
   const addHabit = async (newHabit) => {
     setActionLoading(true);
     try {
-      const response = await axiosPrivate.post(`/communities/${communityId}/habits`, newHabit);
-      setHabits((prev) => [...prev, response.data.habit]);
-      
-      notifications.show({
-        title: 'Success',
-        message: 'Habit added successfully!',
-        color: 'green',
-        icon: <CheckIcon size={18} />,
-        autoClose: 3000,
+      const result = await performAction(async () => {
+        const response = await axiosPrivate.post(`/communities/${communityId}/habits`, newHabit);
+        setHabits((prev) => [...prev, response.data.habit]);
+        showNotification(true, 'Habit added successfully!');
+        return response.data.habit;
       });
-      
-      return response.data.habit;
-    } catch (error) {
-      console.error("Error adding habit", error);
-      
-      notifications.show({
-        title: 'Error',
-        message: error.response?.data?.message || 'Failed to add habit. Please try again.',
-        color: 'red',
-        icon: <XIcon size={18} />,
-        autoClose: 5000,
-      });
-      
-      throw error;
+      return result;
     } finally {
       setActionLoading(false);
     }
@@ -68,28 +67,11 @@ export const useCommunityHabits = (communityId) => {
     setActionLoading(true);
     setActionHabitId(habitId);
     try {
-      await axiosPrivate.delete(`/communities/${communityId}/habits/${habitId}`);
-      setHabits((prev) => prev.filter((habit) => habit.id !== habitId));
-      
-      notifications.show({
-        title: 'Success',
-        message: 'Habit deleted successfully!',
-        color: 'green',
-        icon: <CheckIcon size={18} />,
-        autoClose: 3000,
+      await performAction(async () => {
+        await axiosPrivate.delete(`/communities/${communityId}/habits/${habitId}`);
+        setHabits((prev) => prev.filter((habit) => habit.id !== habitId));
+        showNotification(true, 'Habit deleted successfully!');
       });
-    } catch (error) {
-      console.error("Error deleting habit", error);
-      
-      notifications.show({
-        title: 'Error',
-        message: error.response?.data?.message || 'Failed to delete habit. Please try again.',
-        color: 'red',
-        icon: <XIcon size={18} />,
-        autoClose: 5000,
-      });
-      
-      throw error;
     } finally {
       setActionLoading(false);
       setActionHabitId(null);
@@ -100,63 +82,38 @@ export const useCommunityHabits = (communityId) => {
     setActionLoading(true);
     setActionHabitId(habitId);
     try {
-      const response = await axiosPrivate.put(
-        `/communities/${communityId}/habits/${habitId}/logs/${userId}`, 
-        { status, notes: "updated" }
-      );
-      
-      // Update the habits state with the updated log
-      setHabits((prev) =>
-        prev.map((habit) => {
-          if (habit.id === habitId) {
-            // Get the updated log from response
-            const updatedLog = response.data.log;
-            
-            // Check if the log already exists in habitLogs
-            const existingLogIndex = habit.habitLogs?.findIndex(log => log.userId === userId) ?? -1;
-            
-            let updatedLogs;
-            if (existingLogIndex >= 0) {
-              // Update existing log
-              updatedLogs = [...habit.habitLogs];
-              updatedLogs[existingLogIndex] = updatedLog;
-            } else {
-              // Add new log
-              updatedLogs = [...(habit.habitLogs || []), updatedLog];
+      await performAction(async () => {
+        const response = await axiosPrivate.put(
+          `/communities/${communityId}/habits/${habitId}/logs/${userId}`, 
+          { status, notes: "updated" }
+        );
+        
+        // Update the habits state with the updated log
+        setHabits((prev) =>
+          prev.map((habit) => {
+            if (habit.id === habitId) {
+              const updatedLog = response.data.log;
+              const existingLogIndex = habit.habitLogs?.findIndex(log => log.userId === userId) ?? -1;
+              
+              const updatedLogs = existingLogIndex >= 0
+                ? habit.habitLogs.map((log, i) => i === existingLogIndex ? updatedLog : log)
+                : [...(habit.habitLogs || []), updatedLog];
+              
+              return { ...habit, habitLogs: updatedLogs };
             }
-            
-            return {
-              ...habit,
-              habitLogs: updatedLogs
-            };
+            return habit;
+          })
+        );
+        
+        // Show status-specific notification
+        showNotification(true, 
+          status === 'completed' ? 'Great job! Keep up the good work.' : 'Habit marked as incomplete.',
+          { 
+            color: status === 'completed' ? 'green' : 'blue',
+            icon: status === 'completed' ? <CheckIcon size={18} /> : null
           }
-          return habit;
-        })
-      );
-      
-      // Show appropriate notification based on status
-      notifications.show({
-        title: status === 'completed' ? 'Habit Completed' : 'Habit Marked Incomplete',
-        message: status === 'completed' 
-          ? 'Great job! Keep up the good work.' 
-          : 'Habit marked as incomplete.',
-        color: status === 'completed' ? 'green' : 'blue',
-        icon: status === 'completed' ? <CheckIcon size={18} /> : null,
-        autoClose: 3000,
+        );
       });
-      
-    } catch (error) {
-      console.error("Error updating log", error);
-      
-      notifications.show({
-        title: 'Error',
-        message: error.response?.data?.message || 'Failed to update habit status. Please try again.',
-        color: 'red',
-        icon: <XIcon size={18} />,
-        autoClose: 5000,
-      });
-      
-      throw error;
     } finally {
       setTimeout(() => {
         setActionLoading(false);
