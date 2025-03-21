@@ -4,7 +4,7 @@ import {
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { MantineProvider, Menu, ActionIcon, Skeleton } from "@mantine/core";
+import { Menu, ActionIcon, Skeleton } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { useCommunityHabits } from "@/hooks/useCommunityHabits";
 import HabitModal from "@/components/habits/HabitModal";
@@ -36,9 +36,11 @@ const HabitsChecklist = ({ communityId }) => {
       const userId = auth.userId;
       if (!userId) return;
 
-      // Find the user's specific log
-      const userLog = habit.habitLogs?.find((log) => log.userId === userId);
-      const currentStatus = userLog?.status || "missed";
+      // Get the current status using the same helper function used for rendering
+      const latestUserLog = getLatestUserLog(habit.habitLogs, userId);
+      const currentStatus = latestUserLog?.status;
+
+      // If currentStatus is "completed", set to "missed", otherwise set to "completed"
       const newStatus = currentStatus === "completed" ? "missed" : "completed";
 
       await updateLog(id, userId, newStatus);
@@ -83,7 +85,7 @@ const HabitsChecklist = ({ communityId }) => {
   };
 
   return (
-    <MantineProvider>
+    <>
       <Notifications position="top-right" zIndex={2000} />
       <div className="w-full max-w-4xl mx-auto p-6 relative">
         {/* Header */}
@@ -203,7 +205,7 @@ const HabitsChecklist = ({ communityId }) => {
         </div>
         <HabitModal addHabit={addHabit} />
       </div>
-    </MantineProvider>
+    </>
   );
 };
 
